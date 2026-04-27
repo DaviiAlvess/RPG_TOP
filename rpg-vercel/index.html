@@ -26,10 +26,10 @@
   --hp:#c0392b;--mana:#2980b9;--stam:#27ae60;
   --purple:#6a3fa0;--purple2:#a070e0;
   --ft:'Cinzel Decorative',serif;--fb:'Crimson Text',serif;
-  --sat: env(safe-area-inset-top, 0px);
-  --sar: env(safe-area-inset-right, 0px);
-  --sab: env(safe-area-inset-bottom, 0px);
-  --sal: env(safe-area-inset-left, 0px);
+  --sat:env(safe-area-inset-top,0px);
+  --sar:env(safe-area-inset-right,0px);
+  --sab:env(safe-area-inset-bottom,0px);
+  --sal:env(safe-area-inset-left,0px);
 }
 html{height:100%;height:-webkit-fill-available}
 body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px;line-height:1.6;height:100%;height:-webkit-fill-available;overflow:hidden;-webkit-text-size-adjust:100%}
@@ -38,7 +38,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .screen{display:none;flex-direction:column}
 .screen.active{display:flex}
 
-/* ════════ SCREEN 0 — AUTH ════════ */
+/* ════ SCREEN 0 — AUTH ════ */
 #s-auth{align-items:center;justify-content:center;min-height:100vh;min-height:-webkit-fill-available;padding:calc(20px + var(--sat)) 16px calc(20px + var(--sab));gap:18px;background:var(--bg);overflow-y:auto}
 .auth-box{background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:28px 20px;width:100%;max-width:360px;display:flex;flex-direction:column;gap:14px}
 .auth-logo{font-family:var(--ft);font-size:clamp(11px,3.5vw,15px);color:var(--gold);letter-spacing:2px;text-align:center;margin-bottom:4px}
@@ -58,7 +58,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .auth-tab{flex:1;padding:11px 8px;font-family:var(--ft);font-size:9px;letter-spacing:.5px;cursor:pointer;text-align:center;border:none;background:var(--bg3);color:var(--text3);transition:all .15s;min-height:44px;-webkit-tap-highlight-color:transparent}
 .auth-tab.active{background:var(--bg4);color:var(--gold)}
 
-/* ════════ SCREEN 1 — WORLD SELECT ════════ */
+/* ════ SCREEN 1 — WORLD SELECT ════ */
 #s-world{align-items:center;justify-content:flex-start;min-height:100vh;min-height:-webkit-fill-available;padding:calc(16px + var(--sat)) 16px calc(16px + var(--sab));gap:14px;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .ws-top-bar{width:100%;max-width:600px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
 .ws-logo{font-family:var(--ft);font-size:clamp(10px,2.5vw,14px);color:var(--gold);letter-spacing:2px}
@@ -82,7 +82,20 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .btn-ghost{background:none;border:1px solid var(--border2);color:var(--text3);padding:9px 14px;font-family:var(--fb);font-size:14px;border-radius:4px;cursor:pointer;transition:all .15s;min-height:44px;-webkit-tap-highlight-color:transparent}
 .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
 
-/* ════════ SCREEN 2 — CHARACTER CREATION ════════ */
+/* Resume Banner */
+.resume-banner{width:100%;max-width:600px;background:linear-gradient(135deg,#1a1408,#251c10);border:1px solid var(--gold);border-radius:6px;padding:12px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.resume-icon{font-size:22px;flex-shrink:0}
+.resume-texts{flex:1;min-width:0}
+.resume-title{font-family:var(--ft);font-size:9px;color:var(--gold);letter-spacing:1px;margin-bottom:2px}
+.resume-info{font-size:13px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.resume-date{font-size:10px;color:var(--text3);font-style:italic;margin-top:1px}
+.resume-btns{display:flex;gap:6px;flex-shrink:0}
+.btn-resume{background:var(--red);border:1px solid var(--red2);color:#f0d0a0;padding:8px 14px;font-family:var(--ft);font-size:8px;letter-spacing:.5px;border-radius:4px;cursor:pointer;min-height:40px;-webkit-tap-highlight-color:transparent;white-space:nowrap}
+.btn-resume:hover{background:var(--red2)}
+.btn-discard{background:none;border:1px solid var(--border2);color:var(--text3);padding:8px 10px;font-family:var(--fb);font-size:12px;border-radius:4px;cursor:pointer;min-height:40px;-webkit-tap-highlight-color:transparent;white-space:nowrap}
+.btn-discard:hover{border-color:var(--red2);color:var(--red2)}
+
+/* ════ SCREEN 2 — CHARACTER CREATION ════ */
 #s-char{height:100vh;height:-webkit-fill-available;overflow:hidden;display:flex;flex-direction:column}
 .char-header{background:var(--bg2);border-bottom:1px solid var(--border2);padding:calc(10px + var(--sat)) 16px 10px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .char-header-title{font-family:var(--ft);font-size:clamp(9px,2.5vw,11px);color:var(--gold);letter-spacing:1px}
@@ -105,8 +118,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .classes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 @media(max-width:340px){.classes-grid{grid-template-columns:repeat(2,1fr)}}
 .class-opt{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:9px 6px;cursor:pointer;text-align:center;transition:all .15s;min-height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent}
-.class-opt:active{border-color:var(--gold)}
-@media(hover:hover){.class-opt:hover{border-color:var(--border3)}}
 .class-opt.selected{border-color:var(--gold);background:var(--bg4)}
 .class-opt .co-icon{font-size:20px;margin-bottom:3px}
 .class-opt .co-name{font-family:var(--ft);font-size:clamp(6px,1.8vw,8px);color:var(--text2);letter-spacing:.3px}
@@ -115,7 +126,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .avatar-preview.glow{border-color:var(--gold)}
 .avatar-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-top:6px}
 .avatar-opt{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:6px 4px;cursor:pointer;text-align:center;font-size:20px;transition:all .15s;min-height:40px;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent}
-.avatar-opt:active{border-color:var(--gold)}
 .avatar-opt.selected{border-color:var(--gold);background:var(--bg4)}
 .appear-row{display:flex;gap:10px;align-items:flex-start}
 .appear-fields{flex:1;display:flex;flex-direction:column;gap:6px}
@@ -130,7 +140,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .attr-points-left span{color:var(--gold);font-weight:600}
 .skills-pool{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .skill-opt{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:9px 10px;cursor:pointer;transition:all .15s;display:flex;align-items:flex-start;gap:7px;-webkit-tap-highlight-color:transparent;min-height:56px}
-.skill-opt:active{border-color:var(--border3)}
 .skill-opt.selected{border-color:var(--gold);background:var(--bg4)}
 .sk-icon{font-size:16px;flex-shrink:0;margin-top:1px}
 .sk-name{font-size:12px;color:var(--text);font-weight:600}
@@ -142,7 +151,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .trait-opt{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:10px;cursor:pointer;font-size:12px;color:var(--text2);transition:all .15s;text-align:center;min-height:44px;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent}
 .trait-opt.selected{border-color:var(--gold);background:var(--bg4);color:var(--gold)}
 
-/* ════════ SCREEN 3 — GAME ════════ */
+/* ════ SCREEN 3 — GAME ════ */
 #s-game{height:100vh;height:-webkit-fill-available;overflow:hidden;display:flex;flex-direction:column}
 .rpg-header{background:var(--bg2);border-bottom:1px solid var(--border2);padding:calc(8px + var(--sat)) 14px 8px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .rh-title{font-family:var(--ft);font-size:clamp(7px,2.2vw,10px);color:var(--gold);letter-spacing:1px}
@@ -155,7 +164,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .btn-sidebar-toggle{display:none;background:none;border:none;color:var(--text2);cursor:pointer;font-size:22px;padding:0 4px;min-height:36px;min-width:36px;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent}
 .rpg-body{flex:1;display:flex;overflow:hidden;position:relative;min-height:0}
 
-/* ── Sidebar ── */
+/* Sidebar */
 .rpg-sidebar{width:185px;min-width:185px;background:var(--bg2);border-right:1px solid var(--border);padding:10px 9px;display:flex;flex-direction:column;gap:9px;overflow-y:auto;-webkit-overflow-scrolling:touch;flex-shrink:0;transition:transform .25s cubic-bezier(.4,0,.2,1)}
 .rpg-sidebar::-webkit-scrollbar{width:3px}
 .rpg-sidebar::-webkit-scrollbar-thumb{background:var(--border2)}
@@ -193,16 +202,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .sync-badge{font-size:8px;color:var(--text4);font-style:italic;text-align:center}
 .sync-badge.ok{color:#27ae60}
 
-/* ── Indicador de estado narrativo ── */
-.narrative-state-bar{
-  display:flex;align-items:center;gap:6px;
-  padding:4px 14px;
-  background:var(--bg2);
-  border-bottom:1px solid var(--border);
-  font-size:10px;color:var(--text3);font-style:italic;
-  flex-shrink:0;
-  transition:all .4s;
-}
+/* Indicador narrativo */
+.narrative-state-bar{display:flex;align-items:center;gap:6px;padding:4px 14px;background:var(--bg2);border-bottom:1px solid var(--border);font-size:10px;color:var(--text3);font-style:italic;flex-shrink:0;transition:all .4s}
 .ns-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;transition:all .4s}
 .narrative-state-bar.calmo .ns-dot{background:#27ae60;box-shadow:0 0 5px #27ae60}
 .narrative-state-bar.tensao .ns-dot{background:#e8c97a;box-shadow:0 0 5px #e8c97a}
@@ -212,21 +213,17 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .narrative-state-bar.tensao .ns-label::after{content:'Tensão crescente'}
 .narrative-state-bar.acao .ns-label::after{content:'Em plena ação!'}
 
-/* ── Chat ── */
+/* Chat */
 .rpg-chat{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
 .chat-msgs{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 14px;display:flex;flex-direction:column;gap:9px;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
 .chat-msgs::-webkit-scrollbar{width:3px}
 .chat-msgs::-webkit-scrollbar-thumb{background:var(--border2)}
-
-/* Mensagem do GM — narrativa rica */
 .msg-gm{background:var(--bg2);border-left:3px solid var(--gold);border-radius:0 5px 5px 0;padding:10px 12px;color:var(--text);font-size:clamp(14px,3vw,15px);line-height:1.85}
 .msg-gm .mlabel{font-family:var(--ft);font-size:7px;color:var(--gold);letter-spacing:1px;font-style:normal;margin-bottom:6px;display:flex;align-items:center;gap:6px}
 .msg-gm .mlabel .ns-tag{font-size:8px;padding:1px 5px;border-radius:2px;font-family:var(--fb);font-style:italic;letter-spacing:0}
 .ns-tag.calmo{color:#27ae60;background:rgba(39,174,96,.12);border:1px solid rgba(39,174,96,.3)}
 .ns-tag.tensao{color:#e8c97a;background:rgba(232,201,122,.12);border:1px solid rgba(232,201,122,.3)}
 .ns-tag.acao{color:#c0392b;background:rgba(192,57,43,.12);border:1px solid rgba(192,57,43,.3)}
-
-/* Parágrafos dentro das mensagens do GM */
 .msg-gm .gm-para{font-style:italic;margin-bottom:10px}
 .msg-gm .gm-para:last-child{margin-bottom:0}
 .msg-gm .gm-para.sensory{color:var(--gold3);font-size:clamp(13px,2.8vw,14px);opacity:.9}
@@ -237,7 +234,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .dice-roll.success{color:#27ae60;background:rgba(39,174,96,.1);border:1px solid rgba(39,174,96,.3)}
 .dice-roll.fail{color:#c0392b;background:rgba(192,57,43,.1);border:1px solid rgba(192,57,43,.3)}
 .dice-roll.neutral{color:var(--gold);background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3)}
-
 .msg-player{background:var(--bg3);border-right:3px solid var(--text3);border-radius:5px 0 0 5px;padding:8px 12px;font-size:clamp(13px,2.5vw,14px);color:var(--text2);align-self:flex-end;max-width:85%}
 .msg-player .mlabel{font-size:7px;color:var(--text3);letter-spacing:1px;margin-bottom:2px;display:block;text-align:right}
 .msg-action{text-align:center;font-size:11px;color:var(--text3);font-style:italic;padding:2px 0}
@@ -248,7 +244,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
 @keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}}
 
-/* ── Actions ── */
+/* Actions */
 .rpg-actions{background:var(--bg2);border-top:1px solid var(--border2);padding:8px 12px calc(8px + var(--sab));display:flex;flex-direction:column;gap:7px;flex-shrink:0}
 .action-btns{display:flex;gap:5px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;flex-wrap:nowrap;padding-bottom:2px}
 .action-btns::-webkit-scrollbar{display:none}
@@ -270,7 +266,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .btn-send:active{background:var(--red2)}
 @media(hover:hover){.btn-send:hover{background:var(--red2)}}
 
-/* ── Pause modal ── */
+/* Pause Modal */
 .pause-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:500;align-items:center;justify-content:center}
 .pause-modal.open{display:flex}
 .pause-box{background:var(--bg2);border:1px solid var(--border3);border-radius:8px;padding:28px 24px;width:min(320px,90vw);display:flex;flex-direction:column;gap:12px}
@@ -286,25 +282,12 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .btn-pause-new{background:none;border:1px solid var(--border);color:var(--text3);font-size:8px}
 .btn-pause-new:hover{border-color:var(--red2);color:var(--red2)}
 
-/* ── Toast ── */
+/* Toast */
 .toast{position:fixed;bottom:calc(24px + var(--sab));left:50%;transform:translateX(-50%);background:#3a0a0a;border:1px solid var(--red2);color:#f0c0c0;padding:12px 20px;border-radius:5px;font-size:14px;z-index:999;display:none;max-width:90vw;text-align:center}
 .toast.show{display:block;animation:fadeInToast .2s}
 @keyframes fadeInToast{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 
-/* ── Resume banner ── */
-.resume-banner{width:100%;max-width:600px;background:linear-gradient(135deg,#1a1408,#251c10);border:1px solid var(--gold);border-radius:6px;padding:12px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.resume-icon{font-size:22px;flex-shrink:0}
-.resume-texts{flex:1;min-width:0}
-.resume-title{font-family:var(--ft);font-size:9px;color:var(--gold);letter-spacing:1px;margin-bottom:2px}
-.resume-info{font-size:13px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.resume-date{font-size:10px;color:var(--text3);font-style:italic;margin-top:1px}
-.resume-btns{display:flex;gap:6px;flex-shrink:0}
-.btn-resume{background:var(--red);border:1px solid var(--red2);color:#f0d0a0;padding:8px 14px;font-family:var(--ft);font-size:8px;letter-spacing:.5px;border-radius:4px;cursor:pointer;min-height:40px;-webkit-tap-highlight-color:transparent;white-space:nowrap}
-.btn-resume:hover{background:var(--red2)}
-.btn-discard{background:none;border:1px solid var(--border2);color:var(--text3);padding:8px 10px;font-family:var(--fb);font-size:12px;border-radius:4px;cursor:pointer;min-height:40px;-webkit-tap-highlight-color:transparent;white-space:nowrap}
-.btn-discard:hover{border-color:var(--red2);color:var(--red2)}
-
-/* ── Loading ── */
+/* Loading */
 .loading-overlay{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;z-index:9999}
 .loading-overlay.hide{display:none}
 .loading-title{font-family:var(--ft);font-size:13px;color:var(--gold);letter-spacing:2px}
@@ -313,7 +296,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 </head>
 <body>
 
-<!-- Loading Overlay -->
+<!-- Loading -->
 <div class="loading-overlay" id="loading-overlay">
   <div class="loading-title">⚔ RPG · Mestre Inteligente</div>
   <div class="loading-dots"><span class="dot">●</span><span class="dot">●</span><span class="dot">●</span></div>
@@ -333,9 +316,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════
-     SCREEN 0: AUTH
-════════════════════════════════════════════════ -->
+<!-- ══ SCREEN 0: AUTH ══ -->
 <div id="s-auth" class="screen">
   <div class="auth-box">
     <div class="auth-logo">⚔ RPG · Mestre Inteligente</div>
@@ -359,9 +340,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════
-     SCREEN 1: WORLD SELECT
-════════════════════════════════════════════════ -->
+<!-- ══ SCREEN 1: WORLD SELECT ══ -->
 <div id="s-world" class="screen">
   <div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:16px;overflow-y:auto;-webkit-overflow-scrolling:touch;min-height:100%;width:100%">
     <div class="ws-top-bar">
@@ -401,9 +380,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════
-     SCREEN 2: CHARACTER CREATION
-════════════════════════════════════════════════ -->
+<!-- ══ SCREEN 2: CHARACTER CREATION ══ -->
 <div id="s-char" class="screen">
   <div class="char-header">
     <div>
@@ -520,9 +497,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════
-     SCREEN 3: GAME
-════════════════════════════════════════════════ -->
+<!-- ══ SCREEN 3: GAME ══ -->
 <div id="s-game" class="screen">
   <div class="rpg-header">
     <div>
@@ -537,7 +512,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
     </div>
   </div>
 
-  <!-- Barra de estado narrativo -->
   <div class="narrative-state-bar calmo" id="narrative-state-bar">
     <div class="ns-dot"></div>
     <span class="ns-label"></span>
@@ -639,102 +613,77 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db   = firebase.database();
-
 let currentUser = null;
 let authMode = 'login';
 
 // ════════════════════════════════════════════════
-//  LORE POR MUNDO — narrativas imersivas
+//  LORE POR MUNDO
 // ════════════════════════════════════════════════
 const WORLD_LORE = {
   'Westeros — Game of Thrones': {
-    sensory: 'O vento gelado uiva pelas muralhas de pedra antiga, carregando o cheiro de fumaça e sangue.',
-    tense:   'Tambores de guerra ecoam ao longe — as casas travam sua dança mortal pelo Trono.',
-    action:  'Aço contra aço, o som do combate reverbera entre as pedras frias do castelo.',
-    themes:  ['traição', 'honra', 'sobrevivência', 'poder'],
-    openingLocation: 'Westeros',
-  },
+    sensory:'O vento gelado uiva pelas muralhas de pedra antiga, carregando o cheiro de fumaça e sangue.',
+    tense:'Tambores de guerra ecoam ao longe — as casas travam sua dança mortal pelo Trono.',
+    action:'Aço contra aço, o som do combate reverbera entre as pedras frias do castelo.',
+    themes:['traição','honra','sobrevivência','poder'],openingLocation:'Westeros'},
   'Naruto': {
-    sensory: 'O ar vibra com chakra invisível; folhas sussurram segredos enquanto kunais cortam o vento úmido da floresta.',
-    tense:   'A tensão entre os clãs engrossa — uma missão mal planejada pode custar tudo.',
-    action:  'Selagens de mãos voam em velocidade impossível; o chakra arde como brasa viva.',
-    themes:  ['vingança', 'amizade', 'poder oculto', 'determinação'],
-    openingLocation: 'Aldeia Oculta da Folha',
-  },
+    sensory:'O ar vibra com chakra invisível; folhas sussurram segredos enquanto kunais cortam o vento úmido da floresta.',
+    tense:'A tensão entre os clãs engrossa — uma missão mal planejada pode custar tudo.',
+    action:'Selagens de mãos voam em velocidade impossível; o chakra arde como brasa viva.',
+    themes:['vingança','amizade','poder oculto','determinação'],openingLocation:'Aldeia Oculta da Folha'},
   'Attack on Titan': {
-    sensory: 'O cheiro de madeira queimada e metal enferrujado paira pesado; além dos muros, o silêncio é aterrorizante.',
-    tense:   'Um rugido distante paralisa o sangue — algo enorme se aproxima dos muros.',
-    action:  'O gás dispara, os cabos cortam o ar e a lâmina busca a nuca do Titã.',
-    themes:  ['sobrevivência', 'sacrifício', 'liberdade', 'segredo'],
-    openingLocation: 'Dentro dos Muros',
-  },
+    sensory:'O cheiro de madeira queimada e metal enferrujado paira pesado; além dos muros, o silêncio é aterrorizante.',
+    tense:'Um rugido distante paralisa o sangue — algo enorme se aproxima dos muros.',
+    action:'O gás dispara, os cabos cortam o ar e a lâmina busca a nuca do Titã.',
+    themes:['sobrevivência','sacrifício','liberdade','segredo'],openingLocation:'Dentro dos Muros'},
   'The Witcher': {
-    sensory: 'A chuva tamborila sobre folhagem densa; cheiro de ervas e prata mistura-se ao barro da estrada.',
-    tense:   'Algo observa das sombras — antigo, faminto, paciente além da compreensão humana.',
-    action:  'Os sinais rúnicos incendeiam o ar enquanto a espada de prata traça arcos mortais.',
-    themes:  ['ambiguidade moral', 'monstros', 'destino', 'solidão'],
-    openingLocation: 'Estrada entre vilas do Continente',
-  },
+    sensory:'A chuva tamborila sobre folhagem densa; cheiro de ervas e prata mistura-se ao barro da estrada.',
+    tense:'Algo observa das sombras — antigo, faminto, paciente além da compreensão humana.',
+    action:'Os sinais rúnicos incendeiam o ar enquanto a espada de prata traça arcos mortais.',
+    themes:['ambiguidade moral','monstros','destino','solidão'],openingLocation:'Estrada entre vilas do Continente'},
   'Dragon Ball': {
-    sensory: 'O ki dos combatentes faz o chão tremer; o horizonte brilha com energia acumulada.',
-    tense:   'O poder do oponente sobe além do medidor — o planeta em si começa a sentir a pressão.',
-    action:  'Uma explosão de ki ilumina o céu inteiro; a onda de choque derruba árvores a quilômetros.',
-    themes:  ['superação', 'amizade', 'poder extremo', 'proteção'],
-    openingLocation: 'Planeta Terra',
-  },
+    sensory:'O ki dos combatentes faz o chão tremer; o horizonte brilha com energia acumulada.',
+    tense:'O poder do oponente sobe além do medidor — o planeta em si começa a sentir a pressão.',
+    action:'Uma explosão de ki ilumina o céu inteiro; a onda de choque derruba árvores a quilômetros.',
+    themes:['superação','amizade','poder extremo','proteção'],openingLocation:'Planeta Terra'},
   'Harry Potter': {
-    sensory: 'O ar cheira a pergaminho velho e magia; velas flutuantes criam sombras dançantes nas paredes de pedra.',
-    tense:   'Uma magia escura espreita os corredores — algo proibido foi invocado.',
-    action:  'Feitiços cruzam o salão em arcos de luz colorida; escudos mágicos explodem em fragmentos.',
-    themes:  ['lealdade', 'coragem', 'sacrifício', 'magia'],
-    openingLocation: 'Hogwarts',
-  },
+    sensory:'O ar cheira a pergaminho velho e magia; velas flutuantes criam sombras dançantes nas paredes de pedra.',
+    tense:'Uma magia escura espreita os corredores — algo proibido foi invocado.',
+    action:'Feitiços cruzam o salão em arcos de luz colorida; escudos mágicos explodem em fragmentos.',
+    themes:['lealdade','coragem','sacrifício','magia'],openingLocation:'Hogwarts'},
   'Star Wars': {
-    sensory: 'A Força sussurra entre as estrelas — um equilíbrio frágil que poucos conseguem sentir.',
-    tense:   'O lado sombrio pulsa mais forte; a tentação aguça os sentidos como uma lâmina.',
-    action:  'Sabres de luz zumbem e colidem, gerando arcos de energia que iluminam o confronto.',
-    themes:  ['equilíbrio', 'redenção', 'poder', 'escolha'],
-    openingLocation: 'Galáxia muito, muito distante',
-  },
+    sensory:'A Força sussurra entre as estrelas — um equilíbrio frágil que poucos conseguem sentir.',
+    tense:'O lado sombrio pulsa mais forte; a tentação aguça os sentidos como uma lâmina.',
+    action:'Sabres de luz zumbem e colidem, gerando arcos de energia que iluminam o confronto.',
+    themes:['equilíbrio','redenção','poder','escolha'],openingLocation:'Galáxia muito, muito distante'},
   'One Piece': {
-    sensory: 'Sal e aventura no ar; o oceano infinito brilha como um convite sem fim.',
-    tense:   'A Marinha aparece no horizonte — e desta vez trouxe um Admiral.',
-    action:  'O Haki de Armamento endurece o punho até virar obsidiana; o impacto ressoa como um canhão.',
-    themes:  ['liberdade', 'amizade', 'sonho', 'piratas'],
-    openingLocation: 'Grand Line',
-  },
+    sensory:'Sal e aventura no ar; o oceano infinito brilha como um convite sem fim.',
+    tense:'A Marinha aparece no horizonte — e desta vez trouxe um Admiral.',
+    action:'O Haki de Armamento endurece o punho até virar obsidiana; o impacto ressoa como um canhão.',
+    themes:['liberdade','amizade','sonho','piratas'],openingLocation:'Grand Line'},
   'Dark Souls': {
-    sensory: 'A chama tremeluz nas trevas eternas; cinzas de heróis mortos cobrem o chão frio.',
-    tense:   'A maldição do Oco avança — cada derrota consome um fragmento da humanidade.',
-    action:  'O parry perfeito ressoa como sino; a estocada de contra-ataque atravessa a armadura.',
-    themes:  ['desespero', 'perseverança', 'ciclos', 'sacrifício'],
-    openingLocation: 'Lordran',
-  },
+    sensory:'A chama tremeluz nas trevas eternas; cinzas de heróis mortos cobrem o chão frio.',
+    tense:'A maldição do Oco avança — cada derrota consome um fragmento da humanidade.',
+    action:'O parry perfeito ressoa como sino; a estocada de contra-ataque atravessa a armadura.',
+    themes:['desespero','perseverança','ciclos','sacrifício'],openingLocation:'Lordran'},
 };
-
-// Lore padrão para mundos customizados
 const WORLD_LORE_DEFAULT = {
-  sensory: 'Um mundo misterioso se desdobra ao redor — cheio de segredos e perigos à espreita.',
-  tense:   'A tensão aumenta; cada decisão pode mudar o curso desta história.',
-  action:  'A adrenalina toma conta — é hora de agir sem hesitar.',
-  themes:  ['aventura', 'mistério', 'poder', 'destino'],
-  openingLocation: 'Início da jornada',
-};
+  sensory:'Um mundo misterioso se desdobra ao redor — cheio de segredos e perigos à espreita.',
+  tense:'A tensão aumenta; cada decisão pode mudar o curso desta história.',
+  action:'A adrenalina toma conta — é hora de agir sem hesitar.',
+  themes:['aventura','mistério','poder','destino'],openingLocation:'Início da jornada'};
 
 // ════════════════════════════════════════════════
 //  ESTADO NARRATIVO
 // ════════════════════════════════════════════════
-let narrativeState = 'calmo'; // 'calmo' | 'tensao' | 'acao'
-
+let narrativeState = 'calmo';
 function setNarrativeState(state) {
   narrativeState = state;
   const bar = document.getElementById('narrative-state-bar');
-  if (!bar) return;
-  bar.className = 'narrative-state-bar ' + state;
+  if (bar) bar.className = 'narrative-state-bar ' + state;
 }
 
 // ════════════════════════════════════════════════
-//  AUTH HELPERS
+//  AUTH
 // ════════════════════════════════════════════════
 function switchTab(mode) {
   authMode = mode;
@@ -743,7 +692,6 @@ function switchTab(mode) {
   document.getElementById('btn-auth').textContent = mode === 'login' ? 'ENTRAR' : 'CRIAR CONTA';
   document.getElementById('auth-err').textContent = '';
 }
-
 async function doAuth() {
   const email = document.getElementById('auth-email').value.trim();
   const pass  = document.getElementById('auth-pass').value;
@@ -755,37 +703,35 @@ async function doAuth() {
   try {
     if (authMode === 'login') await auth.signInWithEmailAndPassword(email, pass);
     else await auth.createUserWithEmailAndPassword(email, pass);
-  } catch (e) {
+  } catch(e) {
     const msgs = {
-      'auth/user-not-found':'Usuário não encontrado.','auth/wrong-password':'Senha incorreta.',
+      'auth/user-not-found':'Usuário não encontrado.',
+      'auth/wrong-password':'Senha incorreta.',
       'auth/email-already-in-use':'E-mail já cadastrado. Tente fazer login.',
-      'auth/invalid-email':'E-mail inválido.','auth/weak-password':'Senha muito fraca.',
-      'auth/invalid-credential':'E-mail ou senha incorretos.',
+      'auth/invalid-email':'E-mail inválido.',
+      'auth/weak-password':'Senha muito fraca.',
+      'auth/invalid-credential':'E-mail ou senha incorretos.'
     };
     errEl.textContent = msgs[e.code] || e.message;
     btn.disabled = false;
     btn.textContent = authMode === 'login' ? 'ENTRAR' : 'CRIAR CONTA';
   }
 }
-
 function playAnon() { currentUser = null; goScreen('s-world'); renderUserBar(); checkAndShowResume(); }
 async function logout() { await auth.signOut(); currentUser = null; goScreen('s-auth'); }
-
 auth.onAuthStateChanged(user => {
   document.getElementById('loading-overlay').classList.add('hide');
-  if (user) {
-    currentUser = user; renderUserBar(); goScreen('s-world'); checkAndShowResume();
-  } else {
+  if (user) { currentUser = user; renderUserBar(); goScreen('s-world'); checkAndShowResume(); }
+  else {
     const inGame = ['s-world','s-char','s-game'].some(id => document.getElementById(id).classList.contains('active'));
     if (!inGame) goScreen('s-auth');
   }
 });
-
 function renderUserBar() {
   const bar = document.getElementById('user-bar');
   if (!bar) return;
   if (currentUser) {
-    bar.innerHTML = `<span style="font-size:10px;color:var(--text3);font-style:italic;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${currentUser.email}</span><button class="btn-logout" onclick="logout()" style="background:none;border:1px solid var(--border2);color:var(--text3);font-size:11px;padding:5px 10px;border-radius:3px;cursor:pointer;font-family:var(--fb);white-space:nowrap;min-height:36px">Sair</button>`;
+    bar.innerHTML = `<span style="font-size:10px;color:var(--text3);font-style:italic;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${currentUser.email}</span><button onclick="logout()" style="background:none;border:1px solid var(--border2);color:var(--text3);font-size:11px;padding:5px 10px;border-radius:3px;cursor:pointer;font-family:var(--fb);white-space:nowrap;min-height:36px">Sair</button>`;
   } else {
     bar.innerHTML = `<button class="btn-ghost" style="font-size:11px;padding:6px 12px" onclick="goScreen('s-auth')">Entrar</button>`;
   }
@@ -796,17 +742,13 @@ function renderUserBar() {
 // ════════════════════════════════════════════════
 const LS_KEY = 'rpg_session_v1';
 let saveTimeout = null;
-
 function getDbRef() { return currentUser ? db.ref(`users/${currentUser.uid}/session`) : null; }
-
 function buildSessionPayload() {
   return { charData, stats, inventory, conversationHistory: conversationHistory.slice(-80), savedAt: Date.now() };
 }
-
-function saveToLocalStorage(payload) { try { localStorage.setItem(LS_KEY, JSON.stringify(payload)); } catch(e) {} }
+function saveToLocalStorage(p) { try { localStorage.setItem(LS_KEY, JSON.stringify(p)); } catch(e) {} }
 function loadFromLocalStorage() { try { const r = localStorage.getItem(LS_KEY); return r ? JSON.parse(r) : null; } catch(e) { return null; } }
 function clearLocalStorage() { try { localStorage.removeItem(LS_KEY); } catch(e) {} }
-
 function saveToFirebase() {
   const payload = buildSessionPayload();
   saveToLocalStorage(payload);
@@ -822,34 +764,25 @@ function saveToFirebase() {
   saveTimeout = setTimeout(async () => {
     try {
       await ref.set(payload);
-      const el = document.getElementById('sync-badge');
-      if (el) { el.textContent = '☁ Salvo na nuvem'; el.className = 'sync-badge ok'; }
+      const ok = document.getElementById('sync-badge');
+      if (ok) { ok.textContent = '☁ Salvo na nuvem'; ok.className = 'sync-badge ok'; }
     } catch(e) {
-      const el = document.getElementById('sync-badge');
-      if (el) { el.textContent = '⚠ Erro: ' + (e.code || e.message); el.className = 'sync-badge'; }
+      const bad = document.getElementById('sync-badge');
+      if (bad) { bad.textContent = '⚠ Erro: ' + (e.code || e.message); bad.className = 'sync-badge'; }
     }
   }, 1200);
 }
-
 async function loadSession() {
   const ref = getDbRef();
   if (ref) {
-    try {
-      const snap = await ref.once('value');
-      const val = snap.val();
-      if (val && val.charData) return val;
-    } catch(e) {}
+    try { const snap = await ref.once('value'); const val = snap.val(); if (val && val.charData) return val; } catch(e) {}
   }
   return loadFromLocalStorage();
 }
-
 function applySession(session) {
-  charData            = session.charData;
-  stats               = session.stats;
-  inventory           = session.inventory || [];
-  conversationHistory = session.conversationHistory || [];
+  charData = session.charData; stats = session.stats;
+  inventory = session.inventory || []; conversationHistory = session.conversationHistory || [];
 }
-
 async function checkAndShowResume() {
   const session = await loadSession();
   if (!session || !session.charData || !session.charData.name) {
@@ -858,17 +791,16 @@ async function checkAndShowResume() {
   const c = session.charData;
   const date = session.savedAt ? new Date(session.savedAt).toLocaleString('pt-BR') : '—';
   document.getElementById('resume-banner').style.display = '';
-  document.getElementById('resume-info').textContent = `${c.avatar || '🧙'} ${c.name} · ${c.cls} · ${c.world}`;
+  document.getElementById('resume-info').textContent = `${c.avatar||'🧙'} ${c.name} · ${c.cls} · ${c.world}`;
   document.getElementById('resume-date').textContent = `Salvo em ${date}`;
   window._pendingSession = session;
 }
-
 function resumeGame() {
   const session = window._pendingSession;
   if (!session) { showToast('Nenhuma sessão encontrada.'); return; }
   applySession(session);
-  if (!charData.avatar)   charData.avatar   = '🧙';
-  if (!charData.clsIcon)  charData.clsIcon  = '⚔';
+  if (!charData.avatar) charData.avatar = '🧙';
+  if (!charData.clsIcon) charData.clsIcon = '⚔';
   if (!charData.customSkill) charData.customSkill = null;
   populateSidebar(); updateStats(); updateInventory();
   const chatEl = document.getElementById('chat-msgs');
@@ -881,13 +813,12 @@ function resumeGame() {
   const btnC = document.getElementById('btn-custom-skill');
   if (btnC) {
     if (charData.customSkill) { btnC.style.display = ''; btnC.textContent = charData.customSkill.icon + ' ' + charData.customSkill.name; }
-    else { btnC.style.display = 'none'; }
+    else btnC.style.display = 'none';
   }
   setNarrativeState('calmo');
   goScreen('s-game');
   document.getElementById('chat-input').focus();
 }
-
 function discardSave() {
   if (!confirm('Apagar a aventura salva e começar do zero?')) return;
   clearLocalStorage(); window._pendingSession = null;
@@ -899,73 +830,33 @@ function discardSave() {
 //  DATA
 // ════════════════════════════════════════════════
 const AVATARS = ['🧙','⚔️','🏹','🛡️','🗡️','🔮','🐺','🦅','💀','🌟','🍃','🔥','❄️','⚡','🌊','🧝','🤺','👁️','🦊','🐉'];
-
 const WORLD_CLASSES = {
-  'Westeros — Game of Thrones': [{icon:'⚔',name:'Cavaleiro'},{icon:'🏹',name:'Arqueiro'},{icon:'🔮',name:'Maester'},{icon:'🗡',name:'Assassino'},{icon:'🛡',name:'Guarda'},{icon:'👑',name:'Nobre'}],
-  'Naruto':       [{icon:'🍃',name:'Ninjutsu'},{icon:'🔥',name:'Taijutsu'},{icon:'💧',name:'Genjutsu'},{icon:'⚡',name:'Raikage'},{icon:'🌸',name:'Médico Ninja'},{icon:'🐸',name:'Senjutsu'}],
-  'Attack on Titan': [{icon:'⚙',name:'Legião Explor.'},{icon:'🛡',name:'Guarda Muralha'},{icon:'🔧',name:'Mecânico 3DM'},{icon:'🏹',name:'Atirador'},{icon:'🧠',name:'Estrategista'},{icon:'💪',name:'Corpo a Corpo'}],
-  'The Witcher':  [{icon:'🐺',name:'Witcher'},{icon:'🔮',name:'Mago'},{icon:'🏹',name:'Arqueiro'},{icon:'🗡',name:'Bardo'},{icon:'⚔',name:'Cavaleiro'},{icon:'🌿',name:'Druida'}],
-  'Dragon Ball':  [{icon:'🔴',name:'Guerreiro Z'},{icon:'⚡',name:'Super Sayajin'},{icon:'🌟',name:'Namekiano'},{icon:'🤺',name:'Mestre Artes'},{icon:'💜',name:'Majin'},{icon:'🤖',name:'Androide'}],
-  'Harry Potter': [{icon:'🪄',name:'Auror'},{icon:'📚',name:'Acadêmico'},{icon:'🌿',name:'Herbologista'},{icon:'🦉',name:'Adivinho'},{icon:'⚗',name:'Pocionista'},{icon:'🐍',name:'Parsel'}],
-  'Star Wars':    [{icon:'💙',name:'Jedi'},{icon:'❤',name:'Sith'},{icon:'🔫',name:'Caçador'},{icon:'🚀',name:'Piloto'},{icon:'🔧',name:'Mecânico'},{icon:'🎲',name:'Contrabandista'}],
-  'One Piece':    [{icon:'✊',name:'Usuário Akuma'},{icon:'⚔',name:'Espadachim'},{icon:'🔫',name:'Atirador'},{icon:'🏴‍☠️',name:'Pirata Livre'},{icon:'🌊',name:'Nadador'},{icon:'💊',name:'Médico'}],
-  'Dark Souls':   [{icon:'⚔',name:'Guerreiro'},{icon:'🔮',name:'Feiticeiro'},{icon:'🕯',name:'Clérigo'},{icon:'🗡',name:'Ladrão'},{icon:'🛡',name:'Cavaleiro'},{icon:'🌑',name:'Sem-chama'}],
+  'Westeros — Game of Thrones':[{icon:'⚔',name:'Cavaleiro'},{icon:'🏹',name:'Arqueiro'},{icon:'🔮',name:'Maester'},{icon:'🗡',name:'Assassino'},{icon:'🛡',name:'Guarda'},{icon:'👑',name:'Nobre'}],
+  'Naruto':[{icon:'🍃',name:'Ninjutsu'},{icon:'🔥',name:'Taijutsu'},{icon:'💧',name:'Genjutsu'},{icon:'⚡',name:'Raikage'},{icon:'🌸',name:'Médico Ninja'},{icon:'🐸',name:'Senjutsu'}],
+  'Attack on Titan':[{icon:'⚙',name:'Legião Explor.'},{icon:'🛡',name:'Guarda Muralha'},{icon:'🔧',name:'Mecânico 3DM'},{icon:'🏹',name:'Atirador'},{icon:'🧠',name:'Estrategista'},{icon:'💪',name:'Corpo a Corpo'}],
+  'The Witcher':[{icon:'🐺',name:'Witcher'},{icon:'🔮',name:'Mago'},{icon:'🏹',name:'Arqueiro'},{icon:'🗡',name:'Bardo'},{icon:'⚔',name:'Cavaleiro'},{icon:'🌿',name:'Druida'}],
+  'Dragon Ball':[{icon:'🔴',name:'Guerreiro Z'},{icon:'⚡',name:'Super Sayajin'},{icon:'🌟',name:'Namekiano'},{icon:'🤺',name:'Mestre Artes'},{icon:'💜',name:'Majin'},{icon:'🤖',name:'Androide'}],
+  'Harry Potter':[{icon:'🪄',name:'Auror'},{icon:'📚',name:'Acadêmico'},{icon:'🌿',name:'Herbologista'},{icon:'🦉',name:'Adivinho'},{icon:'⚗',name:'Pocionista'},{icon:'🐍',name:'Parsel'}],
+  'Star Wars':[{icon:'💙',name:'Jedi'},{icon:'❤',name:'Sith'},{icon:'🔫',name:'Caçador'},{icon:'🚀',name:'Piloto'},{icon:'🔧',name:'Mecânico'},{icon:'🎲',name:'Contrabandista'}],
+  'One Piece':[{icon:'✊',name:'Usuário Akuma'},{icon:'⚔',name:'Espadachim'},{icon:'🔫',name:'Atirador'},{icon:'🏴‍☠️',name:'Pirata Livre'},{icon:'🌊',name:'Nadador'},{icon:'💊',name:'Médico'}],
+  'Dark Souls':[{icon:'⚔',name:'Guerreiro'},{icon:'🔮',name:'Feiticeiro'},{icon:'🕯',name:'Clérigo'},{icon:'🗡',name:'Ladrão'},{icon:'🛡',name:'Cavaleiro'},{icon:'🌑',name:'Sem-chama'}],
 };
-
 const WORLD_SKILLS = {
-  'Westeros — Game of Thrones': [
-    {icon:'⚔',name:'Esgrima',desc:'Mestre com lâminas'},{icon:'🛡',name:'Resistência',desc:'Absorve dano extra'},
-    {icon:'🏇',name:'Equitação',desc:'Cavalga com maestria'},{icon:'🗺',name:'Estratégia',desc:'Prevê ações inimigas'},
-    {icon:'🌿',name:'Medicina',desc:'Cura ferimentos'},{icon:'🗣',name:'Persuasão',desc:'Influencia NPCs'},
-    {icon:'🏹',name:'Arco',desc:'Precisão à distância'},{icon:'🔥',name:'Intimidação',desc:'Intimida adversários'}],
-  'Naruto': [
-    {icon:'🔥',name:'Katon',desc:'Jutsus de fogo'},{icon:'💧',name:'Suiton',desc:'Jutsus de água'},
-    {icon:'⚡',name:'Raiton',desc:'Jutsus de raio'},{icon:'🌿',name:'Mokuton',desc:'Jutsus de madeira'},
-    {icon:'🌪',name:'Futon',desc:'Jutsus de vento'},{icon:'👥',name:'Kage Bunshin',desc:'Cria clones físicos'},
-    {icon:'🐸',name:'Senjutsu',desc:'Usa chakra natureza'},{icon:'💜',name:'Genjutsu',desc:'Ilusões poderosas'}],
-  'Attack on Titan': [
-    {icon:'⚙',name:'3DM Elite',desc:'Agilidade extrema'},{icon:'🗡',name:'Duplas Lâminas',desc:'Golpes precisos'},
-    {icon:'💪',name:'Força Bruta',desc:'Dano aumentado'},{icon:'🧠',name:'Análise Tática',desc:'Lê padrões Titãs'},
-    {icon:'🏃',name:'Fuga Ágil',desc:'Esquiva aprimorada'},{icon:'❤',name:'Primeiros Socorros',desc:'Recupera aliados'},
-    {icon:'🎯',name:'Mira Precisa',desc:'Golpe no ponto cego'},{icon:'🛡',name:'Cobertura',desc:'Protege companheiros'}],
-  'The Witcher': [
-    {icon:'🐺',name:'Sinais',desc:'Magia rúnica de combate'},{icon:'⚗',name:'Alquimia',desc:'Poções e mutações'},
-    {icon:'🗡',name:'Espadas',desc:'Técnicas de espadachim'},{icon:'🧪',name:'Venenos',desc:'Envenena alvos'},
-    {icon:'🌿',name:'Herbalism',desc:'Coleta ingredientes raros'},{icon:'👁',name:'Olho de Gato',desc:'Visão no escuro'},
-    {icon:'🐎',name:'Equitação',desc:'Controle de Sardenha'},{icon:'🎵',name:'Persuasão',desc:'Negocia com qualquer um'}],
-  'Dragon Ball': [
-    {icon:'⚡',name:'Kamehameha',desc:'Raio de energia devastador'},{icon:'🌀',name:'Kaioken',desc:'Multiplica poder temporariamente'},
-    {icon:'💥',name:'Galick Gun',desc:'Explosão de energia'},{icon:'🌟',name:'Spirit Bomb',desc:'Bola de energia cósmica'},
-    {icon:'💨',name:'Instant Transmission',desc:'Teletransporte instantâneo'},{icon:'🛡',name:'Ki Shield',desc:'Escudo de energia'},
-    {icon:'👊',name:'Rush Combo',desc:'Série de golpes rápidos'},{icon:'🔮',name:'Sensor de Ki',desc:'Detecta poderes ocultos'}],
-  'Harry Potter': [
-    {icon:'🪄',name:'Expelliarmus',desc:'Desarma o oponente'},{icon:'🔮',name:'Legilimência',desc:'Lê mentes'},
-    {icon:'🌀',name:'Apparition',desc:'Teletransporte mágico'},{icon:'🦌',name:'Patronus',desc:'Proteção contra Dementadores'},
-    {icon:'🔥',name:'Incendio',desc:'Controla chamas'},{icon:'🌿',name:'Herbologia',desc:'Plantas mágicas poderosas'},
-    {icon:'🕵',name:'Disillusionment',desc:'Torna-se quase invisível'},{icon:'⚗',name:'Poções',desc:'Cria poções avançadas'}],
-  'Star Wars': [
-    {icon:'💙',name:'Telecinese',desc:'Move objetos com a Força'},{icon:'⚡',name:'Relâmpago Sith',desc:'Descarga de energia sombria'},
-    {icon:'🧘',name:'Meditação Jedi',desc:'Restaura Força interior'},{icon:'🗡',name:'Sabre de Luz',desc:'Técnicas avançadas de combate'},
-    {icon:'👁',name:'Visão da Força',desc:'Prevê ações inimigas'},{icon:'🌀',name:'Dash da Força',desc:'Velocidade sobre-humana'},
-    {icon:'🛡',name:'Absorção',desc:'Desvia ataques'},{icon:'🎭',name:'Persuasão Jedi',desc:'Influencia mentes fracas'}],
-  'One Piece': [
-    {icon:'✊',name:'Haki Armamento',desc:'Endurece o corpo como armadura'},{icon:'👁',name:'Haki Observação',desc:'Prevê movimentos inimigos'},
-    {icon:'💥',name:'Haki Conquistador',desc:'Dobra a vontade dos fracos'},{icon:'🌊',name:'Nado Livre',desc:'Velocidade extrema na água'},
-    {icon:'⚔',name:'Ittoryu',desc:'Técnicas de um sabre'},{icon:'🔥',name:'Poder Akuma',desc:'Habilidade especial da fruta'},
-    {icon:'🏴‍☠️',name:'Liderança',desc:'Inspira aliados em batalha'},{icon:'💊',name:'Cirurgia',desc:'Opera em condições extremas'}],
-  'Dark Souls': [
-    {icon:'🔥',name:'Pyromancia',desc:'Manipula chamas das trevas'},{icon:'✝',name:'Milagres',desc:'Cura e raios divinos'},
-    {icon:'🔮',name:'Feitiçaria',desc:'Projéteis de almas'},{icon:'🛡',name:'Parry',desc:'Deflexão e contra-ataque'},
-    {icon:'💀',name:'Invocação',desc:'Chama espíritos aliados'},{icon:'🌑',name:'Abyss Walk',desc:'Caminha pelo abismo'},
-    {icon:'⚔',name:'Stance',desc:'Golpe especial de arma'},{icon:'🍂',name:'Resistência',desc:'Absorve dano de status'}],
+  'Westeros — Game of Thrones':[{icon:'⚔',name:'Esgrima',desc:'Mestre com lâminas'},{icon:'🛡',name:'Resistência',desc:'Absorve dano extra'},{icon:'🏇',name:'Equitação',desc:'Cavalga com maestria'},{icon:'🗺',name:'Estratégia',desc:'Prevê ações inimigas'},{icon:'🌿',name:'Medicina',desc:'Cura ferimentos'},{icon:'🗣',name:'Persuasão',desc:'Influencia NPCs'},{icon:'🏹',name:'Arco',desc:'Precisão à distância'},{icon:'🔥',name:'Intimidação',desc:'Intimida adversários'}],
+  'Naruto':[{icon:'🔥',name:'Katon',desc:'Jutsus de fogo'},{icon:'💧',name:'Suiton',desc:'Jutsus de água'},{icon:'⚡',name:'Raiton',desc:'Jutsus de raio'},{icon:'🌿',name:'Mokuton',desc:'Jutsus de madeira'},{icon:'🌪',name:'Futon',desc:'Jutsus de vento'},{icon:'👥',name:'Kage Bunshin',desc:'Cria clones físicos'},{icon:'🐸',name:'Senjutsu',desc:'Usa chakra natureza'},{icon:'💜',name:'Genjutsu',desc:'Ilusões poderosas'}],
+  'Attack on Titan':[{icon:'⚙',name:'3DM Elite',desc:'Agilidade extrema'},{icon:'🗡',name:'Duplas Lâminas',desc:'Golpes precisos'},{icon:'💪',name:'Força Bruta',desc:'Dano aumentado'},{icon:'🧠',name:'Análise Tática',desc:'Lê padrões Titãs'},{icon:'🏃',name:'Fuga Ágil',desc:'Esquiva aprimorada'},{icon:'❤',name:'Primeiros Socorros',desc:'Recupera aliados'},{icon:'🎯',name:'Mira Precisa',desc:'Golpe no ponto cego'},{icon:'🛡',name:'Cobertura',desc:'Protege companheiros'}],
+  'The Witcher':[{icon:'🐺',name:'Sinais',desc:'Magia rúnica de combate'},{icon:'⚗',name:'Alquimia',desc:'Poções e mutações'},{icon:'🗡',name:'Espadas',desc:'Técnicas de espadachim'},{icon:'🧪',name:'Venenos',desc:'Envenena alvos'},{icon:'🌿',name:'Herbalism',desc:'Coleta ingredientes raros'},{icon:'👁',name:'Olho de Gato',desc:'Visão no escuro'},{icon:'🐎',name:'Equitação',desc:'Controle de Sardenha'},{icon:'🎵',name:'Persuasão',desc:'Negocia com qualquer um'}],
+  'Dragon Ball':[{icon:'⚡',name:'Kamehameha',desc:'Raio de energia devastador'},{icon:'🌀',name:'Kaioken',desc:'Multiplica poder temporariamente'},{icon:'💥',name:'Galick Gun',desc:'Explosão de energia'},{icon:'🌟',name:'Spirit Bomb',desc:'Bola de energia cósmica'},{icon:'💨',name:'Instant Transmission',desc:'Teletransporte instantâneo'},{icon:'🛡',name:'Ki Shield',desc:'Escudo de energia'},{icon:'👊',name:'Rush Combo',desc:'Série de golpes rápidos'},{icon:'🔮',name:'Sensor de Ki',desc:'Detecta poderes ocultos'}],
+  'Harry Potter':[{icon:'🪄',name:'Expelliarmus',desc:'Desarma o oponente'},{icon:'🔮',name:'Legilimência',desc:'Lê mentes'},{icon:'🌀',name:'Apparition',desc:'Teletransporte mágico'},{icon:'🦌',name:'Patronus',desc:'Proteção contra Dementadores'},{icon:'🔥',name:'Incendio',desc:'Controla chamas'},{icon:'🌿',name:'Herbologia',desc:'Plantas mágicas poderosas'},{icon:'🕵',name:'Disillusionment',desc:'Torna-se quase invisível'},{icon:'⚗',name:'Poções',desc:'Cria poções avançadas'}],
+  'Star Wars':[{icon:'💙',name:'Telecinese',desc:'Move objetos com a Força'},{icon:'⚡',name:'Relâmpago Sith',desc:'Descarga de energia sombria'},{icon:'🧘',name:'Meditação Jedi',desc:'Restaura Força interior'},{icon:'🗡',name:'Sabre de Luz',desc:'Técnicas avançadas de combate'},{icon:'👁',name:'Visão da Força',desc:'Prevê ações inimigas'},{icon:'🌀',name:'Dash da Força',desc:'Velocidade sobre-humana'},{icon:'🛡',name:'Absorção',desc:'Desvia ataques'},{icon:'🎭',name:'Persuasão Jedi',desc:'Influencia mentes fracas'}],
+  'One Piece':[{icon:'✊',name:'Haki Armamento',desc:'Endurece o corpo como armadura'},{icon:'👁',name:'Haki Observação',desc:'Prevê movimentos inimigos'},{icon:'💥',name:'Haki Conquistador',desc:'Dobra a vontade dos fracos'},{icon:'🌊',name:'Nado Livre',desc:'Velocidade extrema na água'},{icon:'⚔',name:'Ittoryu',desc:'Técnicas de um sabre'},{icon:'🔥',name:'Poder Akuma',desc:'Habilidade especial da fruta'},{icon:'🏴‍☠️',name:'Liderança',desc:'Inspira aliados em batalha'},{icon:'💊',name:'Cirurgia',desc:'Opera em condições extremas'}],
+  'Dark Souls':[{icon:'🔥',name:'Pyromancia',desc:'Manipula chamas das trevas'},{icon:'✝',name:'Milagres',desc:'Cura e raios divinos'},{icon:'🔮',name:'Feitiçaria',desc:'Projéteis de almas'},{icon:'🛡',name:'Parry',desc:'Deflexão e contra-ataque'},{icon:'💀',name:'Invocação',desc:'Chama espíritos aliados'},{icon:'🌑',name:'Abyss Walk',desc:'Caminha pelo abismo'},{icon:'⚔',name:'Stance',desc:'Golpe especial de arma'},{icon:'🍂',name:'Resistência',desc:'Absorve dano de status'}],
 };
-
 const WORLD_SKILLS_DEFAULT = [
   {icon:'⚔',name:'Combate',desc:'Aumenta dano em luta'},{icon:'🛡',name:'Defesa',desc:'Reduz dano recebido'},
   {icon:'🏹',name:'Precisão',desc:'Acertos críticos +30%'},{icon:'🔮',name:'Magia',desc:'Potência mágica'},
   {icon:'💨',name:'Agilidade',desc:'Esquiva e velocidade'},{icon:'🌿',name:'Cura',desc:'Recupera vida lentamente'},
   {icon:'🗣',name:'Diplomacia',desc:'Resolve conflitos'},{icon:'🔍',name:'Percepção',desc:'Detecta perigos ocultos'}];
-
 const TRAITS = ['Corajoso e impulsivo','Calculista e frio','Leal até a morte','Solitário e misterioso','Carismático e brincalhão','Honrado e rígido','Cínico e sarcástico','Curioso e analítico','Protetor dos fracos','Ambicioso e determinado','Compassivo e gentil','Desconfiado e cauteloso'];
 const ATTR_NAMES = ['FOR','DES','CON','INT','SAB','CAR'];
 const ATTR_FULL  = ['Força','Destreza','Constituição','Inteligência','Sabedoria','Carisma'];
@@ -995,36 +886,28 @@ function goScreen(id) {
   document.getElementById(id).classList.add('active');
   window.scrollTo(0, 0);
 }
-
 function showToast(msg, duration = 4000) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), duration);
 }
-
 function openPause() {
   document.getElementById('pause-modal').classList.add('open');
-  if (charData && charData.name) {
-    document.getElementById('pause-char').textContent = `${charData.avatar || '🧙'} ${charData.name} · ${charData.cls} · ${charData.world}`;
-  }
+  if (charData && charData.name)
+    document.getElementById('pause-char').textContent = `${charData.avatar||'🧙'} ${charData.name} · ${charData.cls} · ${charData.world}`;
   const badge = document.getElementById('sync-badge');
   const saveInfo = document.getElementById('pause-save-info');
   if (badge && badge.textContent && badge.textContent !== '—') {
     saveInfo.textContent = badge.textContent;
     saveInfo.className = badge.className === 'sync-badge ok' ? 'pause-save-info ok' : 'pause-save-info';
-  } else {
-    saveInfo.textContent = 'Salvando agora...'; saveInfo.className = 'pause-save-info'; saveToFirebase();
-  }
+  } else { saveInfo.textContent = 'Salvando agora...'; saveInfo.className = 'pause-save-info'; saveToFirebase(); }
 }
-
 function closePause() { document.getElementById('pause-modal').classList.remove('open'); }
-
 function pauseGoWorlds() {
   saveToFirebase();
   document.getElementById('pause-modal').classList.remove('open');
   goScreen('s-world'); checkAndShowResume();
 }
-
 function pauseNewGame() {
   if (!confirm('Tem certeza? Isso apaga toda a aventura atual.')) return;
   conversationHistory = []; inventory = []; clearLocalStorage();
@@ -1067,7 +950,6 @@ function buildCharScreen(world) {
     };
     ag.appendChild(d);
   });
-
   const classes = WORLD_CLASSES[world] || Object.values(WORLD_CLASSES)[0];
   const cg = document.getElementById('classes-grid');
   cg.innerHTML = ''; selectedClass = -1;
@@ -1081,7 +963,6 @@ function buildCharScreen(world) {
     };
     cg.appendChild(d);
   });
-
   attrBonus = [0,0,0,0,0,0]; totalPts = 10;
   const ag2 = document.getElementById('attrs-grid');
   ag2.innerHTML = '';
@@ -1092,7 +973,6 @@ function buildCharScreen(world) {
     ag2.appendChild(row);
   });
   updatePtsLeft();
-
   const pool = WORLD_SKILLS[world] || WORLD_SKILLS_DEFAULT;
   selectedSkills = [];
   const sp = document.getElementById('skills-pool');
@@ -1104,7 +984,6 @@ function buildCharScreen(world) {
     d.onclick = () => toggleSkill(i, d);
     sp.appendChild(d);
   });
-
   const tg = document.getElementById('trait-grid');
   tg.innerHTML = ''; selectedTrait = '';
   TRAITS.forEach(t => {
@@ -1116,13 +995,14 @@ function buildCharScreen(world) {
     };
     tg.appendChild(d);
   });
-
   document.getElementById('cc-name').value = '';
   document.getElementById('cc-age').value = '';
   document.getElementById('cc-backstory').value = '';
+  document.getElementById('custom-skill-icon').value = '';
+  document.getElementById('custom-skill-name').value = '';
+  document.getElementById('custom-skill-desc').value = '';
   checkReady();
 }
-
 function changeAttr(i, val) {
   const old = attrBonus[i]; const diff = val - old;
   if (diff > 0 && totalPts - diff < 0) { document.getElementById(`asl-${i}`).value = old; return; }
@@ -1130,9 +1010,7 @@ function changeAttr(i, val) {
   document.getElementById(`av-${i}`).textContent = attrBase[i] + attrBonus[i];
   updatePtsLeft();
 }
-
 function updatePtsLeft() { document.getElementById('pts-left').textContent = totalPts; }
-
 function toggleSkill(i, el) {
   if (el.classList.contains('selected')) {
     el.classList.remove('selected'); selectedSkills = selectedSkills.filter(x => x !== i);
@@ -1142,7 +1020,6 @@ function toggleSkill(i, el) {
   }
   checkReady();
 }
-
 function checkReady() {
   const name = document.getElementById('cc-name').value.trim();
   const ready = name.length > 0 && selectedClass >= 0 && selectedSkills.length === 3;
@@ -1153,7 +1030,6 @@ function checkReady() {
     : '✦ Pronto para aventurar!';
   document.getElementById('cc-hint').textContent = hint;
 }
-
 document.addEventListener('input', e => { if (e.target.id === 'cc-name') checkReady(); });
 
 // ════════════════════════════════════════════════
@@ -1164,30 +1040,29 @@ function startGame() {
   const classes = WORLD_CLASSES[world] || Object.values(WORLD_CLASSES)[0];
   const pool = WORLD_SKILLS[world] || WORLD_SKILLS_DEFAULT;
   charData = {
-    name:     document.getElementById('cc-name').value.trim(),
-    age:      document.getElementById('cc-age').value || '25',
-    gender:   document.getElementById('cc-gender').value,
-    hair:     document.getElementById('cc-hair').value,
-    eyes:     document.getElementById('cc-eyes').value,
-    build:    document.getElementById('cc-build').value,
-    avatar:   selectedAvatar,
-    cls:      classes[selectedClass].name,
-    clsIcon:  classes[selectedClass].icon,
-    attrs:    ATTR_NAMES.map((n, i) => ({name: n, val: attrBase[i] + attrBonus[i]})),
-    skills:   selectedSkills.map(i => pool[i]),
+    name:      document.getElementById('cc-name').value.trim(),
+    age:       document.getElementById('cc-age').value || '25',
+    gender:    document.getElementById('cc-gender').value,
+    hair:      document.getElementById('cc-hair').value,
+    eyes:      document.getElementById('cc-eyes').value,
+    build:     document.getElementById('cc-build').value,
+    avatar:    selectedAvatar,
+    cls:       classes[selectedClass].name,
+    clsIcon:   classes[selectedClass].icon,
+    attrs:     ATTR_NAMES.map((n, i) => ({name:n, val:attrBase[i]+attrBonus[i]})),
+    skills:    selectedSkills.map(i => pool[i]),
     customSkill: (() => {
-      const icon = (document.getElementById('custom-skill-icon').value.trim() || '🌀');
+      const icon = document.getElementById('custom-skill-icon').value.trim() || '🌀';
       const name = document.getElementById('custom-skill-name').value.trim();
       const desc = document.getElementById('custom-skill-desc').value.trim();
-      return name ? { icon, name, desc: desc || 'Habilidade única' } : null;
+      return name ? {icon, name, desc: desc || 'Habilidade única'} : null;
     })(),
-    trait:    selectedTrait || 'Livre espírito',
-    backstory:document.getElementById('cc-backstory').value.trim(),
+    trait:     selectedTrait || 'Livre espírito',
+    backstory: document.getElementById('cc-backstory').value.trim(),
     world,
   };
-  const con  = charData.attrs[2].val;
-  const int_ = charData.attrs[3].val;
-  stats = { hp: 80 + con * 2, maxHp: 80 + con * 2, mana: 40 + int_ * 2, maxMana: 40 + int_ * 2, stam: 90, maxStam: 90 };
+  const con = charData.attrs[2].val, int_ = charData.attrs[3].val;
+  stats = {hp:80+con*2, maxHp:80+con*2, mana:40+int_*2, maxMana:40+int_*2, stam:90, maxStam:90};
   inventory = [];
   populateSidebar(); updateStats(); updateInventory();
   conversationHistory = [];
@@ -1199,17 +1074,17 @@ function startGame() {
 }
 
 function populateSidebar() {
-  document.getElementById('sb-avatar').textContent   = charData.avatar;
-  document.getElementById('sb-name').textContent     = charData.name;
-  document.getElementById('sb-class').textContent    = `${charData.clsIcon} ${charData.cls}`;
-  document.getElementById('sb-age').textContent      = `${charData.age} anos · ${charData.gender}`;
-  document.getElementById('g-title').textContent     = `⚔ ${charData.world}`;
-  document.getElementById('g-sub').textContent       = `${charData.name} · ${charData.cls}`;
+  document.getElementById('sb-avatar').textContent  = charData.avatar;
+  document.getElementById('sb-name').textContent    = charData.name;
+  document.getElementById('sb-class').textContent   = `${charData.clsIcon} ${charData.cls}`;
+  document.getElementById('sb-age').textContent     = `${charData.age} anos · ${charData.gender}`;
+  document.getElementById('g-title').textContent    = `⚔ ${charData.world}`;
+  document.getElementById('g-sub').textContent      = `${charData.name} · ${charData.cls}`;
   document.getElementById('g-world-badge').textContent = charData.world.substring(0,22).toUpperCase();
-  document.getElementById('g-appear').textContent    = `${charData.build} · Cabelo ${charData.hair.toLowerCase()} · Olhos ${charData.eyes.toLowerCase()}`;
-  document.getElementById('g-trait').textContent     = charData.trait;
-  document.getElementById('g-loc').textContent       = getLore().openingLocation || 'Início da jornada';
-  document.getElementById('g-loc-desc').textContent  = 'Aguardando narração...';
+  document.getElementById('g-appear').textContent   = `${charData.build} · Cabelo ${charData.hair.toLowerCase()} · Olhos ${charData.eyes.toLowerCase()}`;
+  document.getElementById('g-trait').textContent    = charData.trait;
+  document.getElementById('g-loc').textContent      = getLore().openingLocation || 'Início da jornada';
+  document.getElementById('g-loc-desc').textContent = 'Aguardando narração...';
   document.getElementById('g-attrs').innerHTML = charData.attrs.map(a =>
     `<div class="attr-sb">${a.name} <span>${a.val}</span></div>`).join('');
   document.getElementById('g-skills').innerHTML = charData.skills.map(s =>
@@ -1220,10 +1095,9 @@ function populateSidebar() {
   const btnC = document.getElementById('btn-custom-skill');
   if (btnC) {
     if (charData.customSkill) { btnC.style.display = ''; btnC.textContent = charData.customSkill.icon + ' ' + charData.customSkill.name; }
-    else { btnC.style.display = 'none'; }
+    else btnC.style.display = 'none';
   }
 }
-
 function updateStats() {
   document.getElementById('g-hp-v').textContent   = `${stats.hp}/${stats.maxHp}`;
   document.getElementById('g-hp-b').style.width   = `${Math.round(stats.hp/stats.maxHp*100)}%`;
@@ -1232,128 +1106,116 @@ function updateStats() {
   document.getElementById('g-stam-v').textContent = `${stats.stam}/${stats.maxStam}`;
   document.getElementById('g-stam-b').style.width = `${Math.round(stats.stam/stats.maxStam*100)}%`;
 }
-
 function updateInventory() {
   const el = document.getElementById('g-inv');
-  if (inventory.length === 0) {
-    el.innerHTML = '<div class="inv-empty">Nenhum item ainda</div>';
-  } else {
-    el.innerHTML = inventory.map(it =>
-      `<div class="inv-item"><span>${it.name}</span><span style="color:var(--text3)">${it.qty > 1 ? 'x'+it.qty : ''}</span></div>`
-    ).join('');
-  }
+  el.innerHTML = inventory.length === 0
+    ? '<div class="inv-empty">Nenhum item ainda</div>'
+    : inventory.map(it => `<div class="inv-item"><span>${it.name}</span><span style="color:var(--text3)">${it.qty>1?'x'+it.qty:''}</span></div>`).join('');
 }
 
 // ════════════════════════════════════════════════
-//  LORE HELPER
+//  LORE + DADOS
 // ════════════════════════════════════════════════
 function getLore() {
   if (!charData || !charData.world) return WORLD_LORE_DEFAULT;
   return WORLD_LORE[charData.world] || WORLD_LORE_DEFAULT;
 }
-
-// ════════════════════════════════════════════════
-//  ROLAGEM DE DADOS VIRTUAL
-// ════════════════════════════════════════════════
 function rollD20(relevantAttrVal = 0) {
-  const base = Math.floor(Math.random() * 20) + 1;
-  const bonus = Math.floor(relevantAttrVal / 10);
-  const total = Math.min(20, base + bonus);
-  return { base, bonus, total, success: total >= 11, critical: total === 20, fumble: base === 1 };
+  const base = Math.floor(Math.random()*20)+1;
+  const bonus = Math.floor(relevantAttrVal/10);
+  const total = Math.min(20, base+bonus);
+  return {base, bonus, total, success:total>=11, critical:total===20, fumble:base===1};
 }
-
-function diceHtml(roll, label = '') {
-  let cls = 'neutral'; let icon = '🎲';
-  if (roll.critical) { cls = 'success'; icon = '⭐'; }
-  else if (roll.fumble) { cls = 'fail'; icon = '💀'; }
-  else if (roll.success) { cls = 'success'; icon = '✔'; }
-  else { cls = 'fail'; icon = '✖'; }
-  const txt = roll.critical ? 'CRÍTICO!' : roll.fumble ? 'FALHA CRÍTICA!' : roll.success ? 'Sucesso' : 'Falha';
-  return `<div class="dice-roll ${cls}">${icon} 1d20: ${roll.base}${roll.bonus ? '+'+roll.bonus : ''} = ${roll.total} — ${txt}${label ? ' · '+label : ''}</div>`;
+function diceHtml(roll, label='') {
+  let cls='neutral', icon='🎲';
+  if (roll.critical) { cls='success'; icon='⭐'; }
+  else if (roll.fumble) { cls='fail'; icon='💀'; }
+  else if (roll.success) { cls='success'; icon='✔'; }
+  else { cls='fail'; icon='✖'; }
+  const txt = roll.critical?'CRÍTICO!':roll.fumble?'FALHA CRÍTICA!':roll.success?'Sucesso':'Falha';
+  return `<div class="dice-roll ${cls}">${icon} 1d20: ${roll.base}${roll.bonus?'+'+roll.bonus:''} = ${roll.total} — ${txt}${label?' · '+label:''}</div>`;
+}
+function escapeHtml(s) {
+  return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
 }
 
 // ════════════════════════════════════════════════
-//  GM — NARRATIVA MELHORADA
+//  SYSTEM PROMPT
 // ════════════════════════════════════════════════
 function buildSystem() {
-  const c = charData;
-  const lore = getLore();
+  const c = charData, lore = getLore();
   const skillList = c.skills.map(s => `${s.name} (${s.desc})`).join(', ');
   const customPart = c.customSkill ? `\n- Habilidade própria exclusiva: ${c.customSkill.name} — ${c.customSkill.desc}` : '';
-  const attrList  = c.attrs.map(a => `${a.name}:${a.val}`).join(' ');
-  const themeList = lore.themes.join(', ');
-  return `Você é o Mestre de um RPG de texto cinematográfico ambientado em "${c.world}".
-
+  const attrList = c.attrs.map(a => `${a.name}:${a.val}`).join(' ');
+  const mode = WORLD_LORE[c.world] ? 'MUNDO PREDEFINIDO' : 'MUNDO PERSONALIZADO';
+  return `Você é um Mestre de RPG avançado e designer de sistemas narrativos.
+IDIOMA: Responda SEMPRE em português do Brasil.
+MODO ATIVO: ${mode}
 FICHA DO JOGADOR:
 - Nome: ${c.name}, ${c.age} anos, ${c.gender}
 - Aparência: ${c.build}, cabelo ${c.hair}, olhos ${c.eyes}
 - Classe: ${c.cls}
 - Atributos: ${attrList}
-- Habilidades especiais: ${skillList}${customPart}
-- Traço de personalidade: ${c.trait}
+- Habilidades: ${skillList}${customPart}
+- Traço: ${c.trait}
 ${c.backstory ? `- Contexto: ${c.backstory}` : ''}
-
-LORE DO UNIVERSO:
+UNIVERSO: "${c.world}"
 - Tom sensorial: "${lore.sensory}"
-- Temas centrais: ${themeList}
-
-REGRAS NARRATIVAS — siga rigorosamente:
-1. Responda SEMPRE em português brasileiro, sem exceção.
-2. Use estrutura Kishotenketsu implícita (introdução → desenvolvimento → twist → conclusão).
-3. Escreva 3 a 4 parágrafos curtos e cinematográficos. Separe-os com quebra de linha dupla.
-4. Parágrafo 1: Descrição SENSORIAL da cena — cheiros, sons, texturas, luz. Use o tom do universo.
-5. Parágrafo 2-3: Ação principal, com twist ou complicação inesperada. Reflita o traço "${c.trait}".
-6. Parágrafo final (gancho): Situação que EXIGE decisão imediata do jogador. Termine com uma pergunta ou dilema claro.
-7. Incorpore as habilidades do personagem naturalmente — não apenas liste-as.
-8. Quando usar a habilidade própria "${c.customSkill?.name || ''}", trate como poder único e épico, a assinatura do herói.
-9. Resultado de dados deve aparecer no formato: "Você rola 1d20: [X] — acerto/falha crítica/etc!"
-10. Máximo 270 palavras por resposta. Seja denso, não prolixo.`;
+- Tensão-base: "${lore.tense}"
+- Ação-base: "${lore.action}"
+- Temas: ${lore.themes.join(', ')}
+REGRAS DE NARRAÇÃO:
+1) Estruture cada resposta em 3 a 4 parágrafos curtos.
+2) P1 = atmosfera sensorial viva.
+3) P2-P3 = progressão da cena com conflito/virada.
+4) Último parágrafo = gancho forte com decisão imediata.
+5) Se houver rolagem, integre resultado no texto organicamente.
+6) Use consequências reais no mundo, NPCs e recursos.
+7) Nunca contradiga fatos já estabelecidos no chat.
+8) Máximo de 260 palavras. Feche com 2-4 opções de ação + opção livre.
+9) Em mundo predefinido, siga a lore canônica.
+10) Em mundo personalizado, consolide regras de forma coerente.`;
 }
 
+// ════════════════════════════════════════════════
+//  CHAT / GM
+// ════════════════════════════════════════════════
 function setStatus(txt, on) {
   document.getElementById('status-txt').textContent = txt;
   const d = document.getElementById('status-dot');
   d.style.background = on ? '#e8c97a' : '#27ae60';
-  d.style.boxShadow  = `0 0 6px ${on ? '#e8c97a' : '#27ae60'}`;
+  d.style.boxShadow  = `0 0 6px ${on?'#e8c97a':'#27ae60'}`;
 }
-
-// Renderiza mensagem do GM com parágrafos estilizados
 function renderGMContent(text) {
-  // Divide por parágrafo (dupla quebra de linha ou separador)
-  const paras = text.split(/\n\n+/).map(p => p.trim()).filter(Boolean);
-  if (paras.length <= 1) {
-    // Sem estrutura — renderiza como parágrafo único
-    return `<div class="gm-para action-result">${text}</div>`;
-  }
+  const safe = escapeHtml(text);
+  const paras = safe.split(/\n\n+/).map(p => p.trim()).filter(Boolean);
+  if (paras.length <= 1) return `<div class="gm-para action-result">${safe}</div>`;
   return paras.map((p, i) => {
     let cls = 'action-result';
     if (i === 0) cls = 'sensory';
-    else if (i === paras.length - 1) cls = 'hook';
-    else if (i === paras.length - 2 && paras.length >= 4) cls = 'consequence';
+    else if (i === paras.length-1) cls = 'hook';
+    else if (i === paras.length-2 && paras.length >= 4) cls = 'consequence';
     return `<div class="gm-para ${cls}">${p}</div>`;
   }).join('');
 }
-
 function addMsg(type, content) {
   const c = document.getElementById('chat-msgs');
   const d = document.createElement('div');
   if (type === 'gm') {
-    const nsTag = `<span class="ns-tag ${narrativeState}">${narrativeState === 'calmo' ? 'Tranquilo' : narrativeState === 'tensao' ? 'Tenso' : 'Ação'}</span>`;
+    const nsTag = `<span class="ns-tag ${narrativeState}">${narrativeState==='calmo'?'Tranquilo':narrativeState==='tensao'?'Tenso':'Ação'}</span>`;
     d.className = 'msg-gm';
     d.innerHTML = `<span class="mlabel">✦ MESTRE ${nsTag}</span>${renderGMContent(content)}`;
   } else if (type === 'player') {
     d.className = 'msg-player';
-    d.innerHTML = `<span class="mlabel" style="text-align:right">${charData.name || 'Você'} ✦</span>${content}`;
+    d.innerHTML = `<span class="mlabel" style="text-align:right">${escapeHtml(charData.name||'Você')} ✦</span>${escapeHtml(content)}`;
   } else {
     d.className = 'msg-action';
-    d.innerHTML = `<span>${content}</span>`;
+    d.innerHTML = `<span>${escapeHtml(content)}</span>`;
   }
   c.appendChild(d);
   c.scrollTop = c.scrollHeight;
 }
-
-// Injeta dado visual antes de uma mensagem (para ações de combate)
-function addDiceMsg(rollObj, label = '') {
+function addDiceMsg(rollObj, label='') {
   const c = document.getElementById('chat-msgs');
   const d = document.createElement('div');
   d.className = 'msg-action';
@@ -1361,105 +1223,91 @@ function addDiceMsg(rollObj, label = '') {
   c.appendChild(d);
   c.scrollTop = c.scrollHeight;
 }
-
 function setAllDisabled(v) {
   document.querySelectorAll('.btn-act, #btn-send').forEach(b => b.disabled = v);
   document.getElementById('chat-input').disabled = v;
 }
-
 async function callGM(msg, rollResult = null) {
   if (busy) return;
   busy = true; setAllDisabled(true); setStatus('Narrando...', true);
   document.getElementById('typing').classList.add('on');
-  conversationHistory.push({role:'user', content: msg});
-
+  conversationHistory.push({role:'user', content:msg});
   try {
     const r = await fetch('/api/chat', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ system: buildSystem(), messages: conversationHistory })
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({system:buildSystem(), messages:conversationHistory})
     });
     const data = await r.json();
     if (!r.ok) throw new Error(data.error || `Erro ${r.status}`);
     const text = data.text ?? 'Um silêncio estranho paira no ar...';
-    conversationHistory.push({role:'assistant', content: text});
+    conversationHistory.push({role:'assistant', content:text});
     document.getElementById('typing').classList.remove('on');
-
-    // Exibe dado antes da resposta se existir
     if (rollResult) addDiceMsg(rollResult, '');
-
     addMsg('gm', text);
     applyStatEffects(msg, rollResult);
     inferNarrativeState(msg, text);
     saveToFirebase();
   } catch(e) {
     document.getElementById('typing').classList.remove('on');
-    addMsg('gm','<em>O Mestre hesita... Verifique a conexão ou as chaves da API.</em>');
+    addMsg('gm', 'O Mestre hesita por um instante. Verifique conexão e configuração da API.');
     showToast('Erro: ' + e.message);
     conversationHistory.pop();
   }
-
   busy = false; setAllDisabled(false);
   document.getElementById('chat-input').focus();
   setStatus('Pronto', false);
 }
-
-// Infere estado narrativo a partir de palavras-chave na mensagem e resposta
 function inferNarrativeState(msg, gmText) {
-  const combined = (msg + ' ' + gmText).toLowerCase();
-  const fightWords  = ['combate','ataque','luta','inimigo','espada','golpe','ferido','morto','batalha','chase','fugir','perseguição'];
-  const tenseWords  = ['perigo','armadilha','aviso','ameaça','sombra','espreita','suspeito','estranho','alerta','tensão'];
-  const calmWords   = ['descanso','paz','dormir','acampamento','tranquilo','conversa','comerciante','vila','seguro'];
-  const isFight = fightWords.some(w => combined.includes(w));
-  const isTense = tenseWords.some(w => combined.includes(w));
-  const isCalm  = calmWords.some(w => combined.includes(w));
-  if (isFight) setNarrativeState('acao');
-  else if (isTense && !isCalm) setNarrativeState('tensao');
-  else if (isCalm) setNarrativeState('calmo');
-  // Mantém estado atual se nenhuma palavra-chave clara
+  const combined = (msg+' '+gmText).toLowerCase();
+  const fightWords = ['combate','ataque','luta','inimigo','espada','golpe','ferido','morto','batalha','fugir','perseguição'];
+  const tenseWords = ['perigo','armadilha','aviso','ameaça','sombra','espreita','suspeito','estranho','alerta','tensão'];
+  const calmWords  = ['descanso','paz','dormir','acampamento','tranquilo','conversa','comerciante','vila','seguro'];
+  if (fightWords.some(w => combined.includes(w))) setNarrativeState('acao');
+  else if (tenseWords.some(w => combined.includes(w))) setNarrativeState('tensao');
+  else if (calmWords.some(w => combined.includes(w))) setNarrativeState('calmo');
 }
-
-function applyStatEffects(msg, roll = null) {
+function applyStatEffects(msg, roll=null) {
   const lo = msg.toLowerCase();
-  if (lo.includes('descansar') || lo.includes('dormir') || lo.includes('repouso')) {
-    stats.hp   = Math.min(stats.maxHp,   stats.hp + 22);
-    stats.mana = Math.min(stats.maxMana, stats.mana + 18);
-    stats.stam = Math.min(stats.maxStam, stats.stam + 28);
+  if (lo.includes('descansar')||lo.includes('dormir')||lo.includes('repouso')) {
+    stats.hp   = Math.min(stats.maxHp,   stats.hp+22);
+    stats.mana = Math.min(stats.maxMana, stats.mana+18);
+    stats.stam = Math.min(stats.maxStam, stats.stam+28);
   }
-  if (lo.includes('combate') || lo.includes('ataque') || lo.includes('lutar') || lo.includes('fight')) {
+  if (lo.includes('combate')||lo.includes('ataque')||lo.includes('lutar')||lo.includes('fight')) {
     const dmg = roll
-      ? (roll.success ? (roll.critical ? 4 : 8) + Math.floor(Math.random()*12) : 15 + Math.floor(Math.random()*20))
-      : 8 + Math.floor(Math.random()*18);
-    stats.hp   = Math.max(0, stats.hp   - dmg);
-    stats.stam = Math.max(0, stats.stam - 12);
+      ? (roll.success ? (roll.critical?4:8)+Math.floor(Math.random()*12) : 15+Math.floor(Math.random()*20))
+      : 8+Math.floor(Math.random()*18);
+    stats.hp   = Math.max(0, stats.hp-dmg);
+    stats.stam = Math.max(0, stats.stam-12);
   }
-  if (lo.includes('habilidade') || lo.includes('jutsu') || lo.includes('magia') || lo.includes('feitiço') || lo.includes('ki')) {
-    stats.mana = Math.max(0, stats.mana - 14);
-  }
+  if (lo.includes('habilidade')||lo.includes('jutsu')||lo.includes('magia')||lo.includes('feitiço')||lo.includes('ki'))
+    stats.mana = Math.max(0, stats.mana-14);
   if (stats.hp <= 0) showToast('⚠️ Você caiu! Descanse para recuperar vida.');
   updateStats();
 }
 
+// ════════════════════════════════════════════════
+//  AÇÕES
+// ════════════════════════════════════════════════
 function getActionPrompt(type) {
-  const c = charData;
-  const lore = getLore();
-  const skillNames = c.skills ? c.skills.map(s => s.name).join(', ') : 'habilidades especiais';
+  const c = charData, lore = getLore();
+  const skillNames = c.skills?.map(s => s.name).join(', ') || 'habilidades especiais';
   const prompts = {
-    timeskip:  `Algumas horas passam. Use o seguinte tom sensorial para ambientar: "${lore.sensory}". Narre eventos naturais desse período — descoberta, encontro, mudança de situação. Termine com decisão urgente.`,
-    rest:      `${c.name} decide descansar. Tom do mundo: "${lore.sensory}". Narre o descanso cinematograficamente. Algo pode acontecer (sonho, visita, ruído). Termine com decisão.`,
-    explore:   `O personagem explora. Tom sensorial: "${lore.sensory}". Revele pista oculta, local perigoso ou encontro inusitado coerente com o lore de "${c.world}". Termine com decisão.`,
-    talk:      `O personagem procura conversa. Crie um NPC com personalidade, segredo e voz própria. Use o clima: "${lore.tense}". Mostre diálogo. Termine com decisão.`,
-    fight:     `COMBATE! Clima: "${lore.action}". Use dados virtuais narrativos (1d20). Descreva acertos e consequências reais. Aplique traço "${c.trait}". Termine com decisão de vida ou morte.`,
-    flee:      `${c.name} tenta fugir. Tensão máxima: "${lore.tense}". A fuga pode funcionar ou ter consequências graves. Narre com urgência. Termine com decisão.`,
-    useSkill:  `${c.name} usa uma de suas habilidades: ${skillNames}. Efeito dramático e coerente com o universo "${c.world}". Mostre impacto real na cena. Termine com decisão.`,
+    timeskip:  `Algumas horas passam. Tom sensorial: "${lore.sensory}". Mostre mudanças no cenário, reação de NPCs e um novo risco ou oportunidade. Feche com decisão imediata.`,
+    rest:      `${c.name} descansa. Narre recuperação física e mental com atmosfera rica, mas inclua um detalhe que mova a trama (sonho, recado, presságio). Feche com escolha.`,
+    explore:   `${c.name} explora. Use o tom "${lore.sensory}". Revele descoberta, pista de lore ou ameaça velada coerente com "${c.world}". Feche com escolha.`,
+    talk:      `${c.name} inicia diálogo. Crie NPC memorável com objetivo próprio e subtexto. Use tensão "${lore.tense}". Feche com dilema.`,
+    fight:     `COMBATE CINEMATOGRÁFICO em "${c.world}". Tom "${lore.action}". Integre rolagem 1d20, consequências reais e impacto no estado do personagem. Feche com decisão urgente.`,
+    flee:      `${c.name} tenta fugir sob alta pressão. Use "${lore.tense}". Mostre custo da fuga (item, posição, reputação ou ferimento). Feche com escolha.`,
+    useSkill:  `${c.name} usa habilidade (${skillNames}) de modo criativo e coerente com "${c.world}". Mostre efeito direto no ambiente e nos inimigos/NPCs. Feche com decisão.`,
     useCustomSkill: c.customSkill
-      ? `${c.name} usa sua habilidade exclusiva: "${c.customSkill.name}" — ${c.customSkill.desc}. Esta é a ASSINATURA ÉPICA deste herói. Narre com grandiosidade — que o mundo sinta. Cause impacto real. Termine com decisão.`
-      : `${c.name} improvisa uma habilidade surpreendente. Narre com impacto. Termine com decisão.`,
-    lore:      `${c.name} busca informações sobre o universo, eventos ou localização. Revele lore de "${c.world}" de forma instigante e relevante. Termine com decisão ou gancho de missão.`,
+      ? `${c.name} ativa "${c.customSkill.name}" (${c.customSkill.desc}). Trate como assinatura épica e rara. Narre impacto dramático, com preço ou consequência plausível. Feche com decisão.`
+      : `${c.name} improvisa técnica própria. Narre impacto e risco. Feche com decisão.`,
+    lore:      `${c.name} busca lore relevante do mundo "${c.world}". Traga informação útil para a missão atual e conecte ao conflito em andamento. Feche com gancho de ação.`,
   };
   return prompts[type] || prompts.explore;
 }
-
 function getActionLabel(type) {
   const labels = {
     timeskip:'⏭ [Horas se passam...]', rest:'🌙 [Decide descansar]',
@@ -1471,31 +1319,15 @@ function getActionLabel(type) {
   };
   return labels[type] || `[${type}]`;
 }
-
 function doAction(type) {
   if (busy) return;
   addMsg('action', getActionLabel(type));
-
-  // Para combate: rola dado antes de enviar ao GM
   let roll = null;
-  if (type === 'fight') {
-    const strAttr = charData.attrs ? charData.attrs[0].val : 8; // FOR
-    roll = rollD20(strAttr);
-    // Estado narrativo imediato
-    setNarrativeState('acao');
-  } else if (type === 'flee') {
-    const desAttr = charData.attrs ? charData.attrs[1].val : 8; // DES
-    roll = rollD20(desAttr);
-    setNarrativeState('tensao');
-  } else if (type === 'useSkill' || type === 'useCustomSkill') {
-    const intAttr = charData.attrs ? charData.attrs[3].val : 8; // INT
-    roll = rollD20(intAttr);
-    setNarrativeState('acao');
-  }
-
+  if (type === 'fight') { roll = rollD20(charData.attrs?charData.attrs[0].val:8); setNarrativeState('acao'); }
+  else if (type === 'flee') { roll = rollD20(charData.attrs?charData.attrs[1].val:8); setNarrativeState('tensao'); }
+  else if (type === 'useSkill' || type === 'useCustomSkill') { roll = rollD20(charData.attrs?charData.attrs[3].val:8); setNarrativeState('acao'); }
   callGM(getActionPrompt(type), roll);
 }
-
 function sendMsg() {
   const inp = document.getElementById('chat-input');
   const txt = inp.value.trim();
@@ -1504,14 +1336,19 @@ function sendMsg() {
   addMsg('player', txt);
   callGM(txt);
 }
-
 function beginGame() {
-  const c = charData;
-  const lore = getLore();
-  const opening = `Inicie a aventura para ${c.name}, ${c.age} anos, ${c.cls} no universo "${c.world}". Aparência: ${c.build}, cabelo ${c.hair}, olhos ${c.eyes}. Traço: "${c.trait}". ${c.backstory ? 'Contexto: ' + c.backstory + '.' : ''}\n\nCrie uma abertura cinematográfica de 3 a 4 parágrafos:\n- Parágrafo 1 (sensorial): Use este tom: "${lore.sensory}"\n- Parágrafos 2-3: Estabeleça o conflito inicial do universo "${c.world}" e revele algo do passado ou motivação do personagem. Incorpore as habilidades (${c.skills.map(s=>s.name).join(', ')}) de forma natural.\n- Parágrafo final (gancho): Termine com uma decisão urgente e clara para o jogador.\n\nTemas centrais do universo: ${lore.themes.join(', ')}.`;
+  const c = charData, lore = getLore();
+  const opening = `Inicie a aventura de ${c.name} no universo "${c.world}".
+Dados: ${c.age} anos, ${c.cls}, traço "${c.trait}", aparência ${c.build}, cabelo ${c.hair}, olhos ${c.eyes}.
+${c.backstory ? `Contexto pessoal: ${c.backstory}.` : ''}
+Habilidades: ${c.skills.map(s=>s.name).join(', ')}${c.customSkill?`, habilidade própria: ${c.customSkill.name}`:''}. 
+Narração obrigatória: 3 a 4 parágrafos. P1 sensorial: "${lore.sensory}". Desenvolvimento com conflito inicial. Elemento inesperado plausível. Encerrar com decisão urgente + 2-4 opções.`;
   callGM(opening);
 }
 
+// ════════════════════════════════════════════════
+//  SIDEBAR / MOBILE
+// ════════════════════════════════════════════════
 function toggleSidebar() {
   document.getElementById('rpg-sidebar').classList.toggle('open');
   document.getElementById('sb-overlay').classList.toggle('show');
@@ -1520,7 +1357,6 @@ function closeSidebar() {
   document.getElementById('rpg-sidebar').classList.remove('open');
   document.getElementById('sb-overlay').classList.remove('show');
 }
-
 document.querySelectorAll('.btn-act, #btn-send').forEach(btn => {
   btn.addEventListener('click', () => { if (window.innerWidth <= 600) closeSidebar(); });
 });
