@@ -651,7 +651,29 @@ body {
 .toast.show{display:block;animation:fadeInToast .2s}
 @keyframes fadeInToast{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 
-/* Loading overlay */
+/* Resume banner */
+.resume-banner{
+  width:100%;max-width:600px;
+  background:linear-gradient(135deg,#1a1408,#251c10);
+  border:1px solid var(--gold);
+  border-radius:6px;
+  padding:12px 14px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.resume-icon{font-size:22px;flex-shrink:0}
+.resume-texts{flex:1;min-width:0}
+.resume-title{font-family:var(--ft);font-size:9px;color:var(--gold);letter-spacing:1px;margin-bottom:2px}
+.resume-info{font-size:13px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.resume-date{font-size:10px;color:var(--text3);font-style:italic;margin-top:1px}
+.resume-btns{display:flex;gap:6px;flex-shrink:0}
+.btn-resume{background:var(--red);border:1px solid var(--red2);color:#f0d0a0;padding:8px 14px;font-family:var(--ft);font-size:8px;letter-spacing:.5px;border-radius:4px;cursor:pointer;min-height:40px;-webkit-tap-highlight-color:transparent;white-space:nowrap}
+.btn-resume:hover{background:var(--red2)}
+.btn-discard{background:none;border:1px solid var(--border2);color:var(--text3);padding:8px 10px;font-family:var(--fb);font-size:12px;border-radius:4px;cursor:pointer;min-height:40px;-webkit-tap-highlight-color:transparent;white-space:nowrap}
+.btn-discard:hover{border-color:var(--red2);color:var(--red2)}
+
 .loading-overlay{
   position:fixed;
   inset:0;
@@ -718,6 +740,20 @@ body {
       <div id="user-bar" style="display:flex;align-items:center;gap:6px"></div>
     </div>
     <div class="ws-sub">Escolha o universo da sua aventura</div>
+
+    <!-- Banner: continuar aventura salva -->
+    <div class="resume-banner" id="resume-banner" style="display:none">
+      <div class="resume-icon">⚔️</div>
+      <div class="resume-texts">
+        <div class="resume-title">✦ Aventura salva encontrada</div>
+        <div class="resume-info" id="resume-info">—</div>
+        <div class="resume-date" id="resume-date">—</div>
+      </div>
+      <div class="resume-btns">
+        <button class="btn-resume" onclick="resumeGame()">Continuar →</button>
+        <button class="btn-discard" onclick="discardSave()">🗑</button>
+      </div>
+    </div>
     <div class="worlds-grid">
       <div class="world-card" onclick="pickWorld('Westeros — Game of Thrones')"><div class="wc-icon">⚔</div><div class="wc-name">Game of Thrones</div><div class="wc-desc">Westeros & Essos</div></div>
       <div class="world-card" onclick="pickWorld('Naruto')"><div class="wc-icon">🍃</div><div class="wc-name">Naruto</div><div class="wc-desc">Shinobi & jutsus</div></div>
@@ -1019,6 +1055,7 @@ function playAnon() {
   currentUser = null;
   goScreen('s-world');
   renderUserBar();
+  checkAndShowResume();
 }
 
 async function logout() {
@@ -1033,6 +1070,7 @@ auth.onAuthStateChanged(user => {
     currentUser = user;
     renderUserBar();
     goScreen('s-world');
+    checkAndShowResume();
   } else {
     if (document.getElementById('s-world').classList.contains('active') ||
         document.getElementById('s-char').classList.contains('active') ||
@@ -1057,8 +1095,9 @@ function renderUserBar() {
 }
 
 // ════════════════════════════════════════════════
-//  FIREBASE REALTIME DATABASE
+//  PERSISTÊNCIA — Firebase (logado) + localStorage (fallback)
 // ════════════════════════════════════════════════
+const LS_KEY = 'rpg_session_v1';
 let saveTimeout = null;
 
 function getDbRef() {
@@ -1066,37 +1105,122 @@ function getDbRef() {
   return db.ref(`users/${currentUser.uid}/session`);
 }
 
+function buildSessionPayload() {
+  return {
+    charData,
+    stats,
+    inventory,
+    conversationHistory: conversationHistory.slice(-80),
+    savedAt: Date.now()
+  };
+}
+
+function saveToLocalStorage(payload) {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(payload)); } catch(e) {}
+}
+
+function loadFromLocalStorage() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch(e) { return null; }
+}
+
+function clearLocalStorage() {
+  try { localStorage.removeItem(LS_KEY); } catch(e) {}
+}
+
+// Chamado após cada turno do GM
 function saveToFirebase() {
+  const payload = buildSessionPayload();
+  // Sempre salva no localStorage como backup imediato
+  saveToLocalStorage(payload);
+
   const ref = getDbRef();
-  if (!ref) return;
+  if (!ref) {
+    // Anônimo: só localStorage, mostra badge
+    const el = document.getElementById('sync-badge');
+    if (el) { el.textContent = '💾 Salvo localmente'; el.className = 'sync-badge ok'; }
+    return;
+  }
+
   clearTimeout(saveTimeout);
   saveTimeout = setTimeout(async () => {
     try {
-      await ref.set({
-        charData,
-        stats,
-        inventory,
-        conversationHistory: conversationHistory.slice(-60),
-        savedAt: Date.now()
-      });
+      await ref.set(payload);
       const el = document.getElementById('sync-badge');
-      if (el) { el.textContent = '✓ Salvo'; el.className = 'sync-badge ok'; }
+      if (el) { el.textContent = '☁ Salvo na nuvem'; el.className = 'sync-badge ok'; }
     } catch(e) {
       console.error('Erro ao salvar no Firebase:', e);
+      const el = document.getElementById('sync-badge');
+      if (el) { el.textContent = '💾 Salvo localmente'; el.className = 'sync-badge ok'; }
     }
-  }, 1500);
+  }, 1200);
 }
 
-async function loadFromFirebase() {
+async function loadSession() {
+  // 1. Tenta Firebase se logado
   const ref = getDbRef();
-  if (!ref) return null;
-  try {
-    const snap = await ref.once('value');
-    return snap.val();
-  } catch(e) {
-    console.error('Erro ao carregar do Firebase:', e);
-    return null;
+  if (ref) {
+    try {
+      const snap = await ref.once('value');
+      const val = snap.val();
+      if (val && val.charData) return val;
+    } catch(e) { console.error('Firebase load error:', e); }
   }
+  // 2. Fallback: localStorage
+  return loadFromLocalStorage();
+}
+
+// Restaura estado completo a partir de um payload salvo
+function applySession(session) {
+  charData            = session.charData;
+  stats               = session.stats;
+  inventory           = session.inventory || [];
+  conversationHistory = session.conversationHistory || [];
+}
+
+// Exibe banner de "Continuar aventura" na tela de mundos
+async function checkAndShowResume() {
+  const session = await loadSession();
+  if (!session || !session.charData || !session.charData.name) {
+    document.getElementById('resume-banner').style.display = 'none';
+    return;
+  }
+  const c = session.charData;
+  const date = session.savedAt ? new Date(session.savedAt).toLocaleString('pt-BR') : '—';
+  document.getElementById('resume-banner').style.display = '';
+  document.getElementById('resume-info').textContent =
+    `${c.avatar || '🧙'} ${c.name} · ${c.cls} · ${c.world}`;
+  document.getElementById('resume-date').textContent = `Salvo em ${date}`;
+  // guardamos a sessão para o botão continuar usar
+  window._pendingSession = session;
+}
+
+function resumeGame() {
+  const session = window._pendingSession;
+  if (!session) return;
+  applySession(session);
+  populateSidebar();
+  updateStats();
+  updateInventory();
+  document.getElementById('chat-msgs').innerHTML = '';
+  // Reexibe histórico de mensagens
+  conversationHistory.forEach(m => {
+    if (m.role === 'assistant') addMsg('gm', m.content);
+    else if (m.role === 'user')  addMsg('player', m.content);
+  });
+  goScreen('s-game');
+}
+
+function discardSave() {
+  if (!confirm('Apagar a aventura salva e começar do zero?')) return;
+  clearLocalStorage();
+  window._pendingSession = null;
+  document.getElementById('resume-banner').style.display = 'none';
+  // Se Firebase, apaga lá também
+  const ref = getDbRef();
+  if (ref) ref.remove().catch(() => {});
 }
 
 // ════════════════════════════════════════════════
@@ -1212,7 +1336,12 @@ function confirmNewGame() {
   if (confirm('Abandonar aventura atual e voltar à seleção de mundos?')) {
     conversationHistory = [];
     inventory = [];
+    clearLocalStorage();
+    const ref = getDbRef();
+    if (ref) ref.remove().catch(() => {});
+    window._pendingSession = null;
     goScreen('s-world');
+    checkAndShowResume();
   }
 }
 
