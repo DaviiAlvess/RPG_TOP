@@ -863,9 +863,28 @@ body {
     </div>
 
     <!-- Habilidades -->
-    <div class="cc-card">
-      <span class="cc-label">Habilidades <span style="font-family:var(--fb);font-style:italic;font-size:10px;color:var(--text3);letter-spacing:0">(escolha 3)</span></span>
+    <div class="cc-card full-col">
+      <span class="cc-label">Habilidades <span style="font-family:var(--fb);font-style:italic;font-size:10px;color:var(--text3);letter-spacing:0">(escolha até 3)</span></span>
       <div class="skills-pool" id="skills-pool"></div>
+
+      <!-- Habilidade personalizada -->
+      <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:12px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <span style="font-family:var(--ft);font-size:8px;color:var(--purple2);letter-spacing:1px">✦ Criar habilidade própria</span>
+          <span style="font-size:10px;color:var(--text4);font-style:italic">opcional</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <input class="cc-input" id="custom-skill-icon" placeholder="🌀" maxlength="2"
+            style="width:52px;text-align:center;font-size:22px;padding:7px 4px;flex-shrink:0">
+          <div style="flex:1;display:flex;flex-direction:column;gap:6px">
+            <input class="cc-input" id="custom-skill-name" placeholder="Nome da habilidade..." style="font-size:15px;padding:8px 10px">
+            <input class="cc-input" id="custom-skill-desc" placeholder="Descrição curta do efeito..." style="font-size:13px;padding:7px 10px">
+          </div>
+        </div>
+        <div style="font-size:10px;color:var(--text4);font-style:italic;margin-top:5px">
+          O Mestre usará essa habilidade como sua assinatura épica durante a aventura.
+        </div>
+      </div>
     </div>
 
     <!-- Traço -->
@@ -974,6 +993,7 @@ body {
       <button class="btn-act danger" onclick="doAction('fight')">⚔ Combater</button>
       <button class="btn-act danger" onclick="doAction('flee')">🏃 Fugir</button>
       <button class="btn-act special" onclick="doAction('useSkill')">✨ Habilidade</button>
+      <button class="btn-act special" id="btn-custom-skill" onclick="doAction('useCustomSkill')" style="display:none;border-color:#6a3fa0;color:#c090ff">🌀 Habilidade Própria</button>
       <button class="btn-act" onclick="doAction('lore')">📜 Lore</button>
     </div>
     <div class="input-row">
@@ -1512,6 +1532,12 @@ function startGame() {
     clsIcon:  classes[selectedClass].icon,
     attrs:    ATTR_NAMES.map((n, i) => ({name: n, val: attrBase[i] + attrBonus[i]})),
     skills:   selectedSkills.map(i => pool[i]),
+    customSkill: (() => {
+      const icon = (document.getElementById('custom-skill-icon').value.trim() || '🌀');
+      const name = document.getElementById('custom-skill-name').value.trim();
+      const desc = document.getElementById('custom-skill-desc').value.trim();
+      return name ? { icon, name, desc: desc || 'Habilidade única' } : null;
+    })(),
     trait:    selectedTrait || 'Livre espírito',
     backstory:document.getElementById('cc-backstory').value.trim(),
     world,
@@ -1551,7 +1577,21 @@ function populateSidebar() {
   document.getElementById('g-attrs').innerHTML = charData.attrs.map(a =>
     `<div class="attr-sb">${a.name} <span>${a.val}</span></div>`).join('');
   document.getElementById('g-skills').innerHTML = charData.skills.map(s =>
-    `<div class="sb-skill-tag">${s.icon} ${s.name}</div>`).join('');
+    `<div class="sb-skill-tag">${s.icon} ${s.name}</div>`).join('') +
+    (charData.customSkill
+      ? `<div class="sb-skill-tag" style="border-color:#6a3fa0;color:#c090ff">${charData.customSkill.icon} ${charData.customSkill.name} ✦</div>`
+      : '');
+
+  // Botão de habilidade própria no jogo
+  const btnC = document.getElementById('btn-custom-skill');
+  if (btnC) {
+    if (charData.customSkill) {
+      btnC.style.display = '';
+      btnC.textContent = charData.customSkill.icon + ' ' + charData.customSkill.name;
+    } else {
+      btnC.style.display = 'none';
+    }
+  }
 }
 
 function updateStats() {
@@ -1580,6 +1620,7 @@ function updateInventory() {
 function buildSystem() {
   const c = charData;
   const skillList = c.skills.map(s => `${s.name} (${s.desc})`).join(', ');
+  const customPart = c.customSkill ? `\n- Habilidade própria exclusiva: ${c.customSkill.name} — ${c.customSkill.desc}` : '';
   const attrList  = c.attrs.map(a => `${a.name}:${a.val}`).join(' ');
   return `Você é o Mestre de um RPG de texto imersivo ambientado em "${c.world}".
 FICHA DO JOGADOR:
@@ -1587,7 +1628,7 @@ FICHA DO JOGADOR:
 - Aparência: ${c.build}, cabelo ${c.hair}, olhos ${c.eyes}
 - Classe: ${c.cls}
 - Atributos: ${attrList}
-- Habilidades especiais: ${skillList}
+- Habilidades especiais: ${skillList}${customPart}
 - Traço de personalidade: ${c.trait}
 ${c.backstory ? `- Contexto: ${c.backstory}` : ''}
 REGRAS:
@@ -1595,6 +1636,7 @@ REGRAS:
 - Narrações de 2-4 parágrafos cinematográficos curtos
 - Use fidelidade ao lore e tom de "${c.world}"
 - Incorpore as habilidades do personagem nas situações
+- Quando o jogador usar a habilidade própria "${c.customSkill?.name || ''}", trate como poder único e épico do personagem
 - Reflita o traço "${c.trait}" no comportamento e reações
 - Em combate, role dados virtuais: "Você rola 1d20: [X] — acerto/falha!"
 - Termine SEMPRE com situação que exige decisão do jogador
@@ -1701,6 +1743,9 @@ function getActionPrompt(type) {
     fight:    `O personagem entra em combate. Use dados virtuais (rola 1d20: X), descreva acertos e falhas, consequências reais. Termine com decisão.`,
     flee:     `O personagem tenta fugir. Narre a fuga com tensão e urgência — pode funcionar ou ter consequências. Termine com decisão.`,
     useSkill: `O personagem usa uma de suas habilidades especiais: ${skillNames}. Narre o efeito dramático da habilidade na situação atual. Termine com decisão.`,
+    useCustomSkill: c.customSkill
+      ? `O personagem usa sua habilidade exclusiva e pessoal: "${c.customSkill.name}" — ${c.customSkill.desc}. Esta é a marca registrada deste herói. Narre o efeito de forma épica e memorável, como se fosse sua assinatura no mundo. Cause impacto real na cena. Termine com decisão.`
+      : `O personagem improvisa uma habilidade surpreendente. Narre com impacto. Termine com decisão.`,
     lore:     `O personagem busca informações sobre o universo, eventos ou localização atual. Revele lore relevante e instigante. Termine com decisão.`,
   };
   return prompts[type] || prompts.explore;
@@ -1714,6 +1759,7 @@ const actionLabels = {
   fight:'⚔ [Entra em postura de combate]',
   flee:'🏃 [Tenta escapar]',
   useSkill:'✨ [Usa habilidade especial]',
+  useCustomSkill: charData.customSkill ? `${charData.customSkill.icon} [Usa ${charData.customSkill.name}]` : '🌀 [Usa habilidade própria]',
   lore:'📜 [Busca informações]',
 };
 
