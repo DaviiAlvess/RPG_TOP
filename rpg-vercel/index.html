@@ -631,6 +631,49 @@ body {
 .btn-send:active{background:var(--red2)}
 @media(hover:hover){.btn-send:hover{background:var(--red2)}}
 
+/* Pause modal */
+.pause-modal{
+  display:none;
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.85);
+  z-index:500;
+  align-items:center;
+  justify-content:center;
+}
+.pause-modal.open{display:flex}
+.pause-box{
+  background:var(--bg2);
+  border:1px solid var(--border3);
+  border-radius:8px;
+  padding:28px 24px;
+  width:min(320px,90vw);
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.pause-title{font-family:var(--ft);font-size:13px;color:var(--gold);letter-spacing:2px;text-align:center;margin-bottom:4px}
+.pause-char{font-size:13px;color:var(--text2);text-align:center;font-style:italic;margin-bottom:4px}
+.pause-save-info{font-size:11px;color:var(--text3);text-align:center;font-style:italic}
+.pause-save-info.ok{color:#27ae60}
+.btn-pause-action{
+  width:100%;
+  padding:13px 16px;
+  font-family:var(--ft);
+  font-size:9px;
+  letter-spacing:.8px;
+  border-radius:4px;
+  cursor:pointer;
+  min-height:48px;
+  transition:all .15s;
+  -webkit-tap-highlight-color:transparent;
+}
+.btn-pause-resume{background:var(--red);border:1px solid var(--red2);color:#f0d0a0}
+.btn-pause-resume:hover{background:var(--red2)}
+.btn-pause-worlds{background:none;border:1px solid var(--border2);color:var(--text2)}
+.btn-pause-worlds:hover{border-color:var(--gold);color:var(--gold)}
+.btn-pause-new{background:none;border:1px solid var(--border);color:var(--text3);font-size:8px}
+.btn-pause-new:hover{border-color:var(--red2);color:var(--red2)}
+
 /* Toast */
 .toast{
   position:fixed;
@@ -699,6 +742,18 @@ body {
 </div>
 
 <div class="toast" id="toast"></div>
+
+<!-- Pause Modal -->
+<div class="pause-modal" id="pause-modal">
+  <div class="pause-box">
+    <div class="pause-title">⏸ PAUSA</div>
+    <div class="pause-char" id="pause-char">—</div>
+    <div class="pause-save-info" id="pause-save-info">Salvando...</div>
+    <button class="btn-pause-action btn-pause-resume" onclick="closePause()">▶ Continuar Aventura</button>
+    <button class="btn-pause-action btn-pause-worlds" onclick="pauseGoWorlds()">↩ Voltar aos Mundos (salva)</button>
+    <button class="btn-pause-action btn-pause-new" onclick="pauseNewGame()">🗑 Abandonar e começar do zero</button>
+  </div>
+</div>
 
 <!-- ══════════════════════════════════════════════
      SCREEN 0: AUTH (Login/Registro)
@@ -919,7 +974,7 @@ body {
       <button class="btn-sidebar-toggle" id="btn-toggle" onclick="toggleSidebar()">☰</button>
       <span class="status-dot" id="status-dot"></span>
       <span class="status-txt" id="status-txt">Pronto</span>
-      <button class="btn-mini" onclick="confirmNewGame()">↩ Mundos</button>
+      <button class="btn-mini" onclick="openPause()">⏸ Pausa</button>
     </div>
   </div>
 
@@ -1155,25 +1210,30 @@ function saveToFirebase() {
   const payload = buildSessionPayload();
   // Sempre salva no localStorage como backup imediato
   saveToLocalStorage(payload);
+  console.log('[RPG] Salvo no localStorage.');
 
   const ref = getDbRef();
   if (!ref) {
-    // Anônimo: só localStorage, mostra badge
+    // Anônimo: só localStorage
     const el = document.getElementById('sync-badge');
     if (el) { el.textContent = '💾 Salvo localmente'; el.className = 'sync-badge ok'; }
     return;
   }
 
+  const el = document.getElementById('sync-badge');
+  if (el) { el.textContent = '⏳ Salvando...'; el.className = 'sync-badge'; }
+
   clearTimeout(saveTimeout);
   saveTimeout = setTimeout(async () => {
     try {
       await ref.set(payload);
+      console.log('[RPG] Salvo no Firebase com sucesso.');
       const el = document.getElementById('sync-badge');
       if (el) { el.textContent = '☁ Salvo na nuvem'; el.className = 'sync-badge ok'; }
     } catch(e) {
-      console.error('Erro ao salvar no Firebase:', e);
+      console.error('[RPG] Erro ao salvar no Firebase:', e.code, e.message);
       const el = document.getElementById('sync-badge');
-      if (el) { el.textContent = '💾 Salvo localmente'; el.className = 'sync-badge ok'; }
+      if (el) { el.textContent = '⚠ Erro: ' + (e.code || e.message); el.className = 'sync-badge'; }
     }
   }, 1200);
 }
@@ -1183,13 +1243,25 @@ async function loadSession() {
   const ref = getDbRef();
   if (ref) {
     try {
+      const el = document.getElementById('sync-badge');
+      if (el) { el.textContent = '⏳ Carregando...'; el.className = 'sync-badge'; }
       const snap = await ref.once('value');
       const val = snap.val();
-      if (val && val.charData) return val;
-    } catch(e) { console.error('Firebase load error:', e); }
+      if (val && val.charData) {
+        console.log('[RPG] Sessão carregada do Firebase:', val.charData.name);
+        return val;
+      }
+      console.log('[RPG] Nenhuma sessão no Firebase para este usuário.');
+    } catch(e) {
+      console.error('[RPG] Firebase load error:', e);
+      const el = document.getElementById('sync-badge');
+      if (el) { el.textContent = '⚠ Erro Firebase: ' + e.message; el.className = 'sync-badge'; }
+    }
   }
   // 2. Fallback: localStorage
-  return loadFromLocalStorage();
+  const ls = loadFromLocalStorage();
+  if (ls) console.log('[RPG] Sessão carregada do localStorage:', ls.charData?.name);
+  return ls;
 }
 
 // Restaura estado completo a partir de um payload salvo
@@ -1352,17 +1424,52 @@ function showToast(msg, duration = 4000) {
   setTimeout(() => t.classList.remove('show'), duration);
 }
 
-function confirmNewGame() {
-  if (confirm('Abandonar aventura atual e voltar à seleção de mundos?')) {
-    conversationHistory = [];
-    inventory = [];
-    clearLocalStorage();
-    const ref = getDbRef();
-    if (ref) ref.remove().catch(() => {});
-    window._pendingSession = null;
-    goScreen('s-world');
-    checkAndShowResume();
+function openPause() {
+  const modal = document.getElementById('pause-modal');
+  modal.classList.add('open');
+  // Atualiza info do personagem
+  if (charData && charData.name) {
+    document.getElementById('pause-char').textContent =
+      `${charData.avatar || '🧙'} ${charData.name} · ${charData.cls} · ${charData.world}`;
   }
+  // Mostra status do último save
+  const badge = document.getElementById('sync-badge');
+  const saveInfo = document.getElementById('pause-save-info');
+  if (badge && badge.textContent && badge.textContent !== '—') {
+    saveInfo.textContent = badge.textContent;
+    saveInfo.className = badge.className === 'sync-badge ok'
+      ? 'pause-save-info ok' : 'pause-save-info';
+  } else {
+    saveInfo.textContent = 'Salvando agora...';
+    saveInfo.className = 'pause-save-info';
+    saveToFirebase();
+  }
+}
+
+function closePause() {
+  document.getElementById('pause-modal').classList.remove('open');
+}
+
+// Salva e volta para tela de mundos — aventura continua disponível
+function pauseGoWorlds() {
+  saveToFirebase();
+  document.getElementById('pause-modal').classList.remove('open');
+  goScreen('s-world');
+  checkAndShowResume();
+}
+
+// Abandona de vez — apaga o save
+function pauseNewGame() {
+  if (!confirm('Tem certeza? Isso apaga toda a aventura atual.')) return;
+  conversationHistory = [];
+  inventory = [];
+  clearLocalStorage();
+  const ref = getDbRef();
+  if (ref) ref.remove().catch(() => {});
+  window._pendingSession = null;
+  document.getElementById('pause-modal').classList.remove('open');
+  goScreen('s-world');
+  checkAndShowResume();
 }
 
 // ════════════════════════════════════════════════
@@ -1559,6 +1666,7 @@ function startGame() {
   document.getElementById('chat-msgs').innerHTML = '';
 
   goScreen('s-game');
+  saveToFirebase(); // salva ficha logo ao entrar no jogo
   beginGame();
 }
 
