@@ -1291,18 +1291,45 @@ async function checkAndShowResume() {
 
 function resumeGame() {
   const session = window._pendingSession;
-  if (!session) return;
+  if (!session) { showToast('Nenhuma sessão encontrada.'); return; }
+
+  // Restaura todo o estado
   applySession(session);
+
+  // Garante campos que podem estar ausentes em saves antigos
+  if (!charData.avatar)   charData.avatar  = '🧙';
+  if (!charData.clsIcon)  charData.clsIcon = '⚔';
+  if (!charData.customSkill) charData.customSkill = null;
+
+  // Popula interface
   populateSidebar();
   updateStats();
   updateInventory();
-  document.getElementById('chat-msgs').innerHTML = '';
-  // Reexibe histórico de mensagens
+
+  // Limpa e reexibe o histórico do chat
+  const chatEl = document.getElementById('chat-msgs');
+  chatEl.innerHTML = '';
   conversationHistory.forEach(m => {
     if (m.role === 'assistant') addMsg('gm', m.content);
     else if (m.role === 'user')  addMsg('player', m.content);
   });
+
+  // Scroll para o final
+  chatEl.scrollTop = chatEl.scrollHeight;
+
+  // Atualiza botão de habilidade customizada
+  const btnC = document.getElementById('btn-custom-skill');
+  if (btnC) {
+    if (charData.customSkill) {
+      btnC.style.display = '';
+      btnC.textContent = charData.customSkill.icon + ' ' + charData.customSkill.name;
+    } else {
+      btnC.style.display = 'none';
+    }
+  }
+
   goScreen('s-game');
+  document.getElementById('chat-input').focus();
 }
 
 function discardSave() {
@@ -1859,21 +1886,26 @@ function getActionPrompt(type) {
   return prompts[type] || prompts.explore;
 }
 
-const actionLabels = {
-  timeskip:'⏭ [Horas se passam...]',
-  rest:'🌙 [Decide descansar]',
-  explore:'🔍 [Começa a explorar]',
-  talk:'💬 [Procura alguém para falar]',
-  fight:'⚔ [Entra em postura de combate]',
-  flee:'🏃 [Tenta escapar]',
-  useSkill:'✨ [Usa habilidade especial]',
-  useCustomSkill: charData.customSkill ? `${charData.customSkill.icon} [Usa ${charData.customSkill.name}]` : '🌀 [Usa habilidade própria]',
-  lore:'📜 [Busca informações]',
-};
+function getActionLabel(type) {
+  const labels = {
+    timeskip:'⏭ [Horas se passam...]',
+    rest:'🌙 [Decide descansar]',
+    explore:'🔍 [Começa a explorar]',
+    talk:'💬 [Procura alguém para falar]',
+    fight:'⚔ [Entra em postura de combate]',
+    flee:'🏃 [Tenta escapar]',
+    useSkill:'✨ [Usa habilidade especial]',
+    useCustomSkill: charData.customSkill
+      ? `${charData.customSkill.icon} [Usa ${charData.customSkill.name}]`
+      : '🌀 [Usa habilidade própria]',
+    lore:'📜 [Busca informações]',
+  };
+  return labels[type] || `[${type}]`;
+}
 
 function doAction(type) {
   if (busy) return;
-  addMsg('action', actionLabels[type]);
+  addMsg('action', getActionLabel(type));
   callGM(getActionPrompt(type));
 }
 
