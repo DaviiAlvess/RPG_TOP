@@ -10,7 +10,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
-<!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
@@ -296,7 +295,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 </head>
 <body>
 
-<!-- Loading -->
 <div class="loading-overlay" id="loading-overlay">
   <div class="loading-title">⚔ RPG · Mestre Inteligente</div>
   <div class="loading-dots"><span class="dot">●</span><span class="dot">●</span><span class="dot">●</span></div>
@@ -304,7 +302,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 
 <div class="toast" id="toast"></div>
 
-<!-- Pause Modal -->
 <div class="pause-modal" id="pause-modal">
   <div class="pause-box">
     <div class="pause-title">⏸ PAUSA</div>
@@ -316,7 +313,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
   </div>
 </div>
 
-<!-- ══ SCREEN 0: AUTH ══ -->
 <div id="s-auth" class="screen">
   <div class="auth-box">
     <div class="auth-logo">⚔ RPG · Mestre Inteligente</div>
@@ -340,7 +336,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
   </div>
 </div>
 
-<!-- ══ SCREEN 1: WORLD SELECT ══ -->
 <div id="s-world" class="screen">
   <div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:16px;overflow-y:auto;-webkit-overflow-scrolling:touch;min-height:100%;width:100%">
     <div class="ws-top-bar">
@@ -380,7 +375,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
   </div>
 </div>
 
-<!-- ══ SCREEN 2: CHARACTER CREATION ══ -->
 <div id="s-char" class="screen">
   <div class="char-header">
     <div>
@@ -390,7 +384,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
     <button class="btn-ghost" onclick="goScreen('s-world')">← Voltar</button>
   </div>
   <div class="char-body" id="char-body">
-    <!-- Identidade -->
     <div class="cc-card">
       <span class="cc-label">Identidade</span>
       <div style="display:flex;flex-direction:column;gap:8px">
@@ -412,7 +405,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
         </div>
       </div>
     </div>
-    <!-- Aparência -->
     <div class="cc-card">
       <span class="cc-label">Aparência</span>
       <div class="appear-row">
@@ -450,18 +442,15 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
         <div class="avatar-grid" id="avatar-grid"></div>
       </div>
     </div>
-    <!-- Classe -->
     <div class="cc-card full-col">
       <span class="cc-label">Classe</span>
       <div class="classes-grid" id="classes-grid"></div>
     </div>
-    <!-- Atributos -->
     <div class="cc-card">
       <span class="cc-label">Atributos <span style="font-family:var(--fb);font-style:italic;font-size:10px;color:var(--text3);letter-spacing:0">(distribua pontos)</span></span>
       <div class="attrs-grid" id="attrs-grid"></div>
       <div class="attr-points-left">Pontos restantes: <span id="pts-left">10</span></div>
     </div>
-    <!-- Habilidades -->
     <div class="cc-card full-col">
       <span class="cc-label">Habilidades <span style="font-family:var(--fb);font-style:italic;font-size:10px;color:var(--text3);letter-spacing:0">(escolha até 3)</span></span>
       <div class="skills-pool" id="skills-pool"></div>
@@ -480,15 +469,17 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
         <div style="font-size:10px;color:var(--text4);font-style:italic;margin-top:5px">O Mestre usará essa habilidade como sua assinatura épica durante a aventura.</div>
       </div>
     </div>
-    <!-- Traço -->
-    <div class="cc-card full-col">
-      <span class="cc-label">Traço de Personalidade</span>
-      <div class="trait-grid" id="trait-grid"></div>
-    </div>
-    <!-- História -->
     <div class="cc-card full-col">
       <span class="cc-label">Contexto / Motivação <span style="font-family:var(--fb);font-style:italic;font-size:10px;color:var(--text3);letter-spacing:0">(opcional)</span></span>
       <textarea class="cc-input" id="cc-backstory" rows="3" placeholder="Descreva brevemente a história ou motivação do seu personagem..." style="resize:vertical;font-style:italic;font-size:16px"></textarea>
+    </div>
+    <div class="cc-card full-col" id="custom-world-box" style="display:none">
+      <span class="cc-label">Lore do Mundo <span style="font-family:var(--fb);font-style:italic;font-size:10px;color:var(--text3);letter-spacing:0">(Defina como este universo funciona)</span></span>
+      <textarea class="cc-input" id="cc-world-lore" rows="3" placeholder="Ex: Um mundo cyberpunk governado por magos corporativos. A magia consome sucata..." style="resize:vertical;font-style:italic;font-size:16px"></textarea>
+    </div>
+    <div class="cc-card full-col">
+      <span class="cc-label">Traço de Personalidade</span>
+      <div class="trait-grid" id="trait-grid"></div>
     </div>
   </div>
   <div class="char-footer">
@@ -497,7 +488,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
   </div>
 </div>
 
-<!-- ══ SCREEN 3: GAME ══ -->
 <div id="s-game" class="screen">
   <div class="rpg-header">
     <div>
@@ -934,6 +924,10 @@ function pickCustomWorld() {
 //  BUILD CHARACTER SCREEN
 // ════════════════════════════════════════════════
 function buildCharScreen(world) {
+  const isCustomWorld = !WORLD_LORE[world];
+  const customBox = document.getElementById('custom-world-box');
+  if (customBox) customBox.style.display = isCustomWorld ? 'block' : 'none';
+
   const ag = document.getElementById('avatar-grid');
   ag.innerHTML = ''; selectedAvatar = '🧙';
   document.getElementById('avatar-preview').textContent = '🧙';
@@ -950,7 +944,10 @@ function buildCharScreen(world) {
     };
     ag.appendChild(d);
   });
-  const classes = WORLD_CLASSES[world] || Object.values(WORLD_CLASSES)[0];
+
+  const baseClasses = WORLD_CLASSES[world] || [{icon:'⚔',name:'Guerreiro'},{icon:'🔮',name:'Mago'},{icon:'🏹',name:'Arqueiro'}];
+  const classes = [...baseClasses, {icon:'🧑‍🌾', name:'Pessoa Comum'}];
+
   const cg = document.getElementById('classes-grid');
   cg.innerHTML = ''; selectedClass = -1;
   classes.forEach((cl, i) => {
@@ -963,6 +960,7 @@ function buildCharScreen(world) {
     };
     cg.appendChild(d);
   });
+
   attrBonus = [0,0,0,0,0,0]; totalPts = 10;
   const ag2 = document.getElementById('attrs-grid');
   ag2.innerHTML = '';
@@ -973,6 +971,7 @@ function buildCharScreen(world) {
     ag2.appendChild(row);
   });
   updatePtsLeft();
+
   const pool = WORLD_SKILLS[world] || WORLD_SKILLS_DEFAULT;
   selectedSkills = [];
   const sp = document.getElementById('skills-pool');
@@ -984,6 +983,7 @@ function buildCharScreen(world) {
     d.onclick = () => toggleSkill(i, d);
     sp.appendChild(d);
   });
+
   const tg = document.getElementById('trait-grid');
   tg.innerHTML = ''; selectedTrait = '';
   TRAITS.forEach(t => {
@@ -995,9 +995,12 @@ function buildCharScreen(world) {
     };
     tg.appendChild(d);
   });
+
   document.getElementById('cc-name').value = '';
   document.getElementById('cc-age').value = '';
   document.getElementById('cc-backstory').value = '';
+  const loreInp = document.getElementById('cc-world-lore');
+  if(loreInp) loreInp.value = '';
   document.getElementById('custom-skill-icon').value = '';
   document.getElementById('custom-skill-name').value = '';
   document.getElementById('custom-skill-desc').value = '';
@@ -1037,8 +1040,10 @@ document.addEventListener('input', e => { if (e.target.id === 'cc-name') checkRe
 // ════════════════════════════════════════════════
 function startGame() {
   const world = currentWorld;
-  const classes = WORLD_CLASSES[world] || Object.values(WORLD_CLASSES)[0];
+  const baseClasses = WORLD_CLASSES[world] || [{icon:'⚔',name:'Guerreiro'},{icon:'🔮',name:'Mago'},{icon:'🏹',name:'Arqueiro'}];
+  const classes = [...baseClasses, {icon:'🧑‍🌾', name:'Pessoa Comum'}];
   const pool = WORLD_SKILLS[world] || WORLD_SKILLS_DEFAULT;
+  
   charData = {
     name:      document.getElementById('cc-name').value.trim(),
     age:       document.getElementById('cc-age').value || '25',
@@ -1059,6 +1064,7 @@ function startGame() {
     })(),
     trait:     selectedTrait || 'Livre espírito',
     backstory: document.getElementById('cc-backstory').value.trim(),
+    customLore: document.getElementById('cc-world-lore') ? document.getElementById('cc-world-lore').value.trim() : '',
     world,
   };
   const con = charData.attrs[2].val, int_ = charData.attrs[3].val;
@@ -1148,9 +1154,12 @@ function buildSystem() {
   const customPart = c.customSkill ? `\n- Habilidade própria exclusiva: ${c.customSkill.name} — ${c.customSkill.desc}` : '';
   const attrList = c.attrs.map(a => `${a.name}:${a.val}`).join(' ');
   const mode = WORLD_LORE[c.world] ? 'MUNDO PREDEFINIDO' : 'MUNDO PERSONALIZADO';
-  return `Você é um Mestre de RPG avançado e designer de sistemas narrativos.
+  const customLoreText = c.customLore ? `\n- LORE DEFINIDO PELO JOGADOR: ${c.customLore}` : '';
+  
+  return `Você é o Mestre do jogo. Seu objetivo é imersão absoluta.
 IDIOMA: Responda SEMPRE em português do Brasil.
 MODO ATIVO: ${mode}
+
 FICHA DO JOGADOR:
 - Nome: ${c.name}, ${c.age} anos, ${c.gender}
 - Aparência: ${c.build}, cabelo ${c.hair}, olhos ${c.eyes}
@@ -1159,22 +1168,27 @@ FICHA DO JOGADOR:
 - Habilidades: ${skillList}${customPart}
 - Traço: ${c.trait}
 ${c.backstory ? `- Contexto: ${c.backstory}` : ''}
+
 UNIVERSO: "${c.world}"
 - Tom sensorial: "${lore.sensory}"
 - Tensão-base: "${lore.tense}"
 - Ação-base: "${lore.action}"
-- Temas: ${lore.themes.join(', ')}
-REGRAS DE NARRAÇÃO:
-1) Estruture cada resposta em 3 a 4 parágrafos curtos.
-2) P1 = atmosfera sensorial viva.
-3) P2-P3 = progressão da cena com conflito/virada.
-4) Último parágrafo = gancho forte com decisão imediata.
-5) Se houver rolagem, integre resultado no texto organicamente.
-6) Use consequências reais no mundo, NPCs e recursos.
-7) Nunca contradiga fatos já estabelecidos no chat.
-8) Máximo de 260 palavras. Feche com 2-4 opções de ação + opção livre.
-9) Em mundo predefinido, siga a lore canônica.
-10) Em mundo personalizado, consolide regras de forma coerente.`;
+- Temas: ${lore.themes.join(', ')}${customLoreText}
+
+REGRAS ESTRITAS DE NARRAÇÃO:
+1. MENOS É MAIS: Descreva a cena com 2 ou 3 elementos concretos. Deixe lacunas. Frases que cortam.
+2. TODOS OS SENTIDOS: A cada cena, inclua som, tato/temperatura e olfato.
+3. NUNCA DIGA O QUE O PERSONAGEM SENTE: Narre o mundo, não a alma de ${c.name}. Pergunte "Como ${c.name} reage?".
+4. NPCs TÊM VIDA: Eles mentem, têm pressa. Mostre ação enquanto falam.
+5. AÇÕES TÊM PESO: O mundo pune descuido. Não dê segunda chance, o mundo é indiferente.
+6. CONFLITO CONSTANTE: Identifique o conflito de cada cena e deixe o subtexto respirar.
+7. PAUSA É NARRAÇÃO: "O vento para." Pausas criam peso emocional.
+8. SEM LISTAS: NUNCA ofereça opções numeradas. Termine com uma tensão que exige resposta.
+9. IMPROVISO INTENCIONAL: Se o jogador desviar, crie consequências que pareçam inevitáveis.
+10. FIDELIDADE ABSOLUTA AO LORE: Para mundos predefinidos, atue como uma enciclopédia canônica. Use geografia, leis, magia e personagens históricos corretos da obra original. NÃO INVENTE fatos que contradigam o canon. Para mundos personalizados, siga as regras fornecidas pelo jogador ou expanda de forma coerente.
+11. MISSÕES: Ao surgir um objetivo crucial, insira na última linha: [MISSÃO: descrição breve]. Ao concluir: [CONCLUÍDA: descrição].
+12. MECÂNICA DE DADOS: Para ações arriscadas, interrompa com "[TESTE:ATRIBUTO] [Descrição]". Nunca revele o número do dado, julgue apenas as consequências.
+13. RELACIONAMENTOS OCULTOS: Ajuste o tom (Hostil/Amigável) baseado nas atitudes, mas não explique isso ao jogador.`;
 }
 
 // ════════════════════════════════════════════════
@@ -1186,18 +1200,37 @@ function setStatus(txt, on) {
   d.style.background = on ? '#e8c97a' : '#27ae60';
   d.style.boxShadow  = `0 0 6px ${on?'#e8c97a':'#27ae60'}`;
 }
+
 function renderGMContent(text) {
-  const safe = escapeHtml(text);
+  let safe = escapeHtml(text);
+
+  // Interceptando e formatando [MISSÃO: ...]
+  safe = safe.replace(/\[MISSÃO:\s*(.*?)\]/gi, '<div style="margin:12px 0;padding:10px;border:1px solid var(--gold);background:rgba(201,168,76,0.1);color:var(--gold);font-size:10px;font-family:var(--ft);letter-spacing:1px;text-transform:uppercase;text-align:center;border-radius:4px">📜 NOVA MISSÃO: $1</div>');
+  
+  // Interceptando e formatando [CONCLUÍDA: ...]
+  safe = safe.replace(/\[CONCLUÍDA:\s*(.*?)\]/gi, '<div style="margin:12px 0;padding:10px;border:1px solid #27ae60;background:rgba(39,174,96,0.1);color:#27ae60;font-size:10px;font-family:var(--ft);letter-spacing:1px;text-transform:uppercase;text-align:center;border-radius:4px">✔ MISSÃO CONCLUÍDA: $1</div>');
+  
+  // Interceptando e formatando [TESTE:ATRIBUTO]
+  safe = safe.replace(/\[TESTE:\s*(.*?)\](.*?)($|\n)/gi, '<div style="margin:12px 0;padding:10px;border:1px solid var(--red2);background:rgba(192,57,43,0.1);color:var(--red2);font-size:10px;font-family:var(--ft);letter-spacing:1px;text-align:center;border-radius:4px">🎲 TESTE DE $1 $2</div>$3');
+
+  // Fatiamento normal dos parágrafos
   const paras = safe.split(/\n\n+/).map(p => p.trim()).filter(Boolean);
-  if (paras.length <= 1) return `<div class="gm-para action-result">${safe}</div>`;
+  if (paras.length === 0) return '';
+  if (paras.length === 1) return `<div class="gm-para action-result">${paras[0]}</div>`;
+  
   return paras.map((p, i) => {
+    // Evita estilizacão dupla se o parágrafo for apenas uma UI tag gerada acima
+    if (p.startsWith('<div')) return p; 
+    
     let cls = 'action-result';
     if (i === 0) cls = 'sensory';
     else if (i === paras.length-1) cls = 'hook';
     else if (i === paras.length-2 && paras.length >= 4) cls = 'consequence';
+    
     return `<div class="gm-para ${cls}">${p}</div>`;
   }).join('');
 }
+
 function addMsg(type, content) {
   const c = document.getElementById('chat-msgs');
   const d = document.createElement('div');
