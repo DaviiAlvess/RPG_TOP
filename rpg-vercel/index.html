@@ -33,7 +33,6 @@
 html{height:100%;height:-webkit-fill-available}
 body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px;line-height:1.6;height:100%;height:-webkit-fill-available;overflow:hidden;-webkit-text-size-adjust:100%}
 
-/* ── SCREENS ── */
 .screen{display:none;flex-direction:column}
 .screen.active{display:flex}
 
@@ -81,7 +80,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .btn-ghost{background:none;border:1px solid var(--border2);color:var(--text3);padding:9px 14px;font-family:var(--fb);font-size:14px;border-radius:4px;cursor:pointer;transition:all .15s;min-height:44px;-webkit-tap-highlight-color:transparent}
 .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
 
-/* Resume Banner */
 .resume-banner{width:100%;max-width:600px;background:linear-gradient(135deg,#1a1408,#251c10);border:1px solid var(--gold);border-radius:6px;padding:12px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .resume-icon{font-size:22px;flex-shrink:0}
 .resume-texts{flex:1;min-width:0}
@@ -163,7 +161,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .btn-sidebar-toggle{display:none;background:none;border:none;color:var(--text2);cursor:pointer;font-size:22px;padding:0 4px;min-height:36px;min-width:36px;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent}
 .rpg-body{flex:1;display:flex;overflow:hidden;position:relative;min-height:0}
 
-/* Sidebar */
 .rpg-sidebar{width:185px;min-width:185px;background:var(--bg2);border-right:1px solid var(--border);padding:10px 9px;display:flex;flex-direction:column;gap:9px;overflow-y:auto;-webkit-overflow-scrolling:touch;flex-shrink:0;transition:transform .25s cubic-bezier(.4,0,.2,1)}
 .rpg-sidebar::-webkit-scrollbar{width:3px}
 .rpg-sidebar::-webkit-scrollbar-thumb{background:var(--border2)}
@@ -201,7 +198,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .sync-badge{font-size:8px;color:var(--text4);font-style:italic;text-align:center}
 .sync-badge.ok{color:#27ae60}
 
-/* Indicador narrativo */
 .narrative-state-bar{display:flex;align-items:center;gap:6px;padding:4px 14px;background:var(--bg2);border-bottom:1px solid var(--border);font-size:10px;color:var(--text3);font-style:italic;flex-shrink:0;transition:all .4s}
 .ns-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;transition:all .4s}
 .narrative-state-bar.calmo .ns-dot{background:#27ae60;box-shadow:0 0 5px #27ae60}
@@ -212,7 +208,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .narrative-state-bar.tensao .ns-label::after{content:'Tensão crescente'}
 .narrative-state-bar.acao .ns-label::after{content:'Em plena ação!'}
 
-/* Chat */
 .rpg-chat{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
 .chat-msgs{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 14px;display:flex;flex-direction:column;gap:9px;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
 .chat-msgs::-webkit-scrollbar{width:3px}
@@ -243,7 +238,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
 @keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}}
 
-/* Actions */
 .rpg-actions{background:var(--bg2);border-top:1px solid var(--border2);padding:8px 12px calc(8px + var(--sab));display:flex;flex-direction:column;gap:7px;flex-shrink:0}
 .action-btns{display:flex;gap:5px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;flex-wrap:nowrap;padding-bottom:2px}
 .action-btns::-webkit-scrollbar{display:none}
@@ -265,7 +259,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .btn-send:active{background:var(--red2)}
 @media(hover:hover){.btn-send:hover{background:var(--red2)}}
 
-/* Pause Modal */
+/* ════ PAUSE MODAL ════ */
 .pause-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:500;align-items:center;justify-content:center}
 .pause-modal.open{display:flex}
 .pause-box{background:var(--bg2);border:1px solid var(--border3);border-radius:8px;padding:28px 24px;width:min(320px,90vw);display:flex;flex-direction:column;gap:12px}
@@ -281,12 +275,62 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .btn-pause-new{background:none;border:1px solid var(--border);color:var(--text3);font-size:8px}
 .btn-pause-new:hover{border-color:var(--red2);color:var(--red2)}
 
+/* ════ TIMESKIP MODAL ════ */
+.ts-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:500;align-items:center;justify-content:center;padding:16px}
+.ts-modal.open{display:flex}
+.ts-box{background:var(--bg2);border:1px solid var(--border3);border-radius:10px;width:min(480px,100%);max-height:90vh;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column}
+.ts-box::-webkit-scrollbar{width:3px}
+.ts-box::-webkit-scrollbar-thumb{background:var(--border2)}
+.ts-header{padding:18px 20px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.ts-title{font-family:var(--ft);font-size:12px;color:var(--gold);letter-spacing:2px}
+.ts-subtitle{font-size:12px;color:var(--text3);font-style:italic;margin-top:2px}
+.ts-close{background:none;border:1px solid var(--border);color:var(--text3);width:32px;height:32px;border-radius:4px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.ts-close:hover{border-color:var(--red2);color:var(--red2)}
+.ts-body{padding:16px 20px;display:flex;flex-direction:column;gap:18px}
+.ts-section-label{font-family:var(--ft);font-size:8px;color:var(--gold);letter-spacing:1.5px;margin-bottom:10px}
+/* Duration pills */
+.ts-duration-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.ts-dur-group{display:flex;flex-direction:column;gap:5px}
+.ts-dur-group-label{font-size:9px;color:var(--text4);letter-spacing:.5px;text-align:center;text-transform:uppercase;font-family:var(--ft)}
+.ts-dur-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text3);padding:9px 6px;border-radius:4px;cursor:pointer;text-align:center;font-family:var(--fb);font-size:13px;transition:all .15s;min-height:40px;-webkit-tap-highlight-color:transparent;width:100%}
+.ts-dur-btn:hover{border-color:var(--border2);color:var(--text)}
+.ts-dur-btn.selected{border-color:var(--gold);background:var(--bg4);color:var(--gold2)}
+/* Activity grid */
+.ts-activity-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+@media(min-width:400px){.ts-activity-grid{grid-template-columns:repeat(3,1fr)}}
+.ts-act-opt{background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:11px 8px;cursor:pointer;text-align:center;transition:all .15s;-webkit-tap-highlight-color:transparent;display:flex;flex-direction:column;align-items:center;gap:5px;min-height:72px;justify-content:center}
+.ts-act-opt:hover{border-color:var(--border2);background:var(--bg4)}
+.ts-act-opt.selected{border-color:var(--gold);background:var(--bg4)}
+.ts-act-icon{font-size:22px}
+.ts-act-name{font-family:var(--ft);font-size:clamp(6.5px,1.8vw,8px);color:var(--text2);letter-spacing:.3px;text-align:center}
+.ts-act-opt.selected .ts-act-name{color:var(--gold)}
+/* Custom detail */
+.ts-custom-area{display:none;flex-direction:column;gap:6px}
+.ts-custom-area.show{display:flex}
+.ts-custom-label{font-size:11px;color:var(--text3);font-style:italic}
+.ts-custom-input{width:100%;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:9px 12px;font-family:var(--fb);font-size:16px;border-radius:4px;outline:none;font-style:italic;-webkit-appearance:none;resize:vertical}
+.ts-custom-input::placeholder{color:var(--text4)}
+.ts-custom-input:focus{border-color:var(--gold)}
+/* Preview bar */
+.ts-preview{background:linear-gradient(135deg,#1a1408,#251c10);border:1px solid var(--border2);border-radius:5px;padding:10px 14px;font-size:12px;color:var(--text2);font-style:italic;min-height:38px;display:flex;align-items:center;gap:8px;transition:all .3s}
+.ts-preview-icon{font-size:18px;flex-shrink:0}
+.ts-preview-text{flex:1;line-height:1.5}
+.ts-preview-text strong{color:var(--gold);font-style:normal}
+/* Footer */
+.ts-footer{padding:14px 20px calc(14px + var(--sab));border-top:1px solid var(--border);display:flex;gap:8px;flex-shrink:0}
+.ts-btn-cancel{flex:1;background:none;border:1px solid var(--border2);color:var(--text3);padding:12px;font-family:var(--fb);font-size:14px;border-radius:4px;cursor:pointer;min-height:48px;-webkit-tap-highlight-color:transparent}
+.ts-btn-cancel:hover{border-color:var(--gold);color:var(--gold)}
+.ts-btn-go{flex:2;background:var(--red);border:1px solid var(--red2);color:#f0d0a0;padding:12px;font-family:var(--ft);font-size:9px;letter-spacing:.8px;border-radius:4px;cursor:pointer;min-height:48px;-webkit-tap-highlight-color:transparent;transition:all .15s}
+.ts-btn-go:hover{background:var(--red2)}
+.ts-btn-go:disabled{opacity:.4;cursor:not-allowed}
+/* Timeskip message style */
+.msg-timeskip{background:linear-gradient(135deg,#1a1408,#251c10);border:1px solid var(--gold);border-radius:5px;padding:10px 14px;text-align:center;font-family:var(--ft);font-size:9px;color:var(--gold);letter-spacing:1px;margin:4px 0}
+
 /* Toast */
 .toast{position:fixed;bottom:calc(24px + var(--sab));left:50%;transform:translateX(-50%);background:#3a0a0a;border:1px solid var(--red2);color:#f0c0c0;padding:12px 20px;border-radius:5px;font-size:14px;z-index:999;display:none;max-width:90vw;text-align:center}
 .toast.show{display:block;animation:fadeInToast .2s}
 @keyframes fadeInToast{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 
-/* Loading */
 .loading-overlay{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;z-index:9999}
 .loading-overlay.hide{display:none}
 .loading-title{font-family:var(--ft);font-size:13px;color:var(--gold);letter-spacing:2px}
@@ -302,6 +346,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 
 <div class="toast" id="toast"></div>
 
+<!-- PAUSE MODAL -->
 <div class="pause-modal" id="pause-modal">
   <div class="pause-box">
     <div class="pause-title">⏸ PAUSA</div>
@@ -313,6 +358,125 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
   </div>
 </div>
 
+<!-- TIMESKIP MODAL -->
+<div class="ts-modal" id="ts-modal">
+  <div class="ts-box">
+    <div class="ts-header">
+      <div>
+        <div class="ts-title">⏭ PULO DE TEMPO</div>
+        <div class="ts-subtitle">O que acontece enquanto o tempo passa?</div>
+      </div>
+      <button class="ts-close" onclick="closeTimeskip()">✕</button>
+    </div>
+    <div class="ts-body">
+
+      <!-- DURAÇÃO -->
+      <div>
+        <div class="ts-section-label">⌛ Quanto tempo passa?</div>
+        <div style="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap">
+          <div class="ts-dur-group" style="flex:1;min-width:60px">
+            <div class="ts-dur-group-label">Dias</div>
+            <button class="ts-dur-btn" onclick="selectDuration(this,'1 dia')">1</button>
+            <button class="ts-dur-btn" onclick="selectDuration(this,'3 dias')">3</button>
+            <button class="ts-dur-btn" onclick="selectDuration(this,'7 dias')">7</button>
+          </div>
+          <div class="ts-dur-group" style="flex:1;min-width:60px">
+            <div class="ts-dur-group-label">Semanas</div>
+            <button class="ts-dur-btn" onclick="selectDuration(this,'2 semanas')">2</button>
+            <button class="ts-dur-btn" onclick="selectDuration(this,'4 semanas')">4</button>
+            <button class="ts-dur-btn" onclick="selectDuration(this,'6 semanas')">6</button>
+          </div>
+          <div class="ts-dur-group" style="flex:1;min-width:60px">
+            <div class="ts-dur-group-label">Meses</div>
+            <button class="ts-dur-btn" onclick="selectDuration(this,'1 mês')">1</button>
+            <button class="ts-dur-btn" onclick="selectDuration(this,'3 meses')">3</button>
+            <button class="ts-dur-btn" onclick="selectDuration(this,'6 meses')">6</button>
+          </div>
+          <div class="ts-dur-group" style="flex:1;min-width:60px">
+            <div class="ts-dur-group-label">Anos</div>
+            <button class="ts-dur-btn" onclick="selectDuration(this,'1 ano')">1</button>
+            <button class="ts-dur-btn" onclick="selectDuration(this,'2 anos')">2</button>
+            <button class="ts-dur-btn" onclick="selectDuration(this,'5 anos')">5</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ATIVIDADE -->
+      <div>
+        <div class="ts-section-label">⚔ O que faz durante esse tempo?</div>
+        <div class="ts-activity-grid" id="ts-activity-grid">
+          <div class="ts-act-opt" onclick="selectActivity(this,'treino','Treinamento Intenso','Aperfeiçoa habilidades de combate, técnicas e força física.')">
+            <div class="ts-act-icon">⚔️</div>
+            <div class="ts-act-name">Treinamento</div>
+          </div>
+          <div class="ts-act-opt" onclick="selectActivity(this,'descanso','Descanso e Cura','Recupera-se de ferimentos, recarrega energias e repousa.')">
+            <div class="ts-act-icon">🌙</div>
+            <div class="ts-act-name">Descanso</div>
+          </div>
+          <div class="ts-act-opt" onclick="selectActivity(this,'missao','Em Missão','Realiza trabalhos, contratos ou busca objetivos paralelos.')">
+            <div class="ts-act-icon">📜</div>
+            <div class="ts-act-name">Em Missão</div>
+          </div>
+          <div class="ts-act-opt" onclick="selectActivity(this,'estudo','Estudo e Pesquisa','Aprende lore, domina magia, estuda técnicas ou estratégias.')">
+            <div class="ts-act-icon">📚</div>
+            <div class="ts-act-name">Estudando</div>
+          </div>
+          <div class="ts-act-opt" onclick="selectActivity(this,'viagem','Viajando','Percorre terras desconhecidas, explorando novos territórios.')">
+            <div class="ts-act-icon">🗺️</div>
+            <div class="ts-act-name">Viajando</div>
+          </div>
+          <div class="ts-act-opt" onclick="selectActivity(this,'social','Política e Alianças','Constrói relações, forja alianças ou navega intrigas sociais.')">
+            <div class="ts-act-icon">🤝</div>
+            <div class="ts-act-name">Política</div>
+          </div>
+          <div class="ts-act-opt" onclick="selectActivity(this,'espiritual','Meditação / Fé','Busca crescimento interior, espiritualidade ou poderes ocultos.')">
+            <div class="ts-act-icon">🧘</div>
+            <div class="ts-act-name">Meditação</div>
+          </div>
+          <div class="ts-act-opt" onclick="selectActivity(this,'escondido','Escondido / Foragido','Foge de inimigos, se camufla ou planeja em segredo.')">
+            <div class="ts-act-icon">🌑</div>
+            <div class="ts-act-name">Foragido</div>
+          </div>
+          <div class="ts-act-opt" onclick="selectActivity(this,'trabalho','Trabalho Comum','Vive como civil: trabalha, economiza, mantém identidade falsa.')">
+            <div class="ts-act-icon">🔨</div>
+            <div class="ts-act-name">Trabalhando</div>
+          </div>
+          <div class="ts-act-opt" onclick="selectActivity(this,'cura_espiritual','Luto e Reflexão','Processa perdas, toma decisões e redefine objetivos de vida.')">
+            <div class="ts-act-icon">💔</div>
+            <div class="ts-act-name">Luto</div>
+          </div>
+          <div class="ts-act-opt" onclick="selectActivity(this,'busca','Busca Pessoal','Segue uma obsessão: encontrar alguém, vingar-se, descobrir segredo.')">
+            <div class="ts-act-icon">🔍</div>
+            <div class="ts-act-name">Busca</div>
+          </div>
+          <div class="ts-act-opt" onclick="selectActivity(this,'custom','Outro...','Defina o que o personagem fez com suas próprias palavras.')">
+            <div class="ts-act-icon">✍️</div>
+            <div class="ts-act-name">Outro...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DETALHE CUSTOMIZADO -->
+      <div class="ts-custom-area" id="ts-custom-area">
+        <div class="ts-custom-label">Descreva o que fez (opcional — o Mestre vai se adaptar):</div>
+        <textarea class="ts-custom-input" id="ts-custom-text" rows="2" placeholder="Ex: Treinou com um mestre misterioso nas montanhas, praticando jutsu de fogo..."></textarea>
+      </div>
+
+      <!-- PREVIEW -->
+      <div class="ts-preview" id="ts-preview">
+        <div class="ts-preview-icon">⌛</div>
+        <div class="ts-preview-text" id="ts-preview-text">Escolha a duração e a atividade para ver o resumo da sua jornada.</div>
+      </div>
+
+    </div>
+    <div class="ts-footer">
+      <button class="ts-btn-cancel" onclick="closeTimeskip()">Cancelar</button>
+      <button class="ts-btn-go" id="ts-btn-go" onclick="executeTimeskip()" disabled>⏭ Pular o Tempo →</button>
+    </div>
+  </div>
+</div>
+
+<!-- AUTH SCREEN -->
 <div id="s-auth" class="screen">
   <div class="auth-box">
     <div class="auth-logo">⚔ RPG · Mestre Inteligente</div>
@@ -336,6 +500,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
   </div>
 </div>
 
+<!-- WORLD SCREEN -->
 <div id="s-world" class="screen">
   <div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:16px;overflow-y:auto;-webkit-overflow-scrolling:touch;min-height:100%;width:100%">
     <div class="ws-top-bar">
@@ -375,6 +540,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
   </div>
 </div>
 
+<!-- CHAR CREATION SCREEN -->
 <div id="s-char" class="screen">
   <div class="char-header">
     <div>
@@ -488,6 +654,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
   </div>
 </div>
 
+<!-- GAME SCREEN -->
 <div id="s-game" class="screen">
   <div class="rpg-header">
     <div>
@@ -570,7 +737,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 
   <div class="rpg-actions">
     <div class="action-btns">
-      <button class="btn-act" onclick="doAction('timeskip')">⏭ Pular Tempo</button>
+      <button class="btn-act" onclick="openTimeskip()">⏭ Pular Tempo</button>
       <button class="btn-act" onclick="doAction('rest')">🌙 Descansar</button>
       <button class="btn-act" onclick="doAction('explore')">🔍 Explorar</button>
       <button class="btn-act" onclick="doAction('talk')">💬 Falar</button>
@@ -588,9 +755,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 </div>
 
 <script>
-// ════════════════════════════════════════════════
-//  FIREBASE CONFIG
-// ════════════════════════════════════════════════
+// ════ FIREBASE ════
 const firebaseConfig = {
   apiKey: "AIzaSyBb5YIkfwRs53x_mTZBjKknZwHE5tPVTzQ",
   authDomain: "sample-firebase-ai-app-737c8.firebaseapp.com",
@@ -606,65 +771,21 @@ const db   = firebase.database();
 let currentUser = null;
 let authMode = 'login';
 
-// ════════════════════════════════════════════════
-//  LORE POR MUNDO
-// ════════════════════════════════════════════════
+// ════ WORLD LORE ════
 const WORLD_LORE = {
-  'Westeros — Game of Thrones': {
-    sensory:'O vento gelado uiva pelas muralhas de pedra antiga, carregando o cheiro de fumaça e sangue.',
-    tense:'Tambores de guerra ecoam ao longe — as casas travam sua dança mortal pelo Trono.',
-    action:'Aço contra aço, o som do combate reverbera entre as pedras frias do castelo.',
-    themes:['traição','honra','sobrevivência','poder'],openingLocation:'Westeros'},
-  'Naruto': {
-    sensory:'O ar vibra com chakra invisível; folhas sussurram segredos enquanto kunais cortam o vento úmido da floresta.',
-    tense:'A tensão entre os clãs engrossa — uma missão mal planejada pode custar tudo.',
-    action:'Selagens de mãos voam em velocidade impossível; o chakra arde como brasa viva.',
-    themes:['vingança','amizade','poder oculto','determinação'],openingLocation:'Aldeia Oculta da Folha'},
-  'Attack on Titan': {
-    sensory:'O cheiro de madeira queimada e metal enferrujado paira pesado; além dos muros, o silêncio é aterrorizante.',
-    tense:'Um rugido distante paralisa o sangue — algo enorme se aproxima dos muros.',
-    action:'O gás dispara, os cabos cortam o ar e a lâmina busca a nuca do Titã.',
-    themes:['sobrevivência','sacrifício','liberdade','segredo'],openingLocation:'Dentro dos Muros'},
-  'The Witcher': {
-    sensory:'A chuva tamborila sobre folhagem densa; cheiro de ervas e prata mistura-se ao barro da estrada.',
-    tense:'Algo observa das sombras — antigo, faminto, paciente além da compreensão humana.',
-    action:'Os sinais rúnicos incendeiam o ar enquanto a espada de prata traça arcos mortais.',
-    themes:['ambiguidade moral','monstros','destino','solidão'],openingLocation:'Estrada entre vilas do Continente'},
-  'Dragon Ball': {
-    sensory:'O ki dos combatentes faz o chão tremer; o horizonte brilha com energia acumulada.',
-    tense:'O poder do oponente sobe além do medidor — o planeta em si começa a sentir a pressão.',
-    action:'Uma explosão de ki ilumina o céu inteiro; a onda de choque derruba árvores a quilômetros.',
-    themes:['superação','amizade','poder extremo','proteção'],openingLocation:'Planeta Terra'},
-  'Harry Potter': {
-    sensory:'O ar cheira a pergaminho velho e magia; velas flutuantes criam sombras dançantes nas paredes de pedra.',
-    tense:'Uma magia escura espreita os corredores — algo proibido foi invocado.',
-    action:'Feitiços cruzam o salão em arcos de luz colorida; escudos mágicos explodem em fragmentos.',
-    themes:['lealdade','coragem','sacrifício','magia'],openingLocation:'Hogwarts'},
-  'Star Wars': {
-    sensory:'A Força sussurra entre as estrelas — um equilíbrio frágil que poucos conseguem sentir.',
-    tense:'O lado sombrio pulsa mais forte; a tentação aguça os sentidos como uma lâmina.',
-    action:'Sabres de luz zumbem e colidem, gerando arcos de energia que iluminam o confronto.',
-    themes:['equilíbrio','redenção','poder','escolha'],openingLocation:'Galáxia muito, muito distante'},
-  'One Piece': {
-    sensory:'Sal e aventura no ar; o oceano infinito brilha como um convite sem fim.',
-    tense:'A Marinha aparece no horizonte — e desta vez trouxe um Admiral.',
-    action:'O Haki de Armamento endurece o punho até virar obsidiana; o impacto ressoa como um canhão.',
-    themes:['liberdade','amizade','sonho','piratas'],openingLocation:'Grand Line'},
-  'Dark Souls': {
-    sensory:'A chama tremeluz nas trevas eternas; cinzas de heróis mortos cobrem o chão frio.',
-    tense:'A maldição do Oco avança — cada derrota consome um fragmento da humanidade.',
-    action:'O parry perfeito ressoa como sino; a estocada de contra-ataque atravessa a armadura.',
-    themes:['desespero','perseverança','ciclos','sacrifício'],openingLocation:'Lordran'},
+  'Westeros — Game of Thrones': {sensory:'O vento gelado uiva pelas muralhas de pedra antiga, carregando o cheiro de fumaça e sangue.',tense:'Tambores de guerra ecoam ao longe — as casas travam sua dança mortal pelo Trono.',action:'Aço contra aço, o som do combate reverbera entre as pedras frias do castelo.',themes:['traição','honra','sobrevivência','poder'],openingLocation:'Westeros'},
+  'Naruto': {sensory:'O ar vibra com chakra invisível; folhas sussurram segredos enquanto kunais cortam o vento úmido da floresta.',tense:'A tensão entre os clãs engrossa — uma missão mal planejada pode custar tudo.',action:'Selagens de mãos voam em velocidade impossível; o chakra arde como brasa viva.',themes:['vingança','amizade','poder oculto','determinação'],openingLocation:'Aldeia Oculta da Folha'},
+  'Attack on Titan': {sensory:'O cheiro de madeira queimada e metal enferrujado paira pesado; além dos muros, o silêncio é aterrorizante.',tense:'Um rugido distante paralisa o sangue — algo enorme se aproxima dos muros.',action:'O gás dispara, os cabos cortam o ar e a lâmina busca a nuca do Titã.',themes:['sobrevivência','sacrifício','liberdade','segredo'],openingLocation:'Dentro dos Muros'},
+  'The Witcher': {sensory:'A chuva tamborila sobre folhagem densa; cheiro de ervas e prata mistura-se ao barro da estrada.',tense:'Algo observa das sombras — antigo, faminto, paciente além da compreensão humana.',action:'Os sinais rúnicos incendeiam o ar enquanto a espada de prata traça arcos mortais.',themes:['ambiguidade moral','monstros','destino','solidão'],openingLocation:'Estrada entre vilas do Continente'},
+  'Dragon Ball': {sensory:'O ki dos combatentes faz o chão tremer; o horizonte brilha com energia acumulada.',tense:'O poder do oponente sobe além do medidor — o planeta em si começa a sentir a pressão.',action:'Uma explosão de ki ilumina o céu inteiro; a onda de choque derruba árvores a quilômetros.',themes:['superação','amizade','poder extremo','proteção'],openingLocation:'Planeta Terra'},
+  'Harry Potter': {sensory:'O ar cheira a pergaminho velho e magia; velas flutuantes criam sombras dançantes nas paredes de pedra.',tense:'Uma magia escura espreita os corredores — algo proibido foi invocado.',action:'Feitiços cruzam o salão em arcos de luz colorida; escudos mágicos explodem em fragmentos.',themes:['lealdade','coragem','sacrifício','magia'],openingLocation:'Hogwarts'},
+  'Star Wars': {sensory:'A Força sussurra entre as estrelas — um equilíbrio frágil que poucos conseguem sentir.',tense:'O lado sombrio pulsa mais forte; a tentação aguça os sentidos como uma lâmina.',action:'Sabres de luz zumbem e colidem, gerando arcos de energia que iluminam o confronto.',themes:['equilíbrio','redenção','poder','escolha'],openingLocation:'Galáxia muito, muito distante'},
+  'One Piece': {sensory:'Sal e aventura no ar; o oceano infinito brilha como um convite sem fim.',tense:'A Marinha aparece no horizonte — e desta vez trouxe um Admiral.',action:'O Haki de Armamento endurece o punho até virar obsidiana; o impacto ressoa como um canhão.',themes:['liberdade','amizade','sonho','piratas'],openingLocation:'Grand Line'},
+  'Dark Souls': {sensory:'A chama tremeluz nas trevas eternas; cinzas de heróis mortos cobrem o chão frio.',tense:'A maldição do Oco avança — cada derrota consome um fragmento da humanidade.',action:'O parry perfeito ressoa como sino; a estocada de contra-ataque atravessa a armadura.',themes:['desespero','perseverança','ciclos','sacrifício'],openingLocation:'Lordran'},
 };
-const WORLD_LORE_DEFAULT = {
-  sensory:'Um mundo misterioso se desdobra ao redor — cheio de segredos e perigos à espreita.',
-  tense:'A tensão aumenta; cada decisão pode mudar o curso desta história.',
-  action:'A adrenalina toma conta — é hora de agir sem hesitar.',
-  themes:['aventura','mistério','poder','destino'],openingLocation:'Início da jornada'};
+const WORLD_LORE_DEFAULT = {sensory:'Um mundo misterioso se desdobra ao redor — cheio de segredos e perigos à espreita.',tense:'A tensão aumenta; cada decisão pode mudar o curso desta história.',action:'A adrenalina toma conta — é hora de agir sem hesitar.',themes:['aventura','mistério','poder','destino'],openingLocation:'Início da jornada'};
 
-// ════════════════════════════════════════════════
-//  ESTADO NARRATIVO
-// ════════════════════════════════════════════════
+// ════ NARRATIVE STATE ════
 let narrativeState = 'calmo';
 function setNarrativeState(state) {
   narrativeState = state;
@@ -672,491 +793,465 @@ function setNarrativeState(state) {
   if (bar) bar.className = 'narrative-state-bar ' + state;
 }
 
-// ════════════════════════════════════════════════
-//  AUTH
-// ════════════════════════════════════════════════
+// ════ AUTH ════
 function switchTab(mode) {
   authMode = mode;
-  document.getElementById('tab-login').classList.toggle('active', mode === 'login');
-  document.getElementById('tab-register').classList.toggle('active', mode === 'register');
-  document.getElementById('btn-auth').textContent = mode === 'login' ? 'ENTRAR' : 'CRIAR CONTA';
-  document.getElementById('auth-err').textContent = '';
+  document.getElementById('tab-login').classList.toggle('active', mode==='login');
+  document.getElementById('tab-register').classList.toggle('active', mode==='register');
+  document.getElementById('btn-auth').textContent = mode==='login'?'ENTRAR':'CRIAR CONTA';
+  document.getElementById('auth-err').textContent='';
 }
 async function doAuth() {
-  const email = document.getElementById('auth-email').value.trim();
-  const pass  = document.getElementById('auth-pass').value;
-  const errEl = document.getElementById('auth-err');
-  const btn   = document.getElementById('btn-auth');
-  if (!email || !pass) { errEl.textContent = 'Preencha e-mail e senha.'; return; }
-  if (pass.length < 6)  { errEl.textContent = 'Senha mínima: 6 caracteres.'; return; }
-  btn.disabled = true; btn.textContent = '...'; errEl.textContent = '';
+  const email=document.getElementById('auth-email').value.trim();
+  const pass=document.getElementById('auth-pass').value;
+  const errEl=document.getElementById('auth-err');
+  const btn=document.getElementById('btn-auth');
+  if (!email||!pass){errEl.textContent='Preencha e-mail e senha.';return;}
+  if (pass.length<6){errEl.textContent='Senha mínima: 6 caracteres.';return;}
+  btn.disabled=true;btn.textContent='...';errEl.textContent='';
   try {
-    if (authMode === 'login') await auth.signInWithEmailAndPassword(email, pass);
-    else await auth.createUserWithEmailAndPassword(email, pass);
+    if (authMode==='login') await auth.signInWithEmailAndPassword(email,pass);
+    else await auth.createUserWithEmailAndPassword(email,pass);
   } catch(e) {
-    const msgs = {
-      'auth/user-not-found':'Usuário não encontrado.',
-      'auth/wrong-password':'Senha incorreta.',
-      'auth/email-already-in-use':'E-mail já cadastrado. Tente fazer login.',
-      'auth/invalid-email':'E-mail inválido.',
-      'auth/weak-password':'Senha muito fraca.',
-      'auth/invalid-credential':'E-mail ou senha incorretos.'
-    };
-    errEl.textContent = msgs[e.code] || e.message;
-    btn.disabled = false;
-    btn.textContent = authMode === 'login' ? 'ENTRAR' : 'CRIAR CONTA';
+    const msgs={'auth/user-not-found':'Usuário não encontrado.','auth/wrong-password':'Senha incorreta.','auth/email-already-in-use':'E-mail já cadastrado.','auth/invalid-email':'E-mail inválido.','auth/weak-password':'Senha muito fraca.','auth/invalid-credential':'E-mail ou senha incorretos.'};
+    errEl.textContent=msgs[e.code]||e.message;
+    btn.disabled=false;btn.textContent=authMode==='login'?'ENTRAR':'CRIAR CONTA';
   }
 }
-function playAnon() { currentUser = null; goScreen('s-world'); renderUserBar(); checkAndShowResume(); }
-async function logout() { await auth.signOut(); currentUser = null; goScreen('s-auth'); }
-auth.onAuthStateChanged(user => {
+function playAnon(){currentUser=null;goScreen('s-world');renderUserBar();checkAndShowResume();}
+async function logout(){await auth.signOut();currentUser=null;goScreen('s-auth');}
+auth.onAuthStateChanged(user=>{
   document.getElementById('loading-overlay').classList.add('hide');
-  if (user) { currentUser = user; renderUserBar(); goScreen('s-world'); checkAndShowResume(); }
-  else {
-    const inGame = ['s-world','s-char','s-game'].some(id => document.getElementById(id).classList.contains('active'));
-    if (!inGame) goScreen('s-auth');
-  }
+  if (user){currentUser=user;renderUserBar();goScreen('s-world');checkAndShowResume();}
+  else{const inGame=['s-world','s-char','s-game'].some(id=>document.getElementById(id).classList.contains('active'));if(!inGame)goScreen('s-auth');}
 });
-function renderUserBar() {
-  const bar = document.getElementById('user-bar');
-  if (!bar) return;
-  if (currentUser) {
-    bar.innerHTML = `<span style="font-size:10px;color:var(--text3);font-style:italic;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${currentUser.email}</span><button onclick="logout()" style="background:none;border:1px solid var(--border2);color:var(--text3);font-size:11px;padding:5px 10px;border-radius:3px;cursor:pointer;font-family:var(--fb);white-space:nowrap;min-height:36px">Sair</button>`;
-  } else {
-    bar.innerHTML = `<button class="btn-ghost" style="font-size:11px;padding:6px 12px" onclick="goScreen('s-auth')">Entrar</button>`;
-  }
+function renderUserBar(){
+  const bar=document.getElementById('user-bar');if(!bar)return;
+  if(currentUser){bar.innerHTML=`<span style="font-size:10px;color:var(--text3);font-style:italic;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${currentUser.email}</span><button onclick="logout()" style="background:none;border:1px solid var(--border2);color:var(--text3);font-size:11px;padding:5px 10px;border-radius:3px;cursor:pointer;font-family:var(--fb);white-space:nowrap;min-height:36px">Sair</button>`;}
+  else{bar.innerHTML=`<button class="btn-ghost" style="font-size:11px;padding:6px 12px" onclick="goScreen('s-auth')">Entrar</button>`;}
 }
 
-// ════════════════════════════════════════════════
-//  PERSISTÊNCIA
-// ════════════════════════════════════════════════
-const LS_KEY = 'rpg_session_v1';
-let saveTimeout = null;
-function getDbRef() { return currentUser ? db.ref(`users/${currentUser.uid}/session`) : null; }
-function buildSessionPayload() {
-  return { charData, stats, inventory, conversationHistory: conversationHistory.slice(-80), savedAt: Date.now() };
-}
-function saveToLocalStorage(p) { try { localStorage.setItem(LS_KEY, JSON.stringify(p)); } catch(e) {} }
-function loadFromLocalStorage() { try { const r = localStorage.getItem(LS_KEY); return r ? JSON.parse(r) : null; } catch(e) { return null; } }
-function clearLocalStorage() { try { localStorage.removeItem(LS_KEY); } catch(e) {} }
-function saveToFirebase() {
-  const payload = buildSessionPayload();
-  saveToLocalStorage(payload);
-  const ref = getDbRef();
-  if (!ref) {
-    const el = document.getElementById('sync-badge');
-    if (el) { el.textContent = '💾 Salvo localmente'; el.className = 'sync-badge ok'; }
-    return;
-  }
-  const el = document.getElementById('sync-badge');
-  if (el) { el.textContent = '⏳ Salvando...'; el.className = 'sync-badge'; }
+// ════ PERSISTENCE ════
+const LS_KEY='rpg_session_v1';
+let saveTimeout=null;
+function getDbRef(){return currentUser?db.ref(`users/${currentUser.uid}/session`):null;}
+function buildSessionPayload(){return{charData,stats,inventory,conversationHistory:conversationHistory.slice(-80),savedAt:Date.now()};}
+function saveToLocalStorage(p){try{localStorage.setItem(LS_KEY,JSON.stringify(p));}catch(e){}}
+function loadFromLocalStorage(){try{const r=localStorage.getItem(LS_KEY);return r?JSON.parse(r):null;}catch(e){return null;}}
+function clearLocalStorage(){try{localStorage.removeItem(LS_KEY);}catch(e){}}
+function saveToFirebase(){
+  const payload=buildSessionPayload();saveToLocalStorage(payload);
+  const ref=getDbRef();
+  if(!ref){const el=document.getElementById('sync-badge');if(el){el.textContent='💾 Salvo localmente';el.className='sync-badge ok';}return;}
+  const el=document.getElementById('sync-badge');if(el){el.textContent='⏳ Salvando...';el.className='sync-badge';}
   clearTimeout(saveTimeout);
-  saveTimeout = setTimeout(async () => {
-    try {
-      await ref.set(payload);
-      const ok = document.getElementById('sync-badge');
-      if (ok) { ok.textContent = '☁ Salvo na nuvem'; ok.className = 'sync-badge ok'; }
-    } catch(e) {
-      const bad = document.getElementById('sync-badge');
-      if (bad) { bad.textContent = '⚠ Erro: ' + (e.code || e.message); bad.className = 'sync-badge'; }
-    }
-  }, 1200);
+  saveTimeout=setTimeout(async()=>{
+    try{await ref.set(payload);const ok=document.getElementById('sync-badge');if(ok){ok.textContent='☁ Salvo na nuvem';ok.className='sync-badge ok';}}
+    catch(e){const bad=document.getElementById('sync-badge');if(bad){bad.textContent='⚠ Erro: '+(e.code||e.message);bad.className='sync-badge';}}
+  },1200);
 }
-async function loadSession() {
-  const ref = getDbRef();
-  if (ref) {
-    try { const snap = await ref.once('value'); const val = snap.val(); if (val && val.charData) return val; } catch(e) {}
-  }
+async function loadSession(){
+  const ref=getDbRef();
+  if(ref){try{const snap=await ref.once('value');const val=snap.val();if(val&&val.charData)return val;}catch(e){}}
   return loadFromLocalStorage();
 }
-function applySession(session) {
-  charData = session.charData; stats = session.stats;
-  inventory = session.inventory || []; conversationHistory = session.conversationHistory || [];
+function applySession(session){charData=session.charData;stats=session.stats;inventory=session.inventory||[];conversationHistory=session.conversationHistory||[];}
+async function checkAndShowResume(){
+  const session=await loadSession();
+  if(!session||!session.charData||!session.charData.name){document.getElementById('resume-banner').style.display='none';return;}
+  const c=session.charData;const date=session.savedAt?new Date(session.savedAt).toLocaleString('pt-BR'):'—';
+  document.getElementById('resume-banner').style.display='';
+  document.getElementById('resume-info').textContent=`${c.avatar||'🧙'} ${c.name} · ${c.cls} · ${c.world}`;
+  document.getElementById('resume-date').textContent=`Salvo em ${date}`;
+  window._pendingSession=session;
 }
-async function checkAndShowResume() {
-  const session = await loadSession();
-  if (!session || !session.charData || !session.charData.name) {
-    document.getElementById('resume-banner').style.display = 'none'; return;
-  }
-  const c = session.charData;
-  const date = session.savedAt ? new Date(session.savedAt).toLocaleString('pt-BR') : '—';
-  document.getElementById('resume-banner').style.display = '';
-  document.getElementById('resume-info').textContent = `${c.avatar||'🧙'} ${c.name} · ${c.cls} · ${c.world}`;
-  document.getElementById('resume-date').textContent = `Salvo em ${date}`;
-  window._pendingSession = session;
-}
-function resumeGame() {
-  const session = window._pendingSession;
-  if (!session) { showToast('Nenhuma sessão encontrada.'); return; }
+function resumeGame(){
+  const session=window._pendingSession;if(!session){showToast('Nenhuma sessão encontrada.');return;}
   applySession(session);
-  if (!charData.avatar) charData.avatar = '🧙';
-  if (!charData.clsIcon) charData.clsIcon = '⚔';
-  if (!charData.customSkill) charData.customSkill = null;
-  populateSidebar(); updateStats(); updateInventory();
-  const chatEl = document.getElementById('chat-msgs');
-  chatEl.innerHTML = '';
-  conversationHistory.forEach(m => {
-    if (m.role === 'assistant') addMsg('gm', m.content);
-    else if (m.role === 'user') addMsg('player', m.content);
-  });
-  chatEl.scrollTop = chatEl.scrollHeight;
-  const btnC = document.getElementById('btn-custom-skill');
-  if (btnC) {
-    if (charData.customSkill) { btnC.style.display = ''; btnC.textContent = charData.customSkill.icon + ' ' + charData.customSkill.name; }
-    else btnC.style.display = 'none';
+  if(!charData.avatar)charData.avatar='🧙';if(!charData.clsIcon)charData.clsIcon='⚔';if(!charData.customSkill)charData.customSkill=null;
+  populateSidebar();updateStats();updateInventory();
+  const chatEl=document.getElementById('chat-msgs');chatEl.innerHTML='';
+  conversationHistory.forEach(m=>{if(m.role==='assistant')addMsg('gm',m.content);else if(m.role==='user')addMsg('player',m.content);});
+  chatEl.scrollTop=chatEl.scrollHeight;
+  const btnC=document.getElementById('btn-custom-skill');
+  if(btnC){if(charData.customSkill){btnC.style.display='';btnC.textContent=charData.customSkill.icon+' '+charData.customSkill.name;}else btnC.style.display='none';}
+  setNarrativeState('calmo');goScreen('s-game');document.getElementById('chat-input').focus();
+}
+function discardSave(){
+  if(!confirm('Apagar a aventura salva e começar do zero?'))return;
+  clearLocalStorage();window._pendingSession=null;document.getElementById('resume-banner').style.display='none';
+  const ref=getDbRef();if(ref)ref.remove().catch(()=>{});
+}
+
+// ════ DATA ════
+const AVATARS=['🧙','⚔️','🏹','🛡️','🗡️','🔮','🐺','🦅','💀','🌟','🍃','🔥','❄️','⚡','🌊','🧝','🤺','👁️','🦊','🐉'];
+const WORLD_CLASSES={'Westeros — Game of Thrones':[{icon:'⚔',name:'Cavaleiro'},{icon:'🏹',name:'Arqueiro'},{icon:'🔮',name:'Maester'},{icon:'🗡',name:'Assassino'},{icon:'🛡',name:'Guarda'},{icon:'👑',name:'Nobre'}],'Naruto':[{icon:'🍃',name:'Ninjutsu'},{icon:'🔥',name:'Taijutsu'},{icon:'💧',name:'Genjutsu'},{icon:'⚡',name:'Raikage'},{icon:'🌸',name:'Médico Ninja'},{icon:'🐸',name:'Senjutsu'}],'Attack on Titan':[{icon:'⚙',name:'Legião Explor.'},{icon:'🛡',name:'Guarda Muralha'},{icon:'🔧',name:'Mecânico 3DM'},{icon:'🏹',name:'Atirador'},{icon:'🧠',name:'Estrategista'},{icon:'💪',name:'Corpo a Corpo'}],'The Witcher':[{icon:'🐺',name:'Witcher'},{icon:'🔮',name:'Mago'},{icon:'🏹',name:'Arqueiro'},{icon:'🗡',name:'Bardo'},{icon:'⚔',name:'Cavaleiro'},{icon:'🌿',name:'Druida'}],'Dragon Ball':[{icon:'🔴',name:'Guerreiro Z'},{icon:'⚡',name:'Super Sayajin'},{icon:'🌟',name:'Namekiano'},{icon:'🤺',name:'Mestre Artes'},{icon:'💜',name:'Majin'},{icon:'🤖',name:'Androide'}],'Harry Potter':[{icon:'🪄',name:'Auror'},{icon:'📚',name:'Acadêmico'},{icon:'🌿',name:'Herbologista'},{icon:'🦉',name:'Adivinho'},{icon:'⚗',name:'Pocionista'},{icon:'🐍',name:'Parsel'}],'Star Wars':[{icon:'💙',name:'Jedi'},{icon:'❤',name:'Sith'},{icon:'🔫',name:'Caçador'},{icon:'🚀',name:'Piloto'},{icon:'🔧',name:'Mecânico'},{icon:'🎲',name:'Contrabandista'}],'One Piece':[{icon:'✊',name:'Usuário Akuma'},{icon:'⚔',name:'Espadachim'},{icon:'🔫',name:'Atirador'},{icon:'🏴‍☠️',name:'Pirata Livre'},{icon:'🌊',name:'Nadador'},{icon:'💊',name:'Médico'}],'Dark Souls':[{icon:'⚔',name:'Guerreiro'},{icon:'🔮',name:'Feiticeiro'},{icon:'🕯',name:'Clérigo'},{icon:'🗡',name:'Ladrão'},{icon:'🛡',name:'Cavaleiro'},{icon:'🌑',name:'Sem-chama'}]};
+const WORLD_SKILLS={'Westeros — Game of Thrones':[{icon:'⚔',name:'Esgrima',desc:'Mestre com lâminas'},{icon:'🛡',name:'Resistência',desc:'Absorve dano extra'},{icon:'🏇',name:'Equitação',desc:'Cavalga com maestria'},{icon:'🗺',name:'Estratégia',desc:'Prevê ações inimigas'},{icon:'🌿',name:'Medicina',desc:'Cura ferimentos'},{icon:'🗣',name:'Persuasão',desc:'Influencia NPCs'},{icon:'🏹',name:'Arco',desc:'Precisão à distância'},{icon:'🔥',name:'Intimidação',desc:'Intimida adversários'}],'Naruto':[{icon:'🔥',name:'Katon',desc:'Jutsus de fogo'},{icon:'💧',name:'Suiton',desc:'Jutsus de água'},{icon:'⚡',name:'Raiton',desc:'Jutsus de raio'},{icon:'🌿',name:'Mokuton',desc:'Jutsus de madeira'},{icon:'🌪',name:'Futon',desc:'Jutsus de vento'},{icon:'👥',name:'Kage Bunshin',desc:'Cria clones físicos'},{icon:'🐸',name:'Senjutsu',desc:'Usa chakra natureza'},{icon:'💜',name:'Genjutsu',desc:'Ilusões poderosas'}],'Attack on Titan':[{icon:'⚙',name:'3DM Elite',desc:'Agilidade extrema'},{icon:'🗡',name:'Duplas Lâminas',desc:'Golpes precisos'},{icon:'💪',name:'Força Bruta',desc:'Dano aumentado'},{icon:'🧠',name:'Análise Tática',desc:'Lê padrões Titãs'},{icon:'🏃',name:'Fuga Ágil',desc:'Esquiva aprimorada'},{icon:'❤',name:'Primeiros Socorros',desc:'Recupera aliados'},{icon:'🎯',name:'Mira Precisa',desc:'Golpe no ponto cego'},{icon:'🛡',name:'Cobertura',desc:'Protege companheiros'}],'The Witcher':[{icon:'🐺',name:'Sinais',desc:'Magia rúnica de combate'},{icon:'⚗',name:'Alquimia',desc:'Poções e mutações'},{icon:'🗡',name:'Espadas',desc:'Técnicas de espadachim'},{icon:'🧪',name:'Venenos',desc:'Envenena alvos'},{icon:'🌿',name:'Herbalism',desc:'Coleta ingredientes raros'},{icon:'👁',name:'Olho de Gato',desc:'Visão no escuro'},{icon:'🐎',name:'Equitação',desc:'Controle de Sardenha'},{icon:'🎵',name:'Persuasão',desc:'Negocia com qualquer um'}],'Dragon Ball':[{icon:'⚡',name:'Kamehameha',desc:'Raio de energia devastador'},{icon:'🌀',name:'Kaioken',desc:'Multiplica poder temporariamente'},{icon:'💥',name:'Galick Gun',desc:'Explosão de energia'},{icon:'🌟',name:'Spirit Bomb',desc:'Bola de energia cósmica'},{icon:'💨',name:'Instant Transmission',desc:'Teletransporte instantâneo'},{icon:'🛡',name:'Ki Shield',desc:'Escudo de energia'},{icon:'👊',name:'Rush Combo',desc:'Série de golpes rápidos'},{icon:'🔮',name:'Sensor de Ki',desc:'Detecta poderes ocultos'}],'Harry Potter':[{icon:'🪄',name:'Expelliarmus',desc:'Desarma o oponente'},{icon:'🔮',name:'Legilimência',desc:'Lê mentes'},{icon:'🌀',name:'Apparition',desc:'Teletransporte mágico'},{icon:'🦌',name:'Patronus',desc:'Proteção contra Dementadores'},{icon:'🔥',name:'Incendio',desc:'Controla chamas'},{icon:'🌿',name:'Herbologia',desc:'Plantas mágicas poderosas'},{icon:'🕵',name:'Disillusionment',desc:'Torna-se quase invisível'},{icon:'⚗',name:'Poções',desc:'Cria poções avançadas'}],'Star Wars':[{icon:'💙',name:'Telecinese',desc:'Move objetos com a Força'},{icon:'⚡',name:'Relâmpago Sith',desc:'Descarga de energia sombria'},{icon:'🧘',name:'Meditação Jedi',desc:'Restaura Força interior'},{icon:'🗡',name:'Sabre de Luz',desc:'Técnicas avançadas de combate'},{icon:'👁',name:'Visão da Força',desc:'Prevê ações inimigas'},{icon:'🌀',name:'Dash da Força',desc:'Velocidade sobre-humana'},{icon:'🛡',name:'Absorção',desc:'Desvia ataques'},{icon:'🎭',name:'Persuasão Jedi',desc:'Influencia mentes fracas'}],'One Piece':[{icon:'✊',name:'Haki Armamento',desc:'Endurece o corpo como armadura'},{icon:'👁',name:'Haki Observação',desc:'Prevê movimentos inimigos'},{icon:'💥',name:'Haki Conquistador',desc:'Dobra a vontade dos fracos'},{icon:'🌊',name:'Nado Livre',desc:'Velocidade extrema na água'},{icon:'⚔',name:'Ittoryu',desc:'Técnicas de um sabre'},{icon:'🔥',name:'Poder Akuma',desc:'Habilidade especial da fruta'},{icon:'🏴‍☠️',name:'Liderança',desc:'Inspira aliados em batalha'},{icon:'💊',name:'Cirurgia',desc:'Opera em condições extremas'}],'Dark Souls':[{icon:'🔥',name:'Pyromancia',desc:'Manipula chamas das trevas'},{icon:'✝',name:'Milagres',desc:'Cura e raios divinos'},{icon:'🔮',name:'Feitiçaria',desc:'Projéteis de almas'},{icon:'🛡',name:'Parry',desc:'Deflexão e contra-ataque'},{icon:'💀',name:'Invocação',desc:'Chama espíritos aliados'},{icon:'🌑',name:'Abyss Walk',desc:'Caminha pelo abismo'},{icon:'⚔',name:'Stance',desc:'Golpe especial de arma'},{icon:'🍂',name:'Resistência',desc:'Absorve dano de status'}]};
+const WORLD_SKILLS_DEFAULT=[{icon:'⚔',name:'Combate',desc:'Aumenta dano em luta'},{icon:'🛡',name:'Defesa',desc:'Reduz dano recebido'},{icon:'🏹',name:'Precisão',desc:'Acertos críticos +30%'},{icon:'🔮',name:'Magia',desc:'Potência mágica'},{icon:'💨',name:'Agilidade',desc:'Esquiva e velocidade'},{icon:'🌿',name:'Cura',desc:'Recupera vida lentamente'},{icon:'🗣',name:'Diplomacia',desc:'Resolve conflitos'},{icon:'🔍',name:'Percepção',desc:'Detecta perigos ocultos'}];
+const TRAITS=['Corajoso e impulsivo','Calculista e frio','Leal até a morte','Solitário e misterioso','Carismático e brincalhão','Honrado e rígido','Cínico e sarcástico','Curioso e analítico','Protetor dos fracos','Ambicioso e determinado','Compassivo e gentil','Desconfiado e cauteloso'];
+const ATTR_NAMES=['FOR','DES','CON','INT','SAB','CAR'];
+const ATTR_FULL=['Força','Destreza','Constituição','Inteligência','Sabedoria','Carisma'];
+
+// ════ STATE ════
+let currentWorld='';
+let charData={};
+let attrBase=[8,8,8,8,8,8];
+let attrBonus=[0,0,0,0,0,0];
+let totalPts=10;
+let selectedClass=-1;
+let selectedSkills=[];
+let selectedTrait='';
+let selectedAvatar='🧙';
+let conversationHistory=[];
+let busy=false;
+let stats={hp:100,maxHp:100,mana:60,maxMana:60,stam:90,maxStam:90};
+let inventory=[];
+
+// ════ TIMESKIP STATE ════
+let tsSelectedDuration = '';
+let tsSelectedActivity = null;
+
+// ════ UI HELPERS ════
+function goScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+function showToast(msg,duration=4000){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),duration);}
+
+// ════ TIMESKIP MODAL ════
+function openTimeskip(){
+  if(busy)return;
+  tsSelectedDuration='';
+  tsSelectedActivity=null;
+  document.querySelectorAll('.ts-dur-btn').forEach(b=>b.classList.remove('selected'));
+  document.querySelectorAll('.ts-act-opt').forEach(b=>b.classList.remove('selected'));
+  document.getElementById('ts-custom-area').classList.remove('show');
+  document.getElementById('ts-custom-text').value='';
+  updateTimeskipPreview();
+  document.getElementById('ts-modal').classList.add('open');
+}
+function closeTimeskip(){
+  document.getElementById('ts-modal').classList.remove('open');
+}
+function selectDuration(btn, label){
+  document.querySelectorAll('.ts-dur-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  tsSelectedDuration=label;
+  updateTimeskipPreview();
+}
+function selectActivity(el, key, name, desc){
+  document.querySelectorAll('.ts-act-opt').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+  tsSelectedActivity={key,name,desc};
+  const customArea=document.getElementById('ts-custom-area');
+  if(key==='custom') customArea.classList.add('show');
+  else customArea.classList.remove('show');
+  updateTimeskipPreview();
+}
+function updateTimeskipPreview(){
+  const previewText=document.getElementById('ts-preview-text');
+  const goBtn=document.getElementById('ts-btn-go');
+  const ready=tsSelectedDuration&&tsSelectedActivity;
+  goBtn.disabled=!ready;
+  if(!tsSelectedDuration&&!tsSelectedActivity){
+    previewText.innerHTML='Escolha a duração e a atividade para ver o resumo da sua jornada.';
+    document.getElementById('ts-preview').style.borderColor='var(--border2)';
+    return;
   }
+  let text='';
+  const name=charData&&charData.name?charData.name:'o personagem';
+  const trait=charData&&charData.trait?charData.trait:'livre espírito';
+  if(tsSelectedDuration&&tsSelectedActivity){
+    const actLabel=tsSelectedActivity.key==='custom'
+      ? (document.getElementById('ts-custom-text').value.trim()||'algo misterioso')
+      : tsSelectedActivity.name.toLowerCase();
+    text=`<strong>${name}</strong> passa <strong>${tsSelectedDuration}</strong> ${previewActivityVerb(tsSelectedActivity.key)}. Com o traço "<em>${trait}</em>", o Mestre narrará como esse tempo o moldou.`;
+    document.getElementById('ts-preview').style.borderColor='var(--gold)';
+  } else if(tsSelectedDuration){
+    text=`<strong>${tsSelectedDuration}</strong> vão passar... escolha o que faz nesse período.`;
+    document.getElementById('ts-preview').style.borderColor='var(--border2)';
+  } else {
+    text=`Escolha quanto tempo passa enquanto <strong>${name}</strong> ${previewActivityVerb(tsSelectedActivity.key)}.`;
+    document.getElementById('ts-preview').style.borderColor='var(--border2)';
+  }
+  previewText.innerHTML=text;
+}
+function previewActivityVerb(key){
+  const verbs={treino:'em treinamento intenso',descanso:'descansando e se recuperando',missao:'em missão',estudo:'estudando e pesquisando',viagem:'viajando por terras distantes',social:'navegando política e alianças',espiritual:'em meditação e busca interior',escondido:'escondido como foragido',trabalho:'trabalhando entre o povo comum',cura_espiritual:'em luto e reflexão profunda',busca:'em busca pessoal obsessiva',custom:'seguindo seu próprio caminho'};
+  return verbs[key]||'vivendo sua aventura';
+}
+
+function buildTimeskipPrompt(){
+  const c=charData;
+  const lore=getLore();
+  const dur=tsSelectedDuration;
+  const act=tsSelectedActivity;
+  const customDetail=act.key==='custom'?document.getElementById('ts-custom-text').value.trim():'';
+  const skillList=c.skills?c.skills.map(s=>s.name).join(', '):'habilidades variadas';
+  const customSkillPart=c.customSkill?`\nHabilidade própria: ${c.customSkill.name} (${c.customSkill.desc}).`:'';
+
+  // Directives por atividade
+  const actDirectives={
+    treino:`Foque na evolução das habilidades de ${c.name}: como o corpo mudou, o que dominou, os erros que custaram suor. Mostre um momento-chave de avanço. Conecte ao traço "${c.trait}".`,
+    descanso:`Narre recuperação física e psicológica. O que ${c.name} pensou durante o silêncio? Que memórias ou pesadelos surgiram? Mostre uma pequena descoberta pessoal ou mudança interior.`,
+    missao:`Faça um resumo épico e fragmentado das missões: um momento de glória, um custo inesperado, um inimigo lembrado. Conecte ao mundo "${c.world}" com fidelidade ao lore.`,
+    estudo:`Mostre o que foi aprendido, o preço intelectual e uma descoberta que muda a perspectiva de ${c.name} sobre o mundo "${c.world}". Use o traço "${c.trait}" para colorir a forma de aprender.`,
+    viagem:`Descreva 2–3 cenários contrastantes. Sons, cheiros, rostos que ficaram. Algo que ${c.name} não esperava encontrar. Termine com ${c.name} chegando a algum lugar ou tendo uma epifania.`,
+    social:`Narre os bastidores: quem ganhou confiança, quem foi decepcionante. Uma aliança arriscada. Um segredo ouvido. O mundo "${c.world}" reagindo às ações de ${c.name}.`,
+    espiritual:`Use linguagem poética e interna. Silêncio, visões, dúvidas que se tornaram certezas (ou vice-versa). O traço "${c.trait}" deve guiar profundamente essa narração.`,
+    escondido:`Narre a paranoia e a disciplina de viver na sombra. Um quase-encontro com inimigos. O preço de esconder a verdadeira identidade. Conecte ao conflito principal.`,
+    trabalho:`Mostre o contraste entre a vida comum e o que ${c.name} realmente é. Um NPC que percebeu algo diferente. O tédio que afia o foco para o que realmente importa.`,
+    cura_espiritual:`Explore a dor sem censura. O que foi perdido. O que foi aceito. Uma decisão tomada no silêncio que vai mudar tudo daqui em diante. Traço "${c.trait}" em destaque.`,
+    busca:`Uma perseguição obsessiva com fragmentos de progresso e frustrações. Uma pista encontrada. Um preço pago. A obsessão crescendo ou se transformando.`,
+    custom:`Adapte a narração ao que o jogador definiu: "${customDetail||'algo pessoal e único'}". Seja fiel e criativo.`
+  };
+
+  const directive=actDirectives[act.key]||actDirectives.custom;
+
+  return `PULO DE TEMPO: ${dur} passam enquanto ${c.name} ${previewActivityVerb(act.key)}.
+
+ATIVIDADE PRINCIPAL: ${act.name} — ${act.desc}${customDetail?'\nDetalhe do jogador: '+customDetail:''}
+
+DADOS DO PERSONAGEM:
+- Classe: ${c.cls} | Traço: ${c.trait}
+- Habilidades: ${skillList}${customSkillPart}
+- Aparência: ${c.build}, cabelo ${c.hair}, olhos ${c.eyes}
+${c.backstory?'- Backstory: '+c.backstory:''}
+
+DIRETRIZES DE NARRAÇÃO PARA ESSE PULO:
+${directive}
+
+ESTRUTURA OBRIGATÓRIA:
+P1 (AMBIENTAÇÃO): Um flash sensorial do momento em que o tempo começa a passar. Tom de "${lore.sensory}".
+P2 (O PERÍODO): Narre ${dur} de forma comprimida e poética — fragmentos de cenas, não um diário. 3 a 5 momentos-chave em parágrafos curtos. Mostre como o traço "${c.trait}" moldou cada escolha.
+P3 (MUDANÇA): O que mudou em ${c.name}? Uma habilidade nova, uma cicatriz, uma relação, uma certeza perdida. Concreto e específico.
+P4 (RETORNO): ${c.name} "desperta" para o presente. O mundo mudou ao redor? Há uma ameaça esperando, uma oportunidade surgindo ou uma consequência das ${dur} anteriores?
+FIM: Termine com uma decisão urgente que exige ação imediata — sem listar opções.`;
+}
+
+function executeTimeskip(){
+  if(!tsSelectedDuration||!tsSelectedActivity){showToast('Escolha a duração e a atividade.');return;}
+  closeTimeskip();
+  const dur=tsSelectedDuration;
+  const act=tsSelectedActivity;
+  // Adicionar mensagem de ação no chat
+  const chatEl=document.getElementById('chat-msgs');
+  const d=document.createElement('div');
+  d.className='msg-timeskip';
+  d.textContent=`⏭ ${dur.toUpperCase()} PASSAM · ${act.name.toUpperCase()}`;
+  chatEl.appendChild(d);chatEl.scrollTop=chatEl.scrollHeight;
+  // Aplicar efeitos de stats baseados na atividade
+  applyTimeskipStatEffects(act.key,dur);
+  // Mudar estado narrativo
   setNarrativeState('calmo');
-  goScreen('s-game');
-  document.getElementById('chat-input').focus();
-}
-function discardSave() {
-  if (!confirm('Apagar a aventura salva e começar do zero?')) return;
-  clearLocalStorage(); window._pendingSession = null;
-  document.getElementById('resume-banner').style.display = 'none';
-  const ref = getDbRef(); if (ref) ref.remove().catch(() => {});
+  // Chamar o GM
+  callGM(buildTimeskipPrompt());
 }
 
-// ════════════════════════════════════════════════
-//  DATA
-// ════════════════════════════════════════════════
-const AVATARS = ['🧙','⚔️','🏹','🛡️','🗡️','🔮','🐺','🦅','💀','🌟','🍃','🔥','❄️','⚡','🌊','🧝','🤺','👁️','🦊','🐉'];
-const WORLD_CLASSES = {
-  'Westeros — Game of Thrones':[{icon:'⚔',name:'Cavaleiro'},{icon:'🏹',name:'Arqueiro'},{icon:'🔮',name:'Maester'},{icon:'🗡',name:'Assassino'},{icon:'🛡',name:'Guarda'},{icon:'👑',name:'Nobre'}],
-  'Naruto':[{icon:'🍃',name:'Ninjutsu'},{icon:'🔥',name:'Taijutsu'},{icon:'💧',name:'Genjutsu'},{icon:'⚡',name:'Raikage'},{icon:'🌸',name:'Médico Ninja'},{icon:'🐸',name:'Senjutsu'}],
-  'Attack on Titan':[{icon:'⚙',name:'Legião Explor.'},{icon:'🛡',name:'Guarda Muralha'},{icon:'🔧',name:'Mecânico 3DM'},{icon:'🏹',name:'Atirador'},{icon:'🧠',name:'Estrategista'},{icon:'💪',name:'Corpo a Corpo'}],
-  'The Witcher':[{icon:'🐺',name:'Witcher'},{icon:'🔮',name:'Mago'},{icon:'🏹',name:'Arqueiro'},{icon:'🗡',name:'Bardo'},{icon:'⚔',name:'Cavaleiro'},{icon:'🌿',name:'Druida'}],
-  'Dragon Ball':[{icon:'🔴',name:'Guerreiro Z'},{icon:'⚡',name:'Super Sayajin'},{icon:'🌟',name:'Namekiano'},{icon:'🤺',name:'Mestre Artes'},{icon:'💜',name:'Majin'},{icon:'🤖',name:'Androide'}],
-  'Harry Potter':[{icon:'🪄',name:'Auror'},{icon:'📚',name:'Acadêmico'},{icon:'🌿',name:'Herbologista'},{icon:'🦉',name:'Adivinho'},{icon:'⚗',name:'Pocionista'},{icon:'🐍',name:'Parsel'}],
-  'Star Wars':[{icon:'💙',name:'Jedi'},{icon:'❤',name:'Sith'},{icon:'🔫',name:'Caçador'},{icon:'🚀',name:'Piloto'},{icon:'🔧',name:'Mecânico'},{icon:'🎲',name:'Contrabandista'}],
-  'One Piece':[{icon:'✊',name:'Usuário Akuma'},{icon:'⚔',name:'Espadachim'},{icon:'🔫',name:'Atirador'},{icon:'🏴‍☠️',name:'Pirata Livre'},{icon:'🌊',name:'Nadador'},{icon:'💊',name:'Médico'}],
-  'Dark Souls':[{icon:'⚔',name:'Guerreiro'},{icon:'🔮',name:'Feiticeiro'},{icon:'🕯',name:'Clérigo'},{icon:'🗡',name:'Ladrão'},{icon:'🛡',name:'Cavaleiro'},{icon:'🌑',name:'Sem-chama'}],
-};
-const WORLD_SKILLS = {
-  'Westeros — Game of Thrones':[{icon:'⚔',name:'Esgrima',desc:'Mestre com lâminas'},{icon:'🛡',name:'Resistência',desc:'Absorve dano extra'},{icon:'🏇',name:'Equitação',desc:'Cavalga com maestria'},{icon:'🗺',name:'Estratégia',desc:'Prevê ações inimigas'},{icon:'🌿',name:'Medicina',desc:'Cura ferimentos'},{icon:'🗣',name:'Persuasão',desc:'Influencia NPCs'},{icon:'🏹',name:'Arco',desc:'Precisão à distância'},{icon:'🔥',name:'Intimidação',desc:'Intimida adversários'}],
-  'Naruto':[{icon:'🔥',name:'Katon',desc:'Jutsus de fogo'},{icon:'💧',name:'Suiton',desc:'Jutsus de água'},{icon:'⚡',name:'Raiton',desc:'Jutsus de raio'},{icon:'🌿',name:'Mokuton',desc:'Jutsus de madeira'},{icon:'🌪',name:'Futon',desc:'Jutsus de vento'},{icon:'👥',name:'Kage Bunshin',desc:'Cria clones físicos'},{icon:'🐸',name:'Senjutsu',desc:'Usa chakra natureza'},{icon:'💜',name:'Genjutsu',desc:'Ilusões poderosas'}],
-  'Attack on Titan':[{icon:'⚙',name:'3DM Elite',desc:'Agilidade extrema'},{icon:'🗡',name:'Duplas Lâminas',desc:'Golpes precisos'},{icon:'💪',name:'Força Bruta',desc:'Dano aumentado'},{icon:'🧠',name:'Análise Tática',desc:'Lê padrões Titãs'},{icon:'🏃',name:'Fuga Ágil',desc:'Esquiva aprimorada'},{icon:'❤',name:'Primeiros Socorros',desc:'Recupera aliados'},{icon:'🎯',name:'Mira Precisa',desc:'Golpe no ponto cego'},{icon:'🛡',name:'Cobertura',desc:'Protege companheiros'}],
-  'The Witcher':[{icon:'🐺',name:'Sinais',desc:'Magia rúnica de combate'},{icon:'⚗',name:'Alquimia',desc:'Poções e mutações'},{icon:'🗡',name:'Espadas',desc:'Técnicas de espadachim'},{icon:'🧪',name:'Venenos',desc:'Envenena alvos'},{icon:'🌿',name:'Herbalism',desc:'Coleta ingredientes raros'},{icon:'👁',name:'Olho de Gato',desc:'Visão no escuro'},{icon:'🐎',name:'Equitação',desc:'Controle de Sardenha'},{icon:'🎵',name:'Persuasão',desc:'Negocia com qualquer um'}],
-  'Dragon Ball':[{icon:'⚡',name:'Kamehameha',desc:'Raio de energia devastador'},{icon:'🌀',name:'Kaioken',desc:'Multiplica poder temporariamente'},{icon:'💥',name:'Galick Gun',desc:'Explosão de energia'},{icon:'🌟',name:'Spirit Bomb',desc:'Bola de energia cósmica'},{icon:'💨',name:'Instant Transmission',desc:'Teletransporte instantâneo'},{icon:'🛡',name:'Ki Shield',desc:'Escudo de energia'},{icon:'👊',name:'Rush Combo',desc:'Série de golpes rápidos'},{icon:'🔮',name:'Sensor de Ki',desc:'Detecta poderes ocultos'}],
-  'Harry Potter':[{icon:'🪄',name:'Expelliarmus',desc:'Desarma o oponente'},{icon:'🔮',name:'Legilimência',desc:'Lê mentes'},{icon:'🌀',name:'Apparition',desc:'Teletransporte mágico'},{icon:'🦌',name:'Patronus',desc:'Proteção contra Dementadores'},{icon:'🔥',name:'Incendio',desc:'Controla chamas'},{icon:'🌿',name:'Herbologia',desc:'Plantas mágicas poderosas'},{icon:'🕵',name:'Disillusionment',desc:'Torna-se quase invisível'},{icon:'⚗',name:'Poções',desc:'Cria poções avançadas'}],
-  'Star Wars':[{icon:'💙',name:'Telecinese',desc:'Move objetos com a Força'},{icon:'⚡',name:'Relâmpago Sith',desc:'Descarga de energia sombria'},{icon:'🧘',name:'Meditação Jedi',desc:'Restaura Força interior'},{icon:'🗡',name:'Sabre de Luz',desc:'Técnicas avançadas de combate'},{icon:'👁',name:'Visão da Força',desc:'Prevê ações inimigas'},{icon:'🌀',name:'Dash da Força',desc:'Velocidade sobre-humana'},{icon:'🛡',name:'Absorção',desc:'Desvia ataques'},{icon:'🎭',name:'Persuasão Jedi',desc:'Influencia mentes fracas'}],
-  'One Piece':[{icon:'✊',name:'Haki Armamento',desc:'Endurece o corpo como armadura'},{icon:'👁',name:'Haki Observação',desc:'Prevê movimentos inimigos'},{icon:'💥',name:'Haki Conquistador',desc:'Dobra a vontade dos fracos'},{icon:'🌊',name:'Nado Livre',desc:'Velocidade extrema na água'},{icon:'⚔',name:'Ittoryu',desc:'Técnicas de um sabre'},{icon:'🔥',name:'Poder Akuma',desc:'Habilidade especial da fruta'},{icon:'🏴‍☠️',name:'Liderança',desc:'Inspira aliados em batalha'},{icon:'💊',name:'Cirurgia',desc:'Opera em condições extremas'}],
-  'Dark Souls':[{icon:'🔥',name:'Pyromancia',desc:'Manipula chamas das trevas'},{icon:'✝',name:'Milagres',desc:'Cura e raios divinos'},{icon:'🔮',name:'Feitiçaria',desc:'Projéteis de almas'},{icon:'🛡',name:'Parry',desc:'Deflexão e contra-ataque'},{icon:'💀',name:'Invocação',desc:'Chama espíritos aliados'},{icon:'🌑',name:'Abyss Walk',desc:'Caminha pelo abismo'},{icon:'⚔',name:'Stance',desc:'Golpe especial de arma'},{icon:'🍂',name:'Resistência',desc:'Absorve dano de status'}],
-};
-const WORLD_SKILLS_DEFAULT = [
-  {icon:'⚔',name:'Combate',desc:'Aumenta dano em luta'},{icon:'🛡',name:'Defesa',desc:'Reduz dano recebido'},
-  {icon:'🏹',name:'Precisão',desc:'Acertos críticos +30%'},{icon:'🔮',name:'Magia',desc:'Potência mágica'},
-  {icon:'💨',name:'Agilidade',desc:'Esquiva e velocidade'},{icon:'🌿',name:'Cura',desc:'Recupera vida lentamente'},
-  {icon:'🗣',name:'Diplomacia',desc:'Resolve conflitos'},{icon:'🔍',name:'Percepção',desc:'Detecta perigos ocultos'}];
-const TRAITS = ['Corajoso e impulsivo','Calculista e frio','Leal até a morte','Solitário e misterioso','Carismático e brincalhão','Honrado e rígido','Cínico e sarcástico','Curioso e analítico','Protetor dos fracos','Ambicioso e determinado','Compassivo e gentil','Desconfiado e cauteloso'];
-const ATTR_NAMES = ['FOR','DES','CON','INT','SAB','CAR'];
-const ATTR_FULL  = ['Força','Destreza','Constituição','Inteligência','Sabedoria','Carisma'];
+function applyTimeskipStatEffects(actKey,dur){
+  // Multiplicador de tempo
+  let mult=1;
+  if(dur.includes('semana'))mult=2;
+  else if(dur.includes('mês'))mult=3;
+  else if(dur.includes('ano'))mult=4;
 
-// ════════════════════════════════════════════════
-//  STATE
-// ════════════════════════════════════════════════
-let currentWorld = '';
-let charData = {};
-let attrBase = [8,8,8,8,8,8];
-let attrBonus = [0,0,0,0,0,0];
-let totalPts = 10;
-let selectedClass = -1;
-let selectedSkills = [];
-let selectedTrait = '';
-let selectedAvatar = '🧙';
-let conversationHistory = [];
-let busy = false;
-let stats = {hp:100,maxHp:100,mana:60,maxMana:60,stam:90,maxStam:90};
-let inventory = [];
+  const effects={
+    treino:{hp:5*mult,stam:10*mult,mana:0},
+    descanso:{hp:20*mult,stam:20*mult,mana:15*mult},
+    missao:{hp:-5*mult,stam:-5*mult,mana:0},
+    estudo:{hp:0,stam:0,mana:15*mult},
+    viagem:{hp:-3*mult,stam:5*mult,mana:5*mult},
+    social:{hp:5*mult,stam:5*mult,mana:10*mult},
+    espiritual:{hp:5*mult,stam:5*mult,mana:20*mult},
+    escondido:{hp:-2*mult,stam:5*mult,mana:0},
+    trabalho:{hp:8*mult,stam:8*mult,mana:0},
+    cura_espiritual:{hp:10*mult,stam:5*mult,mana:10*mult},
+    busca:{hp:-3*mult,stam:0,mana:5*mult},
+    custom:{hp:5*mult,stam:5*mult,mana:5*mult}
+  };
+  const fx=effects[actKey]||effects.custom;
+  stats.hp=Math.min(stats.maxHp,Math.max(0,stats.hp+fx.hp));
+  stats.mana=Math.min(stats.maxMana,Math.max(0,stats.mana+fx.mana));
+  stats.stam=Math.min(stats.maxStam,Math.max(0,stats.stam+fx.stam));
+  updateStats();
+}
 
-// ════════════════════════════════════════════════
-//  UI HELPERS
-// ════════════════════════════════════════════════
-function goScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo(0, 0);
-}
-function showToast(msg, duration = 4000) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), duration);
-}
-function openPause() {
+// Listener para update do preview quando custom text muda
+document.addEventListener('input',e=>{
+  if(e.target.id==='ts-custom-text')updateTimeskipPreview();
+  if(e.target.id==='cc-name')checkReady();
+});
+
+// ════ PAUSE ════
+function openPause(){
   document.getElementById('pause-modal').classList.add('open');
-  if (charData && charData.name)
-    document.getElementById('pause-char').textContent = `${charData.avatar||'🧙'} ${charData.name} · ${charData.cls} · ${charData.world}`;
-  const badge = document.getElementById('sync-badge');
-  const saveInfo = document.getElementById('pause-save-info');
-  if (badge && badge.textContent && badge.textContent !== '—') {
-    saveInfo.textContent = badge.textContent;
-    saveInfo.className = badge.className === 'sync-badge ok' ? 'pause-save-info ok' : 'pause-save-info';
-  } else { saveInfo.textContent = 'Salvando agora...'; saveInfo.className = 'pause-save-info'; saveToFirebase(); }
+  if(charData&&charData.name)document.getElementById('pause-char').textContent=`${charData.avatar||'🧙'} ${charData.name} · ${charData.cls} · ${charData.world}`;
+  const badge=document.getElementById('sync-badge');const saveInfo=document.getElementById('pause-save-info');
+  if(badge&&badge.textContent&&badge.textContent!=='—'){saveInfo.textContent=badge.textContent;saveInfo.className=badge.className==='sync-badge ok'?'pause-save-info ok':'pause-save-info';}
+  else{saveInfo.textContent='Salvando agora...';saveInfo.className='pause-save-info';saveToFirebase();}
 }
-function closePause() { document.getElementById('pause-modal').classList.remove('open'); }
-function pauseGoWorlds() {
-  saveToFirebase();
-  document.getElementById('pause-modal').classList.remove('open');
-  goScreen('s-world'); checkAndShowResume();
-}
-function pauseNewGame() {
-  if (!confirm('Tem certeza? Isso apaga toda a aventura atual.')) return;
-  conversationHistory = []; inventory = []; clearLocalStorage();
-  const ref = getDbRef(); if (ref) ref.remove().catch(() => {});
-  window._pendingSession = null;
-  document.getElementById('pause-modal').classList.remove('open');
-  goScreen('s-world'); checkAndShowResume();
+function closePause(){document.getElementById('pause-modal').classList.remove('open');}
+function pauseGoWorlds(){saveToFirebase();document.getElementById('pause-modal').classList.remove('open');goScreen('s-world');checkAndShowResume();}
+function pauseNewGame(){
+  if(!confirm('Tem certeza? Isso apaga toda a aventura atual.'))return;
+  conversationHistory=[];inventory=[];clearLocalStorage();
+  const ref=getDbRef();if(ref)ref.remove().catch(()=>{});
+  window._pendingSession=null;document.getElementById('pause-modal').classList.remove('open');goScreen('s-world');checkAndShowResume();
 }
 
-// ════════════════════════════════════════════════
-//  WORLD PICK
-// ════════════════════════════════════════════════
-function pickWorld(w) {
-  currentWorld = w;
-  document.getElementById('cc-world-label').textContent = w;
-  buildCharScreen(w); goScreen('s-char');
-}
-function pickCustomWorld() {
-  const v = document.getElementById('custom-world-inp').value.trim();
-  if (!v) return; pickWorld(v);
-}
+// ════ WORLD PICK ════
+function pickWorld(w){currentWorld=w;document.getElementById('cc-world-label').textContent=w;buildCharScreen(w);goScreen('s-char');}
+function pickCustomWorld(){const v=document.getElementById('custom-world-inp').value.trim();if(!v)return;pickWorld(v);}
 
-// ════════════════════════════════════════════════
-//  BUILD CHARACTER SCREEN
-// ════════════════════════════════════════════════
-function buildCharScreen(world) {
-  const isCustomWorld = !WORLD_LORE[world];
-  const customBox = document.getElementById('custom-world-box');
-  if (customBox) customBox.style.display = isCustomWorld ? 'block' : 'none';
-
-  const ag = document.getElementById('avatar-grid');
-  ag.innerHTML = ''; selectedAvatar = '🧙';
-  document.getElementById('avatar-preview').textContent = '🧙';
+// ════ BUILD CHARACTER SCREEN ════
+function buildCharScreen(world){
+  const isCustomWorld=!WORLD_LORE[world];
+  const customBox=document.getElementById('custom-world-box');
+  if(customBox)customBox.style.display=isCustomWorld?'block':'none';
+  const ag=document.getElementById('avatar-grid');
+  ag.innerHTML='';selectedAvatar='🧙';
+  document.getElementById('avatar-preview').textContent='🧙';
   document.getElementById('avatar-preview').classList.remove('glow');
-  AVATARS.forEach(a => {
-    const d = document.createElement('div');
-    d.className = 'avatar-opt' + (a === selectedAvatar ? ' selected' : '');
-    d.textContent = a;
-    d.onclick = () => {
-      document.querySelectorAll('.avatar-opt').forEach(x => x.classList.remove('selected'));
-      d.classList.add('selected'); selectedAvatar = a;
-      document.getElementById('avatar-preview').textContent = a;
-      document.getElementById('avatar-preview').classList.add('glow');
-    };
+  AVATARS.forEach(a=>{
+    const d=document.createElement('div');d.className='avatar-opt'+(a===selectedAvatar?' selected':'');d.textContent=a;
+    d.onclick=()=>{document.querySelectorAll('.avatar-opt').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');selectedAvatar=a;document.getElementById('avatar-preview').textContent=a;document.getElementById('avatar-preview').classList.add('glow');};
     ag.appendChild(d);
   });
-
-  const baseClasses = WORLD_CLASSES[world] || [{icon:'⚔',name:'Guerreiro'},{icon:'🔮',name:'Mago'},{icon:'🏹',name:'Arqueiro'}];
-  const classes = [...baseClasses, {icon:'🧑‍🌾', name:'Pessoa Comum'}];
-
-  const cg = document.getElementById('classes-grid');
-  cg.innerHTML = ''; selectedClass = -1;
-  classes.forEach((cl, i) => {
-    const d = document.createElement('div');
-    d.className = 'class-opt';
-    d.innerHTML = `<div class="co-icon">${cl.icon}</div><div class="co-name">${cl.name}</div>`;
-    d.onclick = () => {
-      document.querySelectorAll('.class-opt').forEach(x => x.classList.remove('selected'));
-      d.classList.add('selected'); selectedClass = i; checkReady();
-    };
+  const baseClasses=WORLD_CLASSES[world]||[{icon:'⚔',name:'Guerreiro'},{icon:'🔮',name:'Mago'},{icon:'🏹',name:'Arqueiro'}];
+  const classes=[...baseClasses,{icon:'🧑‍🌾',name:'Pessoa Comum'}];
+  const cg=document.getElementById('classes-grid');cg.innerHTML='';selectedClass=-1;
+  classes.forEach((cl,i)=>{
+    const d=document.createElement('div');d.className='class-opt';
+    d.innerHTML=`<div class="co-icon">${cl.icon}</div><div class="co-name">${cl.name}</div>`;
+    d.onclick=()=>{document.querySelectorAll('.class-opt').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');selectedClass=i;checkReady();};
     cg.appendChild(d);
   });
-
-  attrBonus = [0,0,0,0,0,0]; totalPts = 10;
-  const ag2 = document.getElementById('attrs-grid');
-  ag2.innerHTML = '';
-  ATTR_NAMES.forEach((n, i) => {
-    const row = document.createElement('div');
-    row.className = 'attr-row';
-    row.innerHTML = `<div class="attr-top"><span class="attr-name">${n} <span style="font-size:10px;color:var(--text3)">${ATTR_FULL[i]}</span></span><span class="attr-val" id="av-${i}">${attrBase[i]}</span></div><input class="attr-slider" type="range" min="0" max="5" value="0" id="asl-${i}" oninput="changeAttr(${i},this.value)">`;
+  attrBonus=[0,0,0,0,0,0];totalPts=10;
+  const ag2=document.getElementById('attrs-grid');ag2.innerHTML='';
+  ATTR_NAMES.forEach((n,i)=>{
+    const row=document.createElement('div');row.className='attr-row';
+    row.innerHTML=`<div class="attr-top"><span class="attr-name">${n} <span style="font-size:10px;color:var(--text3)">${ATTR_FULL[i]}</span></span><span class="attr-val" id="av-${i}">${attrBase[i]}</span></div><input class="attr-slider" type="range" min="0" max="5" value="0" id="asl-${i}" oninput="changeAttr(${i},this.value)">`;
     ag2.appendChild(row);
   });
   updatePtsLeft();
-
-  const pool = WORLD_SKILLS[world] || WORLD_SKILLS_DEFAULT;
-  selectedSkills = [];
-  const sp = document.getElementById('skills-pool');
-  sp.innerHTML = '';
-  pool.forEach((sk, i) => {
-    const d = document.createElement('div');
-    d.className = 'skill-opt';
-    d.innerHTML = `<span class="sk-icon">${sk.icon}</span><div class="sk-info"><div class="sk-name">${sk.name}</div><div class="sk-desc">${sk.desc}</div></div><span class="skill-check">✓</span>`;
-    d.onclick = () => toggleSkill(i, d);
-    sp.appendChild(d);
+  const pool=WORLD_SKILLS[world]||WORLD_SKILLS_DEFAULT;selectedSkills=[];
+  const sp=document.getElementById('skills-pool');sp.innerHTML='';
+  pool.forEach((sk,i)=>{
+    const d=document.createElement('div');d.className='skill-opt';
+    d.innerHTML=`<span class="sk-icon">${sk.icon}</span><div class="sk-info"><div class="sk-name">${sk.name}</div><div class="sk-desc">${sk.desc}</div></div><span class="skill-check">✓</span>`;
+    d.onclick=()=>toggleSkill(i,d);sp.appendChild(d);
   });
-
-  const tg = document.getElementById('trait-grid');
-  tg.innerHTML = ''; selectedTrait = '';
-  TRAITS.forEach(t => {
-    const d = document.createElement('div');
-    d.className = 'trait-opt'; d.textContent = t;
-    d.onclick = () => {
-      document.querySelectorAll('.trait-opt').forEach(x => x.classList.remove('selected'));
-      d.classList.add('selected'); selectedTrait = t;
-    };
+  const tg=document.getElementById('trait-grid');tg.innerHTML='';selectedTrait='';
+  TRAITS.forEach(t=>{
+    const d=document.createElement('div');d.className='trait-opt';d.textContent=t;
+    d.onclick=()=>{document.querySelectorAll('.trait-opt').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');selectedTrait=t;};
     tg.appendChild(d);
   });
-
-  document.getElementById('cc-name').value = '';
-  document.getElementById('cc-age').value = '';
-  document.getElementById('cc-backstory').value = '';
-  const loreInp = document.getElementById('cc-world-lore');
-  if(loreInp) loreInp.value = '';
-  document.getElementById('custom-skill-icon').value = '';
-  document.getElementById('custom-skill-name').value = '';
-  document.getElementById('custom-skill-desc').value = '';
+  document.getElementById('cc-name').value='';document.getElementById('cc-age').value='';document.getElementById('cc-backstory').value='';
+  const loreInp=document.getElementById('cc-world-lore');if(loreInp)loreInp.value='';
+  document.getElementById('custom-skill-icon').value='';document.getElementById('custom-skill-name').value='';document.getElementById('custom-skill-desc').value='';
   checkReady();
 }
-function changeAttr(i, val) {
-  const old = attrBonus[i]; const diff = val - old;
-  if (diff > 0 && totalPts - diff < 0) { document.getElementById(`asl-${i}`).value = old; return; }
-  attrBonus[i] = parseInt(val); totalPts -= diff;
-  document.getElementById(`av-${i}`).textContent = attrBase[i] + attrBonus[i];
-  updatePtsLeft();
+function changeAttr(i,val){
+  const old=attrBonus[i];const diff=val-old;
+  if(diff>0&&totalPts-diff<0){document.getElementById(`asl-${i}`).value=old;return;}
+  attrBonus[i]=parseInt(val);totalPts-=diff;
+  document.getElementById(`av-${i}`).textContent=attrBase[i]+attrBonus[i];updatePtsLeft();
 }
-function updatePtsLeft() { document.getElementById('pts-left').textContent = totalPts; }
-function toggleSkill(i, el) {
-  if (el.classList.contains('selected')) {
-    el.classList.remove('selected'); selectedSkills = selectedSkills.filter(x => x !== i);
-  } else {
-    if (selectedSkills.length >= 3) { showToast('Você já selecionou 3 habilidades. Desmarque uma primeiro.'); return; }
-    el.classList.add('selected'); selectedSkills.push(i);
-  }
+function updatePtsLeft(){document.getElementById('pts-left').textContent=totalPts;}
+function toggleSkill(i,el){
+  if(el.classList.contains('selected')){el.classList.remove('selected');selectedSkills=selectedSkills.filter(x=>x!==i);}
+  else{if(selectedSkills.length>=3){showToast('Você já selecionou 3 habilidades. Desmarque uma primeiro.');return;}el.classList.add('selected');selectedSkills.push(i);}
   checkReady();
 }
-function checkReady() {
-  const name = document.getElementById('cc-name').value.trim();
-  const ready = name.length > 0 && selectedClass >= 0 && selectedSkills.length === 3;
-  document.getElementById('btn-start').disabled = !ready;
-  const hint = !name ? 'Insira o nome do personagem'
-    : selectedClass < 0 ? 'Escolha uma classe'
-    : selectedSkills.length < 3 ? `Selecione ${3 - selectedSkills.length} habilidade(s)`
-    : '✦ Pronto para aventurar!';
-  document.getElementById('cc-hint').textContent = hint;
+function checkReady(){
+  const name=document.getElementById('cc-name').value.trim();
+  const ready=name.length>0&&selectedClass>=0&&selectedSkills.length===3;
+  document.getElementById('btn-start').disabled=!ready;
+  const hint=!name?'Insira o nome do personagem':selectedClass<0?'Escolha uma classe':selectedSkills.length<3?`Selecione ${3-selectedSkills.length} habilidade(s)`:'✦ Pronto para aventurar!';
+  document.getElementById('cc-hint').textContent=hint;
 }
-document.addEventListener('input', e => { if (e.target.id === 'cc-name') checkReady(); });
 
-// ════════════════════════════════════════════════
-//  START GAME
-// ════════════════════════════════════════════════
-function startGame() {
-  const world = currentWorld;
-  const baseClasses = WORLD_CLASSES[world] || [{icon:'⚔',name:'Guerreiro'},{icon:'🔮',name:'Mago'},{icon:'🏹',name:'Arqueiro'}];
-  const classes = [...baseClasses, {icon:'🧑‍🌾', name:'Pessoa Comum'}];
-  const pool = WORLD_SKILLS[world] || WORLD_SKILLS_DEFAULT;
-  
-  charData = {
-    name:      document.getElementById('cc-name').value.trim(),
-    age:       document.getElementById('cc-age').value || '25',
-    gender:    document.getElementById('cc-gender').value,
-    hair:      document.getElementById('cc-hair').value,
-    eyes:      document.getElementById('cc-eyes').value,
-    build:     document.getElementById('cc-build').value,
-    avatar:    selectedAvatar,
-    cls:       classes[selectedClass].name,
-    clsIcon:   classes[selectedClass].icon,
-    attrs:     ATTR_NAMES.map((n, i) => ({name:n, val:attrBase[i]+attrBonus[i]})),
-    skills:    selectedSkills.map(i => pool[i]),
-    customSkill: (() => {
-      const icon = document.getElementById('custom-skill-icon').value.trim() || '🌀';
-      const name = document.getElementById('custom-skill-name').value.trim();
-      const desc = document.getElementById('custom-skill-desc').value.trim();
-      return name ? {icon, name, desc: desc || 'Habilidade única'} : null;
-    })(),
-    trait:     selectedTrait || 'Livre espírito',
-    backstory: document.getElementById('cc-backstory').value.trim(),
-    customLore: document.getElementById('cc-world-lore') ? document.getElementById('cc-world-lore').value.trim() : '',
+// ════ START GAME ════
+function startGame(){
+  const world=currentWorld;
+  const baseClasses=WORLD_CLASSES[world]||[{icon:'⚔',name:'Guerreiro'},{icon:'🔮',name:'Mago'},{icon:'🏹',name:'Arqueiro'}];
+  const classes=[...baseClasses,{icon:'🧑‍🌾',name:'Pessoa Comum'}];
+  const pool=WORLD_SKILLS[world]||WORLD_SKILLS_DEFAULT;
+  charData={
+    name:document.getElementById('cc-name').value.trim(),
+    age:document.getElementById('cc-age').value||'25',
+    gender:document.getElementById('cc-gender').value,
+    hair:document.getElementById('cc-hair').value,
+    eyes:document.getElementById('cc-eyes').value,
+    build:document.getElementById('cc-build').value,
+    avatar:selectedAvatar,
+    cls:classes[selectedClass].name,
+    clsIcon:classes[selectedClass].icon,
+    attrs:ATTR_NAMES.map((n,i)=>({name:n,val:attrBase[i]+attrBonus[i]})),
+    skills:selectedSkills.map(i=>pool[i]),
+    customSkill:(()=>{const icon=document.getElementById('custom-skill-icon').value.trim()||'🌀';const name=document.getElementById('custom-skill-name').value.trim();const desc=document.getElementById('custom-skill-desc').value.trim();return name?{icon,name,desc:desc||'Habilidade única'}:null;})(),
+    trait:selectedTrait||'Livre espírito',
+    backstory:document.getElementById('cc-backstory').value.trim(),
+    customLore:document.getElementById('cc-world-lore')?document.getElementById('cc-world-lore').value.trim():'',
     world,
   };
-  const con = charData.attrs[2].val, int_ = charData.attrs[3].val;
-  stats = {hp:80+con*2, maxHp:80+con*2, mana:40+int_*2, maxMana:40+int_*2, stam:90, maxStam:90};
-  inventory = [];
-  populateSidebar(); updateStats(); updateInventory();
-  conversationHistory = [];
-  document.getElementById('chat-msgs').innerHTML = '';
-  setNarrativeState('calmo');
-  goScreen('s-game');
-  saveToFirebase();
-  beginGame();
+  const con=charData.attrs[2].val,int_=charData.attrs[3].val;
+  stats={hp:80+con*2,maxHp:80+con*2,mana:40+int_*2,maxMana:40+int_*2,stam:90,maxStam:90};
+  inventory=[];populateSidebar();updateStats();updateInventory();
+  conversationHistory=[];document.getElementById('chat-msgs').innerHTML='';
+  setNarrativeState('calmo');goScreen('s-game');saveToFirebase();beginGame();
+}
+function populateSidebar(){
+  document.getElementById('sb-avatar').textContent=charData.avatar;
+  document.getElementById('sb-name').textContent=charData.name;
+  document.getElementById('sb-class').textContent=`${charData.clsIcon} ${charData.cls}`;
+  document.getElementById('sb-age').textContent=`${charData.age} anos · ${charData.gender}`;
+  document.getElementById('g-title').textContent=`⚔ ${charData.world}`;
+  document.getElementById('g-sub').textContent=`${charData.name} · ${charData.cls}`;
+  document.getElementById('g-world-badge').textContent=charData.world.substring(0,22).toUpperCase();
+  document.getElementById('g-appear').textContent=`${charData.build} · Cabelo ${charData.hair.toLowerCase()} · Olhos ${charData.eyes.toLowerCase()}`;
+  document.getElementById('g-trait').textContent=charData.trait;
+  document.getElementById('g-loc').textContent=getLore().openingLocation||'Início da jornada';
+  document.getElementById('g-loc-desc').textContent='Aguardando narração...';
+  document.getElementById('g-attrs').innerHTML=charData.attrs.map(a=>`<div class="attr-sb">${a.name} <span>${a.val}</span></div>`).join('');
+  document.getElementById('g-skills').innerHTML=charData.skills.map(s=>`<div class="sb-skill-tag">${s.icon} ${s.name}</div>`).join('')+(charData.customSkill?`<div class="sb-skill-tag" style="border-color:#6a3fa0;color:#c090ff">${charData.customSkill.icon} ${charData.customSkill.name} ✦</div>`:'');
+  const btnC=document.getElementById('btn-custom-skill');
+  if(btnC){if(charData.customSkill){btnC.style.display='';btnC.textContent=charData.customSkill.icon+' '+charData.customSkill.name;}else btnC.style.display='none';}
+}
+function updateStats(){
+  document.getElementById('g-hp-v').textContent=`${stats.hp}/${stats.maxHp}`;
+  document.getElementById('g-hp-b').style.width=`${Math.round(stats.hp/stats.maxHp*100)}%`;
+  document.getElementById('g-mana-v').textContent=`${stats.mana}/${stats.maxMana}`;
+  document.getElementById('g-mana-b').style.width=`${Math.round(stats.mana/stats.maxMana*100)}%`;
+  document.getElementById('g-stam-v').textContent=`${stats.stam}/${stats.maxStam}`;
+  document.getElementById('g-stam-b').style.width=`${Math.round(stats.stam/stats.maxStam*100)}%`;
+}
+function updateInventory(){
+  const el=document.getElementById('g-inv');
+  el.innerHTML=inventory.length===0?'<div class="inv-empty">Nenhum item ainda</div>':inventory.map(it=>`<div class="inv-item"><span>${it.name}</span><span style="color:var(--text3)">${it.qty>1?'x'+it.qty:''}</span></div>`).join('');
 }
 
-function populateSidebar() {
-  document.getElementById('sb-avatar').textContent  = charData.avatar;
-  document.getElementById('sb-name').textContent    = charData.name;
-  document.getElementById('sb-class').textContent   = `${charData.clsIcon} ${charData.cls}`;
-  document.getElementById('sb-age').textContent     = `${charData.age} anos · ${charData.gender}`;
-  document.getElementById('g-title').textContent    = `⚔ ${charData.world}`;
-  document.getElementById('g-sub').textContent      = `${charData.name} · ${charData.cls}`;
-  document.getElementById('g-world-badge').textContent = charData.world.substring(0,22).toUpperCase();
-  document.getElementById('g-appear').textContent   = `${charData.build} · Cabelo ${charData.hair.toLowerCase()} · Olhos ${charData.eyes.toLowerCase()}`;
-  document.getElementById('g-trait').textContent    = charData.trait;
-  document.getElementById('g-loc').textContent      = getLore().openingLocation || 'Início da jornada';
-  document.getElementById('g-loc-desc').textContent = 'Aguardando narração...';
-  document.getElementById('g-attrs').innerHTML = charData.attrs.map(a =>
-    `<div class="attr-sb">${a.name} <span>${a.val}</span></div>`).join('');
-  document.getElementById('g-skills').innerHTML = charData.skills.map(s =>
-    `<div class="sb-skill-tag">${s.icon} ${s.name}</div>`).join('') +
-    (charData.customSkill
-      ? `<div class="sb-skill-tag" style="border-color:#6a3fa0;color:#c090ff">${charData.customSkill.icon} ${charData.customSkill.name} ✦</div>`
-      : '');
-  const btnC = document.getElementById('btn-custom-skill');
-  if (btnC) {
-    if (charData.customSkill) { btnC.style.display = ''; btnC.textContent = charData.customSkill.icon + ' ' + charData.customSkill.name; }
-    else btnC.style.display = 'none';
-  }
+// ════ LORE + DICE ════
+function getLore(){if(!charData||!charData.world)return WORLD_LORE_DEFAULT;return WORLD_LORE[charData.world]||WORLD_LORE_DEFAULT;}
+function rollD20(relevantAttrVal=0){
+  const base=Math.floor(Math.random()*20)+1;const bonus=Math.floor(relevantAttrVal/10);const total=Math.min(20,base+bonus);
+  return{base,bonus,total,success:total>=11,critical:total===20,fumble:base===1};
 }
-function updateStats() {
-  document.getElementById('g-hp-v').textContent   = `${stats.hp}/${stats.maxHp}`;
-  document.getElementById('g-hp-b').style.width   = `${Math.round(stats.hp/stats.maxHp*100)}%`;
-  document.getElementById('g-mana-v').textContent = `${stats.mana}/${stats.maxMana}`;
-  document.getElementById('g-mana-b').style.width = `${Math.round(stats.mana/stats.maxMana*100)}%`;
-  document.getElementById('g-stam-v').textContent = `${stats.stam}/${stats.maxStam}`;
-  document.getElementById('g-stam-b').style.width = `${Math.round(stats.stam/stats.maxStam*100)}%`;
+function diceHtml(roll,label=''){
+  let cls='neutral',icon='🎲';
+  if(roll.critical){cls='success';icon='⭐';}else if(roll.fumble){cls='fail';icon='💀';}else if(roll.success){cls='success';icon='✔';}else{cls='fail';icon='✖';}
+  const txt=roll.critical?'CRÍTICO!':roll.fumble?'FALHA CRÍTICA!':roll.success?'Sucesso':'Falha';
+  return`<div class="dice-roll ${cls}">${icon} 1d20: ${roll.base}${roll.bonus?'+'+roll.bonus:''} = ${roll.total} — ${txt}${label?' · '+label:''}</div>`;
 }
-function updateInventory() {
-  const el = document.getElementById('g-inv');
-  el.innerHTML = inventory.length === 0
-    ? '<div class="inv-empty">Nenhum item ainda</div>'
-    : inventory.map(it => `<div class="inv-item"><span>${it.name}</span><span style="color:var(--text3)">${it.qty>1?'x'+it.qty:''}</span></div>`).join('');
-}
+function escapeHtml(s){return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');}
 
-// ════════════════════════════════════════════════
-//  LORE + DADOS
-// ════════════════════════════════════════════════
-function getLore() {
-  if (!charData || !charData.world) return WORLD_LORE_DEFAULT;
-  return WORLD_LORE[charData.world] || WORLD_LORE_DEFAULT;
-}
-function rollD20(relevantAttrVal = 0) {
-  const base = Math.floor(Math.random()*20)+1;
-  const bonus = Math.floor(relevantAttrVal/10);
-  const total = Math.min(20, base+bonus);
-  return {base, bonus, total, success:total>=11, critical:total===20, fumble:base===1};
-}
-function diceHtml(roll, label='') {
-  let cls='neutral', icon='🎲';
-  if (roll.critical) { cls='success'; icon='⭐'; }
-  else if (roll.fumble) { cls='fail'; icon='💀'; }
-  else if (roll.success) { cls='success'; icon='✔'; }
-  else { cls='fail'; icon='✖'; }
-  const txt = roll.critical?'CRÍTICO!':roll.fumble?'FALHA CRÍTICA!':roll.success?'Sucesso':'Falha';
-  return `<div class="dice-roll ${cls}">${icon} 1d20: ${roll.base}${roll.bonus?'+'+roll.bonus:''} = ${roll.total} — ${txt}${label?' · '+label:''}</div>`;
-}
-function escapeHtml(s) {
-  return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
-}
-
-// ════════════════════════════════════════════════
-//  SYSTEM PROMPT
-// ════════════════════════════════════════════════
-function buildSystem() {
-  const c = charData, lore = getLore();
-  const skillList = c.skills.map(s => `${s.name} (${s.desc})`).join(', ');
-  const customPart = c.customSkill ? `\n- Habilidade própria exclusiva: ${c.customSkill.name} — ${c.customSkill.desc}` : '';
-  const attrList = c.attrs.map(a => `${a.name}:${a.val}`).join(' ');
-  const mode = WORLD_LORE[c.world] ? 'MUNDO PREDEFINIDO' : 'MUNDO PERSONALIZADO';
-  const customLoreText = c.customLore ? `\n- LORE DEFINIDO PELO JOGADOR: ${c.customLore}` : '';
-  
-  return `Você é o Mestre do jogo. Seu objetivo é imersão absoluta.
+// ════ SYSTEM PROMPT ════
+function buildSystem(){
+  const c=charData,lore=getLore();
+  const skillList=c.skills.map(s=>`${s.name} (${s.desc})`).join(', ');
+  const customPart=c.customSkill?`\n- Habilidade própria exclusiva: ${c.customSkill.name} — ${c.customSkill.desc}`:'';
+  const attrList=c.attrs.map(a=>`${a.name}:${a.val}`).join(' ');
+  const mode=WORLD_LORE[c.world]?'MUNDO PREDEFINIDO':'MUNDO PERSONALIZADO';
+  const customLoreText=c.customLore?`\n- LORE DEFINIDO PELO JOGADOR: ${c.customLore}`:'';
+  return`Você é o Mestre do jogo. Seu objetivo é imersão absoluta.
 IDIOMA: Responda SEMPRE em português do Brasil.
 MODO ATIVO: ${mode}
 
@@ -1167,7 +1262,7 @@ FICHA DO JOGADOR:
 - Atributos: ${attrList}
 - Habilidades: ${skillList}${customPart}
 - Traço: ${c.trait}
-${c.backstory ? `- Contexto: ${c.backstory}` : ''}
+${c.backstory?`- Contexto: ${c.backstory}`:''}
 
 UNIVERSO: "${c.world}"
 - Tom sensorial: "${lore.sensory}"
@@ -1185,213 +1280,141 @@ REGRAS ESTRITAS DE NARRAÇÃO:
 7. PAUSA É NARRAÇÃO: "O vento para." Pausas criam peso emocional.
 8. SEM LISTAS: NUNCA ofereça opções numeradas. Termine com uma tensão que exige resposta.
 9. IMPROVISO INTENCIONAL: Se o jogador desviar, crie consequências que pareçam inevitáveis.
-10. FIDELIDADE ABSOLUTA AO LORE: Para mundos predefinidos, atue como uma enciclopédia canônica. Use geografia, leis, magia e personagens históricos corretos da obra original. NÃO INVENTE fatos que contradigam o canon. Para mundos personalizados, siga as regras fornecidas pelo jogador ou expanda de forma coerente.
-11. MISSÕES: Ao surgir um objetivo crucial, insira na última linha: [MISSÃO: descrição breve]. Ao concluir: [CONCLUÍDA: descrição].
-12. MECÂNICA DE DADOS: Para ações arriscadas, interrompa com "[TESTE:ATRIBUTO] [Descrição]". Nunca revele o número do dado, julgue apenas as consequências.
-13. RELACIONAMENTOS OCULTOS: Ajuste o tom (Hostil/Amigável) baseado nas atitudes, mas não explique isso ao jogador.`;
+10. FIDELIDADE ABSOLUTA AO LORE: Para mundos predefinidos, atue como enciclopédia canônica. Para mundos personalizados, siga as regras do jogador.
+11. MISSÕES: Ao surgir um objetivo crucial: [MISSÃO: descrição]. Ao concluir: [CONCLUÍDA: descrição].
+12. MECÂNICA DE DADOS: Para ações arriscadas: "[TESTE:ATRIBUTO] [Descrição]". Nunca revele o número.
+13. RELACIONAMENTOS OCULTOS: Ajuste o tom (Hostil/Amigável) baseado nas atitudes.`;
 }
 
-// ════════════════════════════════════════════════
-//  CHAT / GM
-// ════════════════════════════════════════════════
-function setStatus(txt, on) {
-  document.getElementById('status-txt').textContent = txt;
-  const d = document.getElementById('status-dot');
-  d.style.background = on ? '#e8c97a' : '#27ae60';
-  d.style.boxShadow  = `0 0 6px ${on?'#e8c97a':'#27ae60'}`;
+// ════ CHAT ════
+function setStatus(txt,on){
+  document.getElementById('status-txt').textContent=txt;
+  const d=document.getElementById('status-dot');
+  d.style.background=on?'#e8c97a':'#27ae60';d.style.boxShadow=`0 0 6px ${on?'#e8c97a':'#27ae60'}`;
 }
-
-function renderGMContent(text) {
-  let safe = escapeHtml(text);
-
-  // Interceptando e formatando [MISSÃO: ...]
-  safe = safe.replace(/\[MISSÃO:\s*(.*?)\]/gi, '<div style="margin:12px 0;padding:10px;border:1px solid var(--gold);background:rgba(201,168,76,0.1);color:var(--gold);font-size:10px;font-family:var(--ft);letter-spacing:1px;text-transform:uppercase;text-align:center;border-radius:4px">📜 NOVA MISSÃO: $1</div>');
-  
-  // Interceptando e formatando [CONCLUÍDA: ...]
-  safe = safe.replace(/\[CONCLUÍDA:\s*(.*?)\]/gi, '<div style="margin:12px 0;padding:10px;border:1px solid #27ae60;background:rgba(39,174,96,0.1);color:#27ae60;font-size:10px;font-family:var(--ft);letter-spacing:1px;text-transform:uppercase;text-align:center;border-radius:4px">✔ MISSÃO CONCLUÍDA: $1</div>');
-  
-  // Interceptando e formatando [TESTE:ATRIBUTO]
-  safe = safe.replace(/\[TESTE:\s*(.*?)\](.*?)($|\n)/gi, '<div style="margin:12px 0;padding:10px;border:1px solid var(--red2);background:rgba(192,57,43,0.1);color:var(--red2);font-size:10px;font-family:var(--ft);letter-spacing:1px;text-align:center;border-radius:4px">🎲 TESTE DE $1 $2</div>$3');
-
-  // Fatiamento normal dos parágrafos
-  const paras = safe.split(/\n\n+/).map(p => p.trim()).filter(Boolean);
-  if (paras.length === 0) return '';
-  if (paras.length === 1) return `<div class="gm-para action-result">${paras[0]}</div>`;
-  
-  return paras.map((p, i) => {
-    // Evita estilizacão dupla se o parágrafo for apenas uma UI tag gerada acima
-    if (p.startsWith('<div')) return p; 
-    
-    let cls = 'action-result';
-    if (i === 0) cls = 'sensory';
-    else if (i === paras.length-1) cls = 'hook';
-    else if (i === paras.length-2 && paras.length >= 4) cls = 'consequence';
-    
-    return `<div class="gm-para ${cls}">${p}</div>`;
+function renderGMContent(text){
+  let safe=escapeHtml(text);
+  safe=safe.replace(/\[MISSÃO:\s*(.*?)\]/gi,'<div style="margin:12px 0;padding:10px;border:1px solid var(--gold);background:rgba(201,168,76,0.1);color:var(--gold);font-size:10px;font-family:var(--ft);letter-spacing:1px;text-transform:uppercase;text-align:center;border-radius:4px">📜 NOVA MISSÃO: $1</div>');
+  safe=safe.replace(/\[CONCLUÍDA:\s*(.*?)\]/gi,'<div style="margin:12px 0;padding:10px;border:1px solid #27ae60;background:rgba(39,174,96,0.1);color:#27ae60;font-size:10px;font-family:var(--ft);letter-spacing:1px;text-transform:uppercase;text-align:center;border-radius:4px">✔ MISSÃO CONCLUÍDA: $1</div>');
+  safe=safe.replace(/\[TESTE:\s*(.*?)\](.*?)($|\n)/gi,'<div style="margin:12px 0;padding:10px;border:1px solid var(--red2);background:rgba(192,57,43,0.1);color:var(--red2);font-size:10px;font-family:var(--ft);letter-spacing:1px;text-align:center;border-radius:4px">🎲 TESTE DE $1 $2</div>$3');
+  const paras=safe.split(/\n\n+/).map(p=>p.trim()).filter(Boolean);
+  if(paras.length===0)return'';
+  if(paras.length===1)return`<div class="gm-para action-result">${paras[0]}</div>`;
+  return paras.map((p,i)=>{
+    if(p.startsWith('<div'))return p;
+    let cls='action-result';
+    if(i===0)cls='sensory';
+    else if(i===paras.length-1)cls='hook';
+    else if(i===paras.length-2&&paras.length>=4)cls='consequence';
+    return`<div class="gm-para ${cls}">${p}</div>`;
   }).join('');
 }
-
-function addMsg(type, content) {
-  const c = document.getElementById('chat-msgs');
-  const d = document.createElement('div');
-  if (type === 'gm') {
-    const nsTag = `<span class="ns-tag ${narrativeState}">${narrativeState==='calmo'?'Tranquilo':narrativeState==='tensao'?'Tenso':'Ação'}</span>`;
-    d.className = 'msg-gm';
-    d.innerHTML = `<span class="mlabel">✦ MESTRE ${nsTag}</span>${renderGMContent(content)}`;
-  } else if (type === 'player') {
-    d.className = 'msg-player';
-    d.innerHTML = `<span class="mlabel" style="text-align:right">${escapeHtml(charData.name||'Você')} ✦</span>${escapeHtml(content)}`;
-  } else {
-    d.className = 'msg-action';
-    d.innerHTML = `<span>${escapeHtml(content)}</span>`;
-  }
-  c.appendChild(d);
-  c.scrollTop = c.scrollHeight;
+function addMsg(type,content){
+  const c=document.getElementById('chat-msgs');const d=document.createElement('div');
+  if(type==='gm'){
+    const nsTag=`<span class="ns-tag ${narrativeState}">${narrativeState==='calmo'?'Tranquilo':narrativeState==='tensao'?'Tenso':'Ação'}</span>`;
+    d.className='msg-gm';d.innerHTML=`<span class="mlabel">✦ MESTRE ${nsTag}</span>${renderGMContent(content)}`;
+  } else if(type==='player'){
+    d.className='msg-player';d.innerHTML=`<span class="mlabel" style="text-align:right">${escapeHtml(charData.name||'Você')} ✦</span>${escapeHtml(content)}`;
+  } else {d.className='msg-action';d.innerHTML=`<span>${escapeHtml(content)}</span>`;}
+  c.appendChild(d);c.scrollTop=c.scrollHeight;
 }
-function addDiceMsg(rollObj, label='') {
-  const c = document.getElementById('chat-msgs');
-  const d = document.createElement('div');
-  d.className = 'msg-action';
-  d.innerHTML = diceHtml(rollObj, label);
-  c.appendChild(d);
-  c.scrollTop = c.scrollHeight;
+function addDiceMsg(rollObj,label=''){
+  const c=document.getElementById('chat-msgs');const d=document.createElement('div');
+  d.className='msg-action';d.innerHTML=diceHtml(rollObj,label);c.appendChild(d);c.scrollTop=c.scrollHeight;
 }
-function setAllDisabled(v) {
-  document.querySelectorAll('.btn-act, #btn-send').forEach(b => b.disabled = v);
-  document.getElementById('chat-input').disabled = v;
+function setAllDisabled(v){
+  document.querySelectorAll('.btn-act, #btn-send').forEach(b=>b.disabled=v);
+  document.getElementById('chat-input').disabled=v;
 }
-async function callGM(msg, rollResult = null) {
-  if (busy) return;
-  busy = true; setAllDisabled(true); setStatus('Narrando...', true);
+async function callGM(msg,rollResult=null){
+  if(busy)return;busy=true;setAllDisabled(true);setStatus('Narrando...',true);
   document.getElementById('typing').classList.add('on');
-  conversationHistory.push({role:'user', content:msg});
-  try {
-    const r = await fetch('/api/chat', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({system:buildSystem(), messages:conversationHistory})
-    });
-    const data = await r.json();
-    if (!r.ok) throw new Error(data.error || `Erro ${r.status}`);
-    const text = data.text ?? 'Um silêncio estranho paira no ar...';
-    conversationHistory.push({role:'assistant', content:text});
+  conversationHistory.push({role:'user',content:msg});
+  try{
+    const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system:buildSystem(),messages:conversationHistory})});
+    const data=await r.json();
+    if(!r.ok)throw new Error(data.error||`Erro ${r.status}`);
+    const text=data.text??'Um silêncio estranho paira no ar...';
+    conversationHistory.push({role:'assistant',content:text});
     document.getElementById('typing').classList.remove('on');
-    if (rollResult) addDiceMsg(rollResult, '');
-    addMsg('gm', text);
-    applyStatEffects(msg, rollResult);
-    inferNarrativeState(msg, text);
+    if(rollResult)addDiceMsg(rollResult,'');
+    addMsg('gm',text);
+    applyStatEffects(msg,rollResult);
+    inferNarrativeState(msg,text);
     saveToFirebase();
-  } catch(e) {
+  }catch(e){
     document.getElementById('typing').classList.remove('on');
-    addMsg('gm', 'O Mestre hesita por um instante. Verifique conexão e configuração da API.');
-    showToast('Erro: ' + e.message);
-    conversationHistory.pop();
+    addMsg('gm','O Mestre hesita por um instante. Verifique conexão e configuração da API.');
+    showToast('Erro: '+e.message);conversationHistory.pop();
   }
-  busy = false; setAllDisabled(false);
-  document.getElementById('chat-input').focus();
-  setStatus('Pronto', false);
+  busy=false;setAllDisabled(false);document.getElementById('chat-input').focus();setStatus('Pronto',false);
 }
-function inferNarrativeState(msg, gmText) {
-  const combined = (msg+' '+gmText).toLowerCase();
-  const fightWords = ['combate','ataque','luta','inimigo','espada','golpe','ferido','morto','batalha','fugir','perseguição'];
-  const tenseWords = ['perigo','armadilha','aviso','ameaça','sombra','espreita','suspeito','estranho','alerta','tensão'];
-  const calmWords  = ['descanso','paz','dormir','acampamento','tranquilo','conversa','comerciante','vila','seguro'];
-  if (fightWords.some(w => combined.includes(w))) setNarrativeState('acao');
-  else if (tenseWords.some(w => combined.includes(w))) setNarrativeState('tensao');
-  else if (calmWords.some(w => combined.includes(w))) setNarrativeState('calmo');
+function inferNarrativeState(msg,gmText){
+  const combined=(msg+' '+gmText).toLowerCase();
+  const fightWords=['combate','ataque','luta','inimigo','espada','golpe','ferido','morto','batalha','fugir','perseguição'];
+  const tenseWords=['perigo','armadilha','aviso','ameaça','sombra','espreita','suspeito','estranho','alerta','tensão'];
+  const calmWords=['descanso','paz','dormir','acampamento','tranquilo','conversa','comerciante','vila','seguro'];
+  if(fightWords.some(w=>combined.includes(w)))setNarrativeState('acao');
+  else if(tenseWords.some(w=>combined.includes(w)))setNarrativeState('tensao');
+  else if(calmWords.some(w=>combined.includes(w)))setNarrativeState('calmo');
 }
-function applyStatEffects(msg, roll=null) {
-  const lo = msg.toLowerCase();
-  if (lo.includes('descansar')||lo.includes('dormir')||lo.includes('repouso')) {
-    stats.hp   = Math.min(stats.maxHp,   stats.hp+22);
-    stats.mana = Math.min(stats.maxMana, stats.mana+18);
-    stats.stam = Math.min(stats.maxStam, stats.stam+28);
-  }
-  if (lo.includes('combate')||lo.includes('ataque')||lo.includes('lutar')||lo.includes('fight')) {
-    const dmg = roll
-      ? (roll.success ? (roll.critical?4:8)+Math.floor(Math.random()*12) : 15+Math.floor(Math.random()*20))
-      : 8+Math.floor(Math.random()*18);
-    stats.hp   = Math.max(0, stats.hp-dmg);
-    stats.stam = Math.max(0, stats.stam-12);
-  }
-  if (lo.includes('habilidade')||lo.includes('jutsu')||lo.includes('magia')||lo.includes('feitiço')||lo.includes('ki'))
-    stats.mana = Math.max(0, stats.mana-14);
-  if (stats.hp <= 0) showToast('⚠️ Você caiu! Descanse para recuperar vida.');
+function applyStatEffects(msg,roll=null){
+  const lo=msg.toLowerCase();
+  if(lo.includes('descansar')||lo.includes('dormir')||lo.includes('repouso')){stats.hp=Math.min(stats.maxHp,stats.hp+22);stats.mana=Math.min(stats.maxMana,stats.mana+18);stats.stam=Math.min(stats.maxStam,stats.stam+28);}
+  if(lo.includes('combate')||lo.includes('ataque')||lo.includes('lutar')||lo.includes('fight')){const dmg=roll?(roll.success?(roll.critical?4:8)+Math.floor(Math.random()*12):15+Math.floor(Math.random()*20)):8+Math.floor(Math.random()*18);stats.hp=Math.max(0,stats.hp-dmg);stats.stam=Math.max(0,stats.stam-12);}
+  if(lo.includes('habilidade')||lo.includes('jutsu')||lo.includes('magia')||lo.includes('feitiço')||lo.includes('ki'))stats.mana=Math.max(0,stats.mana-14);
+  if(stats.hp<=0)showToast('⚠️ Você caiu! Descanse para recuperar vida.');
   updateStats();
 }
 
-// ════════════════════════════════════════════════
-//  AÇÕES
-// ════════════════════════════════════════════════
-function getActionPrompt(type) {
-  const c = charData, lore = getLore();
-  const skillNames = c.skills?.map(s => s.name).join(', ') || 'habilidades especiais';
-  const prompts = {
-    timeskip:  `Algumas horas passam. Tom sensorial: "${lore.sensory}". Mostre mudanças no cenário, reação de NPCs e um novo risco ou oportunidade. Feche com decisão imediata.`,
-    rest:      `${c.name} descansa. Narre recuperação física e mental com atmosfera rica, mas inclua um detalhe que mova a trama (sonho, recado, presságio). Feche com escolha.`,
-    explore:   `${c.name} explora. Use o tom "${lore.sensory}". Revele descoberta, pista de lore ou ameaça velada coerente com "${c.world}". Feche com escolha.`,
-    talk:      `${c.name} inicia diálogo. Crie NPC memorável com objetivo próprio e subtexto. Use tensão "${lore.tense}". Feche com dilema.`,
-    fight:     `COMBATE CINEMATOGRÁFICO em "${c.world}". Tom "${lore.action}". Integre rolagem 1d20, consequências reais e impacto no estado do personagem. Feche com decisão urgente.`,
-    flee:      `${c.name} tenta fugir sob alta pressão. Use "${lore.tense}". Mostre custo da fuga (item, posição, reputação ou ferimento). Feche com escolha.`,
-    useSkill:  `${c.name} usa habilidade (${skillNames}) de modo criativo e coerente com "${c.world}". Mostre efeito direto no ambiente e nos inimigos/NPCs. Feche com decisão.`,
-    useCustomSkill: c.customSkill
-      ? `${c.name} ativa "${c.customSkill.name}" (${c.customSkill.desc}). Trate como assinatura épica e rara. Narre impacto dramático, com preço ou consequência plausível. Feche com decisão.`
-      : `${c.name} improvisa técnica própria. Narre impacto e risco. Feche com decisão.`,
-    lore:      `${c.name} busca lore relevante do mundo "${c.world}". Traga informação útil para a missão atual e conecte ao conflito em andamento. Feche com gancho de ação.`,
+// ════ ACTIONS ════
+function getActionPrompt(type){
+  const c=charData,lore=getLore();
+  const skillNames=c.skills?.map(s=>s.name).join(', ')||'habilidades especiais';
+  const prompts={
+    rest:`${c.name} descansa. Narre recuperação física e mental com atmosfera rica, mas inclua um detalhe que mova a trama (sonho, recado, presságio). Feche com escolha.`,
+    explore:`${c.name} explora. Use o tom "${lore.sensory}". Revele descoberta, pista de lore ou ameaça velada coerente com "${c.world}". Feche com escolha.`,
+    talk:`${c.name} inicia diálogo. Crie NPC memorável com objetivo próprio e subtexto. Use tensão "${lore.tense}". Feche com dilema.`,
+    fight:`COMBATE CINEMATOGRÁFICO em "${c.world}". Tom "${lore.action}". Integre rolagem 1d20, consequências reais e impacto no estado do personagem. Feche com decisão urgente.`,
+    flee:`${c.name} tenta fugir sob alta pressão. Use "${lore.tense}". Mostre custo da fuga (item, posição, reputação ou ferimento). Feche com escolha.`,
+    useSkill:`${c.name} usa habilidade (${skillNames}) de modo criativo e coerente com "${c.world}". Mostre efeito direto no ambiente e nos inimigos/NPCs. Feche com decisão.`,
+    useCustomSkill:c.customSkill?`${c.name} ativa "${c.customSkill.name}" (${c.customSkill.desc}). Trate como assinatura épica e rara. Narre impacto dramático, com preço ou consequência plausível. Feche com decisão.`:`${c.name} improvisa técnica própria. Narre impacto e risco. Feche com decisão.`,
+    lore:`${c.name} busca lore relevante do mundo "${c.world}". Traga informação útil para a missão atual e conecte ao conflito em andamento. Feche com gancho de ação.`,
   };
-  return prompts[type] || prompts.explore;
+  return prompts[type]||prompts.explore;
 }
-function getActionLabel(type) {
-  const labels = {
-    timeskip:'⏭ [Horas se passam...]', rest:'🌙 [Decide descansar]',
-    explore:'🔍 [Começa a explorar]', talk:'💬 [Procura alguém para falar]',
-    fight:'⚔ [Entra em postura de combate]', flee:'🏃 [Tenta escapar]',
-    useSkill:'✨ [Usa habilidade especial]',
-    useCustomSkill: charData.customSkill ? `${charData.customSkill.icon} [Usa ${charData.customSkill.name}]` : '🌀 [Usa habilidade própria]',
-    lore:'📜 [Busca informações]',
-  };
-  return labels[type] || `[${type}]`;
+function getActionLabel(type){
+  const labels={rest:'🌙 [Decide descansar]',explore:'🔍 [Começa a explorar]',talk:'💬 [Procura alguém para falar]',fight:'⚔ [Entra em postura de combate]',flee:'🏃 [Tenta escapar]',useSkill:'✨ [Usa habilidade especial]',useCustomSkill:charData.customSkill?`${charData.customSkill.icon} [Usa ${charData.customSkill.name}]`:'🌀 [Usa habilidade própria]',lore:'📜 [Busca informações]'};
+  return labels[type]||`[${type}]`;
 }
-function doAction(type) {
-  if (busy) return;
-  addMsg('action', getActionLabel(type));
-  let roll = null;
-  if (type === 'fight') { roll = rollD20(charData.attrs?charData.attrs[0].val:8); setNarrativeState('acao'); }
-  else if (type === 'flee') { roll = rollD20(charData.attrs?charData.attrs[1].val:8); setNarrativeState('tensao'); }
-  else if (type === 'useSkill' || type === 'useCustomSkill') { roll = rollD20(charData.attrs?charData.attrs[3].val:8); setNarrativeState('acao'); }
-  callGM(getActionPrompt(type), roll);
+function doAction(type){
+  if(busy)return;addMsg('action',getActionLabel(type));
+  let roll=null;
+  if(type==='fight'){roll=rollD20(charData.attrs?charData.attrs[0].val:8);setNarrativeState('acao');}
+  else if(type==='flee'){roll=rollD20(charData.attrs?charData.attrs[1].val:8);setNarrativeState('tensao');}
+  else if(type==='useSkill'||type==='useCustomSkill'){roll=rollD20(charData.attrs?charData.attrs[3].val:8);setNarrativeState('acao');}
+  callGM(getActionPrompt(type),roll);
 }
-function sendMsg() {
-  const inp = document.getElementById('chat-input');
-  const txt = inp.value.trim();
-  if (!txt || busy) return;
-  inp.value = '';
-  addMsg('player', txt);
-  callGM(txt);
+function sendMsg(){
+  const inp=document.getElementById('chat-input');const txt=inp.value.trim();
+  if(!txt||busy)return;inp.value='';addMsg('player',txt);callGM(txt);
 }
-function beginGame() {
-  const c = charData, lore = getLore();
-  const opening = `Inicie a aventura de ${c.name} no universo "${c.world}".
+function beginGame(){
+  const c=charData,lore=getLore();
+  const opening=`Inicie a aventura de ${c.name} no universo "${c.world}".
 Dados: ${c.age} anos, ${c.cls}, traço "${c.trait}", aparência ${c.build}, cabelo ${c.hair}, olhos ${c.eyes}.
-${c.backstory ? `Contexto pessoal: ${c.backstory}.` : ''}
+${c.backstory?`Contexto pessoal: ${c.backstory}.`:''}
 Habilidades: ${c.skills.map(s=>s.name).join(', ')}${c.customSkill?`, habilidade própria: ${c.customSkill.name}`:''}. 
 Narração obrigatória: 3 a 4 parágrafos. P1 sensorial: "${lore.sensory}". Desenvolvimento com conflito inicial. Elemento inesperado plausível. Encerrar com decisão urgente + 2-4 opções.`;
   callGM(opening);
 }
 
-// ════════════════════════════════════════════════
-//  SIDEBAR / MOBILE
-// ════════════════════════════════════════════════
-function toggleSidebar() {
-  document.getElementById('rpg-sidebar').classList.toggle('open');
-  document.getElementById('sb-overlay').classList.toggle('show');
-}
-function closeSidebar() {
-  document.getElementById('rpg-sidebar').classList.remove('open');
-  document.getElementById('sb-overlay').classList.remove('show');
-}
-document.querySelectorAll('.btn-act, #btn-send').forEach(btn => {
-  btn.addEventListener('click', () => { if (window.innerWidth <= 600) closeSidebar(); });
+// ════ SIDEBAR ════
+function toggleSidebar(){document.getElementById('rpg-sidebar').classList.toggle('open');document.getElementById('sb-overlay').classList.toggle('show');}
+function closeSidebar(){document.getElementById('rpg-sidebar').classList.remove('open');document.getElementById('sb-overlay').classList.remove('show');}
+document.querySelectorAll('.btn-act, #btn-send').forEach(btn=>{
+  btn.addEventListener('click',()=>{if(window.innerWidth<=600)closeSidebar();});
 });
 </script>
 </body>
