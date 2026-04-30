@@ -494,7 +494,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
       <div class="char-header-title">✦ Criação de Personagem</div>
       <div class="char-header-world" id="cc-world-label">Universo</div>
     </div>
-    <!-- FIX: Voltar vai para s-world E renderiza saves corretamente -->
     <button class="btn-ghost" onclick="goScreen('s-world');renderSavesList()">← Voltar</button>
   </div>
   <div class="char-body" id="char-body">
@@ -503,7 +502,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
       <div style="display:flex;flex-direction:column;gap:8px">
         <div>
           <div style="font-size:11px;color:var(--text3);margin-bottom:4px">Nome do personagem</div>
-          <!-- FIX: oninput="checkReady()" adicionado -->
           <input class="cc-input" id="cc-name" placeholder="Nome completo..." autocomplete="off" oninput="checkReady()">
         </div>
         <div class="cc-row">
@@ -530,7 +528,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
     <div class="cc-card full-col"><span class="cc-label">Classe</span><div class="classes-grid" id="classes-grid"></div></div>
     <div class="cc-card"><span class="cc-label">Atributos <span style="font-family:var(--fb);font-style:italic;font-size:10px;color:var(--text3);letter-spacing:0">(distribua pontos)</span></span><div class="attrs-grid" id="attrs-grid"></div><div class="attr-points-left">Pontos restantes: <span id="pts-left">10</span></div></div>
     <div class="cc-card full-col">
-      <!-- FIX: label atualizado para "ao menos 1, até 3" -->
       <span class="cc-label">Habilidades <span style="font-family:var(--fb);font-style:italic;font-size:10px;color:var(--text3);letter-spacing:0">(escolha 1 a 3)</span></span>
       <div class="skills-pool" id="skills-pool"></div>
       <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:12px">
@@ -549,7 +546,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
     <div class="cc-card full-col"><span class="cc-label">Traço de Personalidade</span><div class="trait-grid" id="trait-grid"></div></div>
   </div>
   <div class="char-footer">
-    <!-- FIX: hint com badges coloridos mostrando o que falta -->
     <div class="char-footer-hint" id="cc-hint">Preencha os campos obrigatórios</div>
     <button class="btn-gold" id="btn-start" onclick="startGame()" disabled>Iniciar →</button>
   </div>
@@ -682,6 +678,7 @@ const WORLD_SKILLS={
   'Dark Souls':[{icon:'🔥',name:'Pyromancia',desc:'Chamas'},{icon:'🛡',name:'Parry',desc:'Deflexão'}]
 };
 const WORLD_SKILLS_DEFAULT=[{icon:'⚔',name:'Combate',desc:'Aumenta dano'},{icon:'🛡',name:'Defesa',desc:'Reduz dano'},{icon:'🔮',name:'Magia',desc:'Magia forte'}];
+const WORLD_LORE_DEFAULT={sensory:'Mistério no ar',tense:'Algo espreita',action:'Ação repentina',themes:['aventura']};
 const AVATARS=['🧙','⚔️','🏹','🛡️','🗡️','🔮','🐺','🦅','💀','🌟','🍃','🔥','❄️','⚡','🌊','🧝','🤺','👁️','🦊','🐉'];
 const TRAITS=['Corajoso','Calculista','Leal','Solitário','Carismático','Honrado','Sarcástico','Curioso'];
 const ATTR_NAMES=['FOR','DES','CON','INT','SAB','CAR'];
@@ -741,6 +738,7 @@ function renderUserBar(){
 // ════ PERSISTENCE ════
 const LS_KEY='rpg_sessions_v2';
 let saveTimeout=null;
+let _savesCache = {};
 
 function buildSessionPayload(){return{charData,stats,inventory,conversationHistory:conversationHistory.slice(-80),savedAt:Date.now()};}
 
@@ -775,6 +773,7 @@ async function loadAllSessions(){
       }
     }catch(e){}
   }
+  _savesCache = saves;
   return saves;
 }
 
@@ -824,7 +823,7 @@ async function resumeGame(id){
     stats=session.stats||{hp:100,maxHp:100,mana:60,maxMana:60,stam:90,maxStam:90};
     inventory=session.inventory||[];
     conversationHistory=session.conversationHistory||[];
-    // Fallbacks
+    
     charData.name=charData.name||'Herói';
     charData.world=charData.world||'Mundo Desconhecido';
     charData.cls=charData.cls||'Comum';
@@ -834,10 +833,11 @@ async function resumeGame(id){
     charData.build=charData.build||'Médio';
     charData.hair=charData.hair||'Desconhecido';
     charData.eyes=charData.eyes||'Desconhecido';
+    
     populateSidebar();updateStats();updateInventory();
     const chatEl=document.getElementById('chat-msgs');
     chatEl.innerHTML='';
-    // FIX: Recarrega o histórico de mensagens corretamente
+    
     conversationHistory.forEach(m=>{
       if(m&&m.role==='assistant') addMsg('gm',m.content||'');
       else if(m&&m.role==='user') addMsg('player',m.content||'');
@@ -903,7 +903,6 @@ function pickCustomWorld(){const v=document.getElementById('custom-world-inp').v
 
 function buildCharScreen(w){
   document.getElementById('custom-world-box').style.display=WORLD_LORE[w]?'none':'block';
-  // Reset avatar
   const ag=document.getElementById('avatar-grid');ag.innerHTML='';selectedAvatar='🧙';
   document.getElementById('avatar-preview').textContent='🧙';
   AVATARS.forEach(a=>{
@@ -911,7 +910,7 @@ function buildCharScreen(w){
     d.onclick=()=>{document.querySelectorAll('.avatar-opt').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');selectedAvatar=a;document.getElementById('avatar-preview').textContent=a;};
     ag.appendChild(d);
   });
-  // Classes
+  
   const classes=[...(WORLD_CLASSES[w]||WORLD_CLASSES['Westeros — Game of Thrones']),{icon:'🧑‍🌾',name:'Comum'}];
   const cg=document.getElementById('classes-grid');cg.innerHTML='';selectedClass=-1;
   classes.forEach((cl,i)=>{
@@ -920,11 +919,11 @@ function buildCharScreen(w){
     d.onclick=()=>{document.querySelectorAll('.class-opt').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');selectedClass=i;checkReady();};
     cg.appendChild(d);
   });
-  // Atributos
+  
   attrBonus=[0,0,0,0,0,0];totalPts=10;
   document.getElementById('attrs-grid').innerHTML=ATTR_NAMES.map((n,i)=>`<div class="attr-row"><div class="attr-top"><span class="attr-name">${n}</span><span class="attr-val" id="av-${i}">8</span></div><input class="attr-slider" type="range" min="0" max="5" value="0" id="asl-${i}" oninput="changeAttr(${i},this.value)"></div>`).join('');
   document.getElementById('pts-left').textContent=totalPts;
-  // Habilidades
+  
   const pool=WORLD_SKILLS[w]||WORLD_SKILLS_DEFAULT;selectedSkills=[];
   const sp=document.getElementById('skills-pool');sp.innerHTML='';
   pool.forEach((sk,i)=>{
@@ -932,9 +931,9 @@ function buildCharScreen(w){
     d.innerHTML=`<span class="sk-icon">${sk.icon}</span><div><div class="sk-name">${sk.name}</div><div class="sk-desc">${sk.desc}</div></div><span class="skill-check">✓</span>`;
     d.onclick=()=>toggleSkill(i,d);sp.appendChild(d);
   });
-  // Traços
+  
   document.getElementById('trait-grid').innerHTML=TRAITS.map(t=>`<div class="trait-opt" onclick="document.querySelectorAll('.trait-opt').forEach(x=>x.classList.remove('selected'));this.classList.add('selected');selectedTrait='${t}'">${t}</div>`).join('');
-  // Reset campos
+  
   document.getElementById('cc-name').value='';
   document.getElementById('custom-skill-name').value='';
   selectedTrait='';
@@ -952,28 +951,24 @@ function changeAttr(i,val){
 function toggleSkill(i,el){
   if(el.classList.contains('selected')){el.classList.remove('selected');selectedSkills=selectedSkills.filter(x=>x!==i);}
   else{
-    // FIX: máximo 3, mínimo 1 para liberar botão
     if(selectedSkills.length>=3){showToast('Máximo de 3 habilidades.');return;}
     el.classList.add('selected');selectedSkills.push(i);
   }
   checkReady();
 }
 
-// ═══ FIX PRINCIPAL: checkReady com feedback detalhado ═══
 function checkReady(){
   const name = document.getElementById('cc-name').value.trim();
   const hasName    = name.length > 0;
   const hasClass   = selectedClass >= 0;
-  // FIX: mínimo 1 habilidade, não mais obrigatório ter exatamente 3
   const hasSkills  = selectedSkills.length >= 1;
 
   const hintEl = document.getElementById('cc-hint');
   const btnEl  = document.getElementById('btn-start');
 
-  // Monta feedback visual com badges
   const nb = `<span class="req-badge ${hasName?'done':'todo'}">${hasName?'✓ Nome':'✗ Nome'}</span>`;
   const cb = `<span class="req-badge ${hasClass?'done':'todo'}">${hasClass?'✓ Classe':'✗ Classe'}</span>`;
-  const sb = `<span class="req-badge ${hasSkills?'done':'todo'}">${hasSkills?`✓ ${selectedSkills.length} habilidade${selectedSkills.length>1?'s':''}` :'✗ Habilidade'}</span>`;
+  const sb = `<span class="req-badge ${hasSkills?'done':'todo'}">${hasSkills?`✓ ${selectedSkills.length} hab${selectedSkills.length>1?'s':''}` :'✗ Habilidade'}</span>`;
 
   if(hasName && hasClass && hasSkills){
     hintEl.innerHTML = `<span class="hint-ok">✦ Pronto para aventurar!</span>`;
@@ -1109,33 +1104,88 @@ function applyStatEffects(msg,roll=null){
   updateStats();
 }
 
-// ════ CORE AI ════
-async function callGM(msg,rollResult=null){
-  if(busy) return;
-  busy=true;
-  document.querySelectorAll('.btn-act, #btn-send').forEach(b=>b.disabled=true);
-  document.getElementById('chat-input').disabled=true;
-  document.getElementById('typing').classList.add('on');
-  conversationHistory.push({role:'user',content:msg});
+// ════ LORE & SYSTEM PROMPT ════
+function getLore() {
+  return WORLD_LORE[charData.world] || WORLD_LORE_DEFAULT;
+}
 
-  try{
-    await new Promise(resolve=>setTimeout(resolve,1500));
-    const text="O Mestre observa atentamente. *(Sistema funcionando corretamente! Conecte seu backend de IA no código para respostas reais. O sistema de saves múltiplos, retomada de chat e criação de personagem foram corrigidos.)*";
-    conversationHistory.push({role:'assistant',content:text});
+function buildSystem() {
+  const c = charData, lore = getLore();
+  const skillList = c.skills.map(s => `${s.name} (${s.desc})`).join(', ');
+  const customPart = c.customSkill ? `\n- Habilidade própria: ${c.customSkill.name} — ${c.customSkill.desc}` : '';
+  const attrList = c.attrs.map(a => `${a.name}:${a.val}`).join(' ');
+  const mode = WORLD_LORE[c.world] ? 'MUNDO PREDEFINIDO' : 'MUNDO PERSONALIZADO';
+  const customLoreText = c.customLore ? `\n- LORE DEFINIDO PELO JOGADOR: ${c.customLore}` : '';
+  
+  return `Você é o Mestre do jogo. Seu objetivo é imersão absoluta.
+IDIOMA: Responda SEMPRE em português do Brasil.
+MODO ATIVO: ${mode}
+
+FICHA DO JOGADOR:
+- Nome: ${c.name}, Idade: ${c.age} anos, Gênero: ${c.gender}
+- Aparência: ${c.build}, cabelo ${c.hair}, olhos ${c.eyes}
+- Classe: ${c.cls}
+- Atributos: ${attrList}
+- Habilidades: ${skillList}${customPart}
+- Traço: ${c.trait}
+${c.backstory ? `- Contexto: ${c.backstory}` : ''}
+
+UNIVERSO: "${c.world}"
+- Tom sensorial: "${lore.sensory}"
+- Tensão-base: "${lore.tense}"
+- Ação-base: "${lore.action}"
+- Temas: ${lore.themes.join(', ')}${customLoreText}
+
+REGRAS ESTRITAS DE NARRAÇÃO:
+1. MENOS É MAIS: Descreva a cena com 2 ou 3 elementos concretos. Deixe lacunas.
+2. TODOS OS SENTIDOS: Inclua som, tato/temperatura e olfato.
+3. NUNCA DIGA O QUE O PERSONAGEM SENTE: Narre o mundo ao redor.
+4. NPCs TÊM VIDA: Eles mentem, têm pressa, sentem medo.
+5. SEM LISTAS: NUNCA ofereça opções numeradas. Termine com uma tensão que exige resposta do jogador.
+6. MECÂNICA DE DADOS: Para ações arriscadas use "[TESTE:ATRIBUTO] [Descrição]". Não revele os números ao jogador.
+7. MISSÕES: Ao surgir missão use "[MISSÃO: descrição]". Ao concluir: "[CONCLUÍDA: descrição]".`;
+}
+
+// ════ CORE AI (CONEXÃO REAL COM O GEMINI) ════
+async function callGM(msg, rollResult=null){
+  if(busy) return;
+  busy = true;
+  document.querySelectorAll('.btn-act, #btn-send').forEach(b => b.disabled = true);
+  document.getElementById('chat-input').disabled = true;
+  document.getElementById('typing').classList.add('on');
+  
+  conversationHistory.push({role: 'user', content: msg});
+
+  try {
+    const r = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ system: buildSystem(), messages: conversationHistory })
+    });
+    
+    const data = await r.json();
+    if(!r.ok) throw new Error(data.error || `Erro ${r.status}`);
+    
+    const text = data.text || 'O silêncio toma conta do local...';
+    
+    conversationHistory.push({role: 'assistant', content: text});
     document.getElementById('typing').classList.remove('on');
-    if(rollResult) addDiceMsg(rollResult,'');
-    addMsg('gm',text);
-    applyStatEffects(msg,rollResult);
-    inferNarrativeState(msg,text);
-    saveToFirebase();
-  }catch(e){
+    
+    if(rollResult) addDiceMsg(rollResult, '');
+    addMsg('gm', text);
+    
+    applyStatEffects(msg, rollResult);
+    inferNarrativeState(msg, text);
+    saveToFirebase(); 
+  } catch(e) {
     document.getElementById('typing').classList.remove('on');
-    showToast('Erro de Conexão: '+e.message);
+    showToast('Erro de Conexão com o Mestre: ' + e.message);
+    conversationHistory.pop(); 
   }
 
-  busy=false;
-  document.querySelectorAll('.btn-act, #btn-send').forEach(b=>b.disabled=false);
-  document.getElementById('chat-input').disabled=false;
+  busy = false;
+  document.querySelectorAll('.btn-act, #btn-send').forEach(b => b.disabled = false);
+  document.getElementById('chat-input').disabled = false;
   document.getElementById('chat-input').focus();
 }
 
@@ -1159,7 +1209,9 @@ function sendMsg(){
   inp.value='';
 }
 
-function beginGame(){callGM('Inicie a jornada de '+charData.name);}
+function beginGame(){
+    callGM('Inicie a jornada de '+charData.name);
+}
 
 function toggleSidebar(){document.getElementById('rpg-sidebar').classList.toggle('open');document.getElementById('sb-overlay').classList.toggle('show');}
 function closeSidebar(){document.getElementById('rpg-sidebar').classList.remove('open');document.getElementById('sb-overlay').classList.remove('show');}
