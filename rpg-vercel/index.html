@@ -79,7 +79,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .btn-ghost{background:none;border:1px solid var(--border2);color:var(--text3);padding:9px 14px;font-family:var(--fb);font-size:14px;border-radius:4px;cursor:pointer;transition:all .15s;min-height:44px}
 .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
 
-/* SAVES */
+/* SAVES MÚLTIPLOS */
 .saves-section{width:100%;max-width:600px;display:none;flex-direction:column;gap:8px}
 .saves-header{font-family:var(--ft);font-size:11px;color:var(--gold);letter-spacing:1px;margin-bottom:4px;text-align:center}
 .saves-list{display:flex;flex-direction:column;gap:8px;max-height:240px;overflow-y:auto;padding-right:4px;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
@@ -108,7 +108,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .char-footer{background:var(--bg2);border-top:1px solid var(--border2);padding:10px 16px calc(10px + var(--sab));display:flex;justify-content:space-between;align-items:center;flex-shrink:0;gap:10px}
 .char-footer-hint{font-size:12px;color:var(--text3);font-style:italic;flex:1}
 .hint-ok{color:#27ae60}
-.hint-warn{color:var(--gold2)}
 .cc-card{background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:11px}
 .cc-card.full-col{grid-column:1/-1}
 .cc-label{font-family:var(--ft);font-size:8px;color:var(--gold);letter-spacing:1px;margin-bottom:8px;display:block}
@@ -152,6 +151,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 @media(max-width:380px){.trait-grid{grid-template-columns:1fr}}
 .trait-opt{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:10px;cursor:pointer;font-size:12px;color:var(--text2);transition:all .15s;text-align:center;min-height:44px;display:flex;align-items:center;justify-content:center}
 .trait-opt.selected{border-color:var(--gold);background:var(--bg4);color:var(--gold)}
+.req-badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:3px;margin-right:4px;font-style:normal;font-family:var(--ft);letter-spacing:.3px}
+.req-badge.done{background:rgba(39,174,96,.15);color:#27ae60;border:1px solid rgba(39,174,96,.4)}
+.req-badge.todo{background:rgba(192,57,43,.12);color:#e07070;border:1px solid rgba(192,57,43,.3)}
 
 /* GAME SCREEN */
 #s-game{height:100vh;overflow:hidden;display:flex;flex-direction:column}
@@ -326,7 +328,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .loading-overlay.hide{display:none}
 .loading-title{font-family:var(--ft);font-size:13px;color:var(--gold);letter-spacing:2px}
 .loading-dots{color:var(--text3);font-size:14px;font-style:italic}
-/* badge de requisito na criação */
 .req-badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:3px;margin-right:4px;font-style:normal;font-family:var(--ft);letter-spacing:.3px}
 .req-badge.done{background:rgba(39,174,96,.15);color:#27ae60;border:1px solid rgba(39,174,96,.4)}
 .req-badge.todo{background:rgba(192,57,43,.12);color:#e07070;border:1px solid rgba(192,57,43,.3)}
@@ -348,8 +349,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
     <div class="pause-char" id="pause-char">—</div>
     <div class="pause-save-info" id="pause-save-info">Salvando...</div>
     <button class="btn-pause-action btn-pause-resume" onclick="closePause()">▶ Continuar Aventura</button>
-    <button class="btn-pause-action btn-pause-worlds" onclick="pauseGoWorlds()">↩ Voltar aos Mundos</button>
-    <button class="btn-pause-action btn-pause-new" onclick="pauseNewGame()">🗑 Abandonar Herói Atual</button>
+    <button class="btn-pause-action btn-pause-worlds" onclick="pauseGoWorlds()">💾 Salvar e Voltar aos Mundos</button>
+    <button class="btn-pause-action btn-pause-new" onclick="pauseNewGame()">🗑 Apagar este Personagem</button>
   </div>
 </div>
 
@@ -462,9 +463,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
     <div class="saves-section" id="saves-section">
       <div class="saves-header">✦ SUAS AVENTURAS SALVAS ✦</div>
       <div class="saves-list" id="saves-list"></div>
-      <div class="ws-divider">ou crie uma nova aventura</div>
+      <div class="ws-divider">OU CRIE UM NOVO PERSONAGEM NESTES MUNDOS</div>
     </div>
-    <div class="ws-sub" id="ws-sub-title">Escolha o universo da sua aventura</div>
+    <div class="ws-sub" id="ws-sub-title">Escolha o universo da sua nova aventura</div>
 
     <div class="worlds-grid">
       <div class="world-card" onclick="pickWorld('Westeros — Game of Thrones')"><div class="wc-icon">⚔</div><div class="wc-name">Game of Thrones</div><div class="wc-desc">Westeros & Essos</div></div>
@@ -747,7 +748,6 @@ async function loadAllSessions(){
     try{
       const snap=await db.ref(`users/${currentUser.uid}/sessions`).once('value');
       if(snap.exists()) saves=snap.val()||{};
-      // Resgate de save antigo da gaveta antiga (v1)
       const oldSnap=await db.ref(`users/${currentUser.uid}/session`).once('value');
       if(oldSnap.exists()){
         const oldSave=oldSnap.val();
@@ -812,36 +812,37 @@ async function deleteSave(id){
   renderSavesList();
 }
 
-// === FIX: SISTEMA DE CARREGAMENTO DIRETO ===
+// === CARREGAMENTO IMEDIATO E A PROVA DE FALHAS ===
 async function resumeGame(id){
   try {
-    // 1. Mostrar loading instantaneamente para dar resposta visual
+    // 1. Pular pra tela de jogo na mesma hora!
+    goScreen('s-game');
     document.getElementById('loading-overlay').classList.remove('hide');
-    
-    // 2. Usar o cache da memória (isso garante que carrega na hora!)
+
+    // 2. Busca na memória ou no firebase
     let session = _savesCache[id];
-    
-    // Fallback caso a memória limpou mas a sessão existe
     if(!session){
       const saves = await loadAllSessions();
       session = saves[id];
     }
     
     if(!session){
+      goScreen('s-world');
       document.getElementById('loading-overlay').classList.add('hide');
-      showToast('Save não encontrado!');
+      showToast('Erro: Save não encontrado!');
       return;
     }
-    
+
+    // 3. Preenche todas as variáveis
     currentSessionId = id;
     charData = session.charData || {};
     stats = session.stats || {hp:100,maxHp:100,mana:60,maxMana:60,stam:90,maxStam:90};
     inventory = session.inventory || [];
     conversationHistory = session.conversationHistory || [];
     
-    // Fallbacks para saves velhos não quebrarem
+    // 4. Fallbacks para garantir que nenhum dado velho quebre a tela
     charData.name = charData.name || 'Herói';
-    charData.world = charData.world || 'Mundo Desconhecido';
+    charData.world = charData.world || 'Aventura';
     charData.cls = charData.cls || 'Comum';
     charData.avatar = charData.avatar || '🧙';
     charData.clsIcon = charData.clsIcon || '⚔';
@@ -854,6 +855,7 @@ async function resumeGame(id){
     updateStats(); 
     updateInventory();
     
+    // 5. Renderiza o histórico de Chat
     const chatEl = document.getElementById('chat-msgs');
     chatEl.innerHTML = '';
     
@@ -862,19 +864,19 @@ async function resumeGame(id){
       else if(m && m.role === 'user') addMsg('player', m.content || '');
     });
     
-    // Delay de 50ms para garantir que o chat rolou até a última linha
-    setTimeout(() => { chatEl.scrollTop = chatEl.scrollHeight; }, 50);
+    // 6. Rolar pro fundo
+    setTimeout(() => { chatEl.scrollTop = chatEl.scrollHeight; }, 100);
     
-    setNarrativeState('calmo');
+    setNarrativeState('calmo'); 
     
-    // Esconde o loading e entra direto no jogo
+    // Libera a tela
     document.getElementById('loading-overlay').classList.add('hide');
-    goScreen('s-game');
     
   } catch(err) {
     console.error(err);
+    goScreen('s-world');
     document.getElementById('loading-overlay').classList.add('hide');
-    showToast('Erro ao carregar aventura: '+err.message);
+    showToast('Erro fatal ao carregar: ' + err.message);
   }
 }
 
