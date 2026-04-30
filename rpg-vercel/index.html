@@ -56,11 +56,11 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .auth-tab{flex:1;padding:11px 8px;font-family:var(--ft);font-size:9px;letter-spacing:.5px;cursor:pointer;text-align:center;border:none;background:var(--bg3);color:var(--text3);transition:all .15s;min-height:44px;-webkit-tap-highlight-color:transparent}
 .auth-tab.active{background:var(--bg4);color:var(--gold)}
 
-/* WORLD SELECT & MULTI-SAVES */
+/* WORLD SELECT */
 #s-world{align-items:center;justify-content:flex-start;min-height:100vh;padding:calc(16px + var(--sat)) 16px calc(16px + var(--sab));gap:14px;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .ws-top-bar{width:100%;max-width:600px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
 .ws-logo{font-family:var(--ft);font-size:clamp(10px,2.5vw,14px);color:var(--gold);letter-spacing:2px}
-.ws-sub{font-size:13px;color:var(--text3);text-align:center;font-style:italic;width:100%;max-width:600px}
+.ws-sub{font-size:13px;color:var(--text3);text-align:center;font-style:italic;width:100%;max-width:600px;margin-bottom:8px}
 .worlds-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;max-width:600px}
 @media(min-width:400px){.worlds-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr))}}
 .world-card{background:var(--bg2);border:1px solid var(--border2);border-radius:6px;padding:13px 8px;cursor:pointer;transition:all .2s;text-align:center;min-height:80px;display:flex;flex-direction:column;align-items:center;justify-content:center}
@@ -68,17 +68,18 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .wc-icon{font-size:22px;margin-bottom:5px}
 .wc-name{font-family:var(--ft);font-size:clamp(6px,1.8vw,8px);color:var(--gold);letter-spacing:.5px}
 .wc-desc{font-size:clamp(9px,2.2vw,11px);color:var(--text3);margin-top:2px;font-style:italic}
-.ws-divider{display:flex;align-items:center;gap:10px;width:100%;max-width:600px;color:var(--text3);font-size:13px}
+.ws-divider{display:flex;align-items:center;gap:10px;width:100%;max-width:600px;color:var(--text3);font-size:13px;margin:8px 0}
 .ws-divider::before,.ws-divider::after{content:'';flex:1;border-top:1px solid var(--border2)}
 .custom-row{display:flex;gap:8px;width:100%;max-width:600px}
 .field-input{flex:1;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:11px 12px;font-family:var(--fb);font-size:16px;border-radius:4px;outline:none;font-style:italic;-webkit-appearance:none}
+.field-input::placeholder{color:var(--text3)}
 .field-input:focus{border-color:var(--gold)}
 .btn-gold{background:var(--red);border:1px solid var(--red2);color:#f0d0a0;padding:11px 16px;font-family:var(--ft);font-size:8px;letter-spacing:.5px;border-radius:4px;cursor:pointer;white-space:nowrap;transition:all .15s;min-height:48px}
 .btn-gold:hover{background:var(--red2)}
 .btn-ghost{background:none;border:1px solid var(--border2);color:var(--text3);padding:9px 14px;font-family:var(--fb);font-size:14px;border-radius:4px;cursor:pointer;transition:all .15s;min-height:44px}
 .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
 
-/* LISTA DE SAVES MULTIPLOS */
+/* SAVES */
 .saves-section{width:100%;max-width:600px;display:none;flex-direction:column;gap:8px}
 .saves-header{font-family:var(--ft);font-size:11px;color:var(--gold);letter-spacing:1px;margin-bottom:4px;text-align:center}
 .saves-list{display:flex;flex-direction:column;gap:8px;max-height:240px;overflow-y:auto;padding-right:4px;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
@@ -89,7 +90,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .save-card:active{transform:scale(0.98)}
 .save-icon{font-size:26px;flex-shrink:0;width:36px;text-align:center}
 .save-info{flex:1;min-width:0}
-.save-title{font-family:var(--ft);font-size:10px;color:var(--gold);letter-spacing:1px;margin-bottom:2px}
+.save-title{font-family:var(--ft);font-size:10px;color:var(--gold);letter-spacing:1px;margin-bottom:2px;text-transform:uppercase}
 .save-desc{font-size:13px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .save-date{font-size:10px;color:var(--text3);font-style:italic}
 .btn-del-save{background:none;border:1px solid var(--border2);color:var(--text3);border-radius:4px;padding:8px 12px;font-size:14px;cursor:pointer;min-height:40px;flex-shrink:0;transition:all 0.15s}
@@ -106,6 +107,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .char-body::-webkit-scrollbar-thumb{background:var(--border2)}
 .char-footer{background:var(--bg2);border-top:1px solid var(--border2);padding:10px 16px calc(10px + var(--sab));display:flex;justify-content:space-between;align-items:center;flex-shrink:0;gap:10px}
 .char-footer-hint{font-size:12px;color:var(--text3);font-style:italic;flex:1}
+/* hint colorido */
+.hint-ok{color:#27ae60}
+.hint-warn{color:var(--gold2)}
 .cc-card{background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:11px}
 .cc-card.full-col{grid-column:1/-1}
 .cc-label{font-family:var(--ft);font-size:8px;color:var(--gold);letter-spacing:1px;margin-bottom:8px;display:block}
@@ -315,7 +319,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .ts-btn-go:disabled{opacity:.4;cursor:not-allowed}
 .msg-timeskip{background:linear-gradient(135deg,#1a1408,#251c10);border:1px solid var(--gold);border-radius:5px;padding:10px 14px;text-align:center;font-family:var(--ft);font-size:9px;color:var(--gold);letter-spacing:1px;margin:4px 0}
 
-/* TOAST E LOADING */
+/* TOAST & LOADING */
 .toast{position:fixed;bottom:calc(24px + var(--sab));left:50%;transform:translateX(-50%);background:#3a0a0a;border:1px solid var(--red2);color:#f0c0c0;padding:12px 20px;border-radius:5px;font-size:14px;z-index:999;display:none;max-width:90vw;text-align:center}
 .toast.show{display:block;animation:fadeInToast .2s}
 @keyframes fadeInToast{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
@@ -323,6 +327,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .loading-overlay.hide{display:none}
 .loading-title{font-family:var(--ft);font-size:13px;color:var(--gold);letter-spacing:2px}
 .loading-dots{color:var(--text3);font-size:14px;font-style:italic}
+/* badge de requisito na criação */
+.req-badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:3px;margin-right:4px;font-style:normal;font-family:var(--ft);letter-spacing:.3px}
+.req-badge.done{background:rgba(39,174,96,.15);color:#27ae60;border:1px solid rgba(39,174,96,.4)}
+.req-badge.todo{background:rgba(192,57,43,.12);color:#e07070;border:1px solid rgba(192,57,43,.3)}
 </style>
 </head>
 <body>
@@ -450,8 +458,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
       <div class="ws-logo">⚔ RPG · Mestre Inteligente</div>
       <div id="user-bar" style="display:flex;align-items:center;gap:6px"></div>
     </div>
-    
-    <!-- ÁREA DE MÚLTIPLOS SAVES -->
+
+    <!-- SAVES MÚLTIPLOS -->
     <div class="saves-section" id="saves-section">
       <div class="saves-header">✦ SUAS AVENTURAS SALVAS ✦</div>
       <div class="saves-list" id="saves-list"></div>
@@ -486,13 +494,18 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
       <div class="char-header-title">✦ Criação de Personagem</div>
       <div class="char-header-world" id="cc-world-label">Universo</div>
     </div>
+    <!-- FIX: Voltar vai para s-world E renderiza saves corretamente -->
     <button class="btn-ghost" onclick="goScreen('s-world');renderSavesList()">← Voltar</button>
   </div>
   <div class="char-body" id="char-body">
     <div class="cc-card">
       <span class="cc-label">Identidade</span>
       <div style="display:flex;flex-direction:column;gap:8px">
-        <div><div style="font-size:11px;color:var(--text3);margin-bottom:4px">Nome do personagem</div><input class="cc-input" id="cc-name" placeholder="Nome completo..." autocomplete="off"></div>
+        <div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">Nome do personagem</div>
+          <!-- FIX: oninput="checkReady()" adicionado -->
+          <input class="cc-input" id="cc-name" placeholder="Nome completo..." autocomplete="off" oninput="checkReady()">
+        </div>
         <div class="cc-row">
           <div style="flex:1"><div style="font-size:11px;color:var(--text3);margin-bottom:4px">Idade</div><input class="cc-input" id="cc-age" type="number" min="10" max="200" placeholder="25" style="text-align:center"></div>
           <div style="flex:1"><div style="font-size:11px;color:var(--text3);margin-bottom:4px">Gênero</div><select class="cc-select" id="cc-gender"><option>Masculino</option><option>Feminino</option><option>Não-binário</option><option>Prefere não dizer</option></select></div>
@@ -517,7 +530,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
     <div class="cc-card full-col"><span class="cc-label">Classe</span><div class="classes-grid" id="classes-grid"></div></div>
     <div class="cc-card"><span class="cc-label">Atributos <span style="font-family:var(--fb);font-style:italic;font-size:10px;color:var(--text3);letter-spacing:0">(distribua pontos)</span></span><div class="attrs-grid" id="attrs-grid"></div><div class="attr-points-left">Pontos restantes: <span id="pts-left">10</span></div></div>
     <div class="cc-card full-col">
-      <span class="cc-label">Habilidades <span style="font-family:var(--fb);font-style:italic;font-size:10px;color:var(--text3);letter-spacing:0">(escolha até 3)</span></span>
+      <!-- FIX: label atualizado para "ao menos 1, até 3" -->
+      <span class="cc-label">Habilidades <span style="font-family:var(--fb);font-style:italic;font-size:10px;color:var(--text3);letter-spacing:0">(escolha 1 a 3)</span></span>
       <div class="skills-pool" id="skills-pool"></div>
       <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:12px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><span style="font-family:var(--ft);font-size:8px;color:var(--purple2);letter-spacing:1px">✦ Criar habilidade própria</span><span style="font-size:10px;color:var(--text4);font-style:italic">opcional</span></div>
@@ -535,7 +549,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
     <div class="cc-card full-col"><span class="cc-label">Traço de Personalidade</span><div class="trait-grid" id="trait-grid"></div></div>
   </div>
   <div class="char-footer">
-    <div class="char-footer-hint" id="cc-hint">Preencha nome e escolha uma classe</div>
+    <!-- FIX: hint com badges coloridos mostrando o que falta -->
+    <div class="char-footer-hint" id="cc-hint">Preencha os campos obrigatórios</div>
     <button class="btn-gold" id="btn-start" onclick="startGame()" disabled>Iniciar →</button>
   </div>
 </div>
@@ -632,21 +647,40 @@ const db   = firebase.database();
 let currentUser = null;
 let authMode = 'login';
 
-// ════ LORE & DATA COMPACTADOS ════
+// ════ DATA ════
 const WORLD_LORE = {
-  'Westeros — Game of Thrones': {sensory:'Vento gelado, cheiro de fumaça.',tense:'Tambores ecoam ao longe.',action:'Aço contra aço.',themes:['traição','poder']},
-  'Naruto': {sensory:'Ar vibra com chakra.',tense:'Tensão de clãs.',action:'Jutsus em alta velocidade.',themes:['vingança','amizade']},
-  'Attack on Titan': {sensory:'Madeira queimada, silêncio aterrorizante.',tense:'Rugido Titã.',action:'Cabos cortam o ar.',themes:['sobrevivência']},
-  'The Witcher': {sensory:'Cheiro de ervas e prata.',tense:'Monstros nas sombras.',action:'Sinais rúnicos e espadas.',themes:['monstros','destino']},
-  'Dragon Ball': {sensory:'Ki faz tremer o chão.',tense:'Poder subindo além do limite.',action:'Explosões de energia.',themes:['superação']},
-  'Harry Potter': {sensory:'Pergaminho e magia no ar.',tense:'Magia escura espreita.',action:'Feitiços coloridos.',themes:['lealdade']},
-  'Star Wars': {sensory:'Força sussurra.',tense:'Lado sombrio pulsa.',action:'Sabres colidem.',themes:['equilíbrio']},
-  'One Piece': {sensory:'Sal e aventura.',tense:'Marinha no horizonte.',action:'Haki estrondoso.',themes:['liberdade','piratas']},
-  'Dark Souls': {sensory:'Cinzas e fogo fraco.',tense:'Maldição Oco.',action:'Rolamento e contra-ataque.',themes:['desespero','ciclos']}
+  'Westeros — Game of Thrones':{sensory:'Vento gelado, cheiro de fumaça.',tense:'Tambores ecoam ao longe.',action:'Aço contra aço.',themes:['traição','poder']},
+  'Naruto':{sensory:'Ar vibra com chakra.',tense:'Tensão de clãs.',action:'Jutsus em alta velocidade.',themes:['vingança','amizade']},
+  'Attack on Titan':{sensory:'Madeira queimada, silêncio aterrorizante.',tense:'Rugido Titã.',action:'Cabos cortam o ar.',themes:['sobrevivência']},
+  'The Witcher':{sensory:'Cheiro de ervas e prata.',tense:'Monstros nas sombras.',action:'Sinais rúnicos e espadas.',themes:['monstros','destino']},
+  'Dragon Ball':{sensory:'Ki faz tremer o chão.',tense:'Poder subindo além do limite.',action:'Explosões de energia.',themes:['superação']},
+  'Harry Potter':{sensory:'Pergaminho e magia no ar.',tense:'Magia escura espreita.',action:'Feitiços coloridos.',themes:['lealdade']},
+  'Star Wars':{sensory:'Força sussurra.',tense:'Lado sombrio pulsa.',action:'Sabres colidem.',themes:['equilíbrio']},
+  'One Piece':{sensory:'Sal e aventura.',tense:'Marinha no horizonte.',action:'Haki estrondoso.',themes:['liberdade','piratas']},
+  'Dark Souls':{sensory:'Cinzas e fogo fraco.',tense:'Maldição Oco.',action:'Rolamento e contra-ataque.',themes:['desespero','ciclos']}
 };
-const WORLD_LORE_DEFAULT = {sensory:'Mundo misterioso.',tense:'Tensão.',action:'Ação.',themes:['aventura']};
-const WORLD_CLASSES={'Westeros — Game of Thrones':[{icon:'⚔',name:'Cavaleiro'},{icon:'🏹',name:'Arqueiro'},{icon:'🔮',name:'Maester'},{icon:'🗡',name:'Assassino'}],'Naruto':[{icon:'🍃',name:'Ninjutsu'},{icon:'🔥',name:'Taijutsu'},{icon:'💧',name:'Genjutsu'}],'Attack on Titan':[{icon:'⚙',name:'Legião Explor.'},{icon:'🛡',name:'Guarda'}],'The Witcher':[{icon:'🐺',name:'Witcher'},{icon:'🔮',name:'Mago'},{icon:'🗡',name:'Bardo'}],'Dragon Ball':[{icon:'🔴',name:'Guerreiro Z'},{icon:'⚡',name:'Super Sayajin'}],'Harry Potter':[{icon:'🪄',name:'Auror'},{icon:'📚',name:'Bruxo'}],'Star Wars':[{icon:'💙',name:'Jedi'},{icon:'❤',name:'Sith'},{icon:'🔫',name:'Caçador'}],'One Piece':[{icon:'✊',name:'Usuário Akuma'},{icon:'⚔',name:'Espadachim'},{icon:'🏴‍☠️',name:'Pirata'}],'Dark Souls':[{icon:'⚔',name:'Guerreiro'},{icon:'🔮',name:'Feiticeiro'},{icon:'🌑',name:'Sem-chama'}]};
-const WORLD_SKILLS={'Westeros — Game of Thrones':[{icon:'⚔',name:'Esgrima',desc:'Mestre com lâminas'},{icon:'🛡',name:'Resistência',desc:'Absorve dano extra'},{icon:'🗣',name:'Persuasão',desc:'Influencia NPCs'}],'Naruto':[{icon:'🔥',name:'Katon',desc:'Jutsus de fogo'},{icon:'👥',name:'Clones',desc:'Cria cópias'},{icon:'⚡',name:'Raiton',desc:'Raios'}],'Attack on Titan':[{icon:'⚙',name:'3DM Elite',desc:'Agilidade extrema'},{icon:'🗡',name:'Duplas Lâminas',desc:'Golpes'}],'The Witcher':[{icon:'🐺',name:'Sinais',desc:'Magia rúnica'},{icon:'⚗',name:'Alquimia',desc:'Poções'}],'Dragon Ball':[{icon:'⚡',name:'Kamehameha',desc:'Raio'},{icon:'🌀',name:'Kaioken',desc:'Multiplica poder'}],'Harry Potter':[{icon:'🪄',name:'Expelliarmus',desc:'Desarma'},{icon:'🦌',name:'Patronus',desc:'Proteção'}],'Star Wars':[{icon:'💙',name:'Telecinese',desc:'Move objetos'},{icon:'🗡',name:'Sabre de Luz',desc:'Combate avançado'}],'One Piece':[{icon:'✊',name:'Haki Armamento',desc:'Endurece'},{icon:'👁',name:'Haki Observação',desc:'Prevê'}],'Dark Souls':[{icon:'🔥',name:'Pyromancia',desc:'Chamas'},{icon:'🛡',name:'Parry',desc:'Deflexão'}]};
+const WORLD_CLASSES={
+  'Westeros — Game of Thrones':[{icon:'⚔',name:'Cavaleiro'},{icon:'🏹',name:'Arqueiro'},{icon:'🔮',name:'Maester'},{icon:'🗡',name:'Assassino'}],
+  'Naruto':[{icon:'🍃',name:'Ninjutsu'},{icon:'🔥',name:'Taijutsu'},{icon:'💧',name:'Genjutsu'}],
+  'Attack on Titan':[{icon:'⚙',name:'Legião Explor.'},{icon:'🛡',name:'Guarda'}],
+  'The Witcher':[{icon:'🐺',name:'Witcher'},{icon:'🔮',name:'Mago'},{icon:'🗡',name:'Bardo'}],
+  'Dragon Ball':[{icon:'🔴',name:'Guerreiro Z'},{icon:'⚡',name:'Super Sayajin'}],
+  'Harry Potter':[{icon:'🪄',name:'Auror'},{icon:'📚',name:'Bruxo'}],
+  'Star Wars':[{icon:'💙',name:'Jedi'},{icon:'❤',name:'Sith'},{icon:'🔫',name:'Caçador'}],
+  'One Piece':[{icon:'✊',name:'Usuário Akuma'},{icon:'⚔',name:'Espadachim'},{icon:'🏴‍☠️',name:'Pirata'}],
+  'Dark Souls':[{icon:'⚔',name:'Guerreiro'},{icon:'🔮',name:'Feiticeiro'},{icon:'🌑',name:'Sem-chama'}]
+};
+const WORLD_SKILLS={
+  'Westeros — Game of Thrones':[{icon:'⚔',name:'Esgrima',desc:'Mestre com lâminas'},{icon:'🛡',name:'Resistência',desc:'Absorve dano extra'},{icon:'🗣',name:'Persuasão',desc:'Influencia NPCs'}],
+  'Naruto':[{icon:'🔥',name:'Katon',desc:'Jutsus de fogo'},{icon:'👥',name:'Clones',desc:'Cria cópias'},{icon:'⚡',name:'Raiton',desc:'Raios'}],
+  'Attack on Titan':[{icon:'⚙',name:'3DM Elite',desc:'Agilidade extrema'},{icon:'🗡',name:'Duplas Lâminas',desc:'Golpes'}],
+  'The Witcher':[{icon:'🐺',name:'Sinais',desc:'Magia rúnica'},{icon:'⚗',name:'Alquimia',desc:'Poções'}],
+  'Dragon Ball':[{icon:'⚡',name:'Kamehameha',desc:'Raio'},{icon:'🌀',name:'Kaioken',desc:'Multiplica poder'}],
+  'Harry Potter':[{icon:'🪄',name:'Expelliarmus',desc:'Desarma'},{icon:'🦌',name:'Patronus',desc:'Proteção'}],
+  'Star Wars':[{icon:'💙',name:'Telecinese',desc:'Move objetos'},{icon:'🗡',name:'Sabre de Luz',desc:'Combate avançado'}],
+  'One Piece':[{icon:'✊',name:'Haki Armamento',desc:'Endurece'},{icon:'👁',name:'Haki Observação',desc:'Prevê'}],
+  'Dark Souls':[{icon:'🔥',name:'Pyromancia',desc:'Chamas'},{icon:'🛡',name:'Parry',desc:'Deflexão'}]
+};
 const WORLD_SKILLS_DEFAULT=[{icon:'⚔',name:'Combate',desc:'Aumenta dano'},{icon:'🛡',name:'Defesa',desc:'Reduz dano'},{icon:'🔮',name:'Magia',desc:'Magia forte'}];
 const AVATARS=['🧙','⚔️','🏹','🛡️','🗡️','🔮','🐺','🦅','💀','🌟','🍃','🔥','❄️','⚡','🌊','🧝','🤺','👁️','🦊','🐉'];
 const TRAITS=['Corajoso','Calculista','Leal','Solitário','Carismático','Honrado','Sarcástico','Curioso'];
@@ -654,48 +688,48 @@ const ATTR_NAMES=['FOR','DES','CON','INT','SAB','CAR'];
 const ATTR_FULL=['Força','Destreza','Constituição','Inteligência','Sabedoria','Carisma'];
 
 // ════ STATE ════
-let currentSessionId = null; // Para Múltiplos Saves
-let currentWorld='';
-let charData={};
-let attrBase=[8,8,8,8,8,8];
-let attrBonus=[0,0,0,0,0,0];
-let totalPts=10;
-let selectedClass=-1, selectedSkills=[], selectedTrait='', selectedAvatar='🧙';
-let conversationHistory=[], inventory=[];
-let busy=false, stats={hp:100,maxHp:100,mana:60,maxMana:60,stam:90,maxStam:90};
-let tsSelectedDuration='', tsSelectedActivity=null;
+let currentSessionId = null;
+let currentWorld = '';
+let charData = {};
+let attrBase = [8,8,8,8,8,8];
+let attrBonus = [0,0,0,0,0,0];
+let totalPts = 10;
+let selectedClass = -1, selectedSkills = [], selectedTrait = '', selectedAvatar = '🧙';
+let conversationHistory = [], inventory = [];
+let busy = false, stats = {hp:100,maxHp:100,mana:60,maxMana:60,stam:90,maxStam:90};
+let tsSelectedDuration = '', tsSelectedActivity = null;
+let narrativeState = 'calmo';
 
 // ════ HELPERS ════
 function goScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
 function showToast(msg,dur=3000){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),dur);}
+function setNarrativeState(state){narrativeState=state;document.getElementById('narrative-state-bar').className='narrative-state-bar '+state;}
+function escapeHtml(s){return String(s||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');}
 
 // ════ AUTH ════
-function switchTab(mode) {
-  authMode = mode;
-  document.getElementById('tab-login').classList.toggle('active', mode==='login');
-  document.getElementById('tab-register').classList.toggle('active', mode==='register');
-  document.getElementById('btn-auth').textContent = mode==='login'?'ENTRAR':'CRIAR CONTA';
+function switchTab(mode){
+  authMode=mode;
+  document.getElementById('tab-login').classList.toggle('active',mode==='login');
+  document.getElementById('tab-register').classList.toggle('active',mode==='register');
+  document.getElementById('btn-auth').textContent=mode==='login'?'ENTRAR':'CRIAR CONTA';
   document.getElementById('auth-err').textContent='';
 }
-async function doAuth() {
+async function doAuth(){
   const email=document.getElementById('auth-email').value.trim();
   const pass=document.getElementById('auth-pass').value;
   const errEl=document.getElementById('auth-err');
-  if (!email||pass.length<6){errEl.textContent='Preencha os campos corretos.';return;}
+  if(!email||pass.length<6){errEl.textContent='Preencha os campos corretos.';return;}
   document.getElementById('btn-auth').disabled=true;
-  try {
-    if (authMode==='login') await auth.signInWithEmailAndPassword(email,pass);
+  try{
+    if(authMode==='login') await auth.signInWithEmailAndPassword(email,pass);
     else await auth.createUserWithEmailAndPassword(email,pass);
-  } catch(e) {
-    errEl.textContent=e.message;
-    document.getElementById('btn-auth').disabled=false;
-  }
+  }catch(e){errEl.textContent=e.message;document.getElementById('btn-auth').disabled=false;}
 }
 function playAnon(){currentUser=null;goScreen('s-world');renderUserBar();renderSavesList();}
 async function logout(){await auth.signOut();currentUser=null;goScreen('s-auth');}
 auth.onAuthStateChanged(user=>{
   document.getElementById('loading-overlay').classList.add('hide');
-  if (user){currentUser=user;renderUserBar();goScreen('s-world');renderSavesList();}
+  if(user){currentUser=user;renderUserBar();goScreen('s-world');renderSavesList();}
   else{const inGame=['s-world','s-char','s-game'].some(id=>document.getElementById(id).classList.contains('active'));if(!inGame)goScreen('s-auth');}
 });
 function renderUserBar(){
@@ -704,128 +738,134 @@ function renderUserBar(){
   else{bar.innerHTML=`<button class="btn-ghost" style="font-size:11px;padding:6px 12px" onclick="goScreen('s-auth')">Entrar</button>`;}
 }
 
-// ════ PERSISTENCE (MULTI-SAVE) ════
+// ════ PERSISTENCE ════
 const LS_KEY='rpg_sessions_v2';
 let saveTimeout=null;
 
 function buildSessionPayload(){return{charData,stats,inventory,conversationHistory:conversationHistory.slice(-80),savedAt:Date.now()};}
 
-async function loadAllSessions() {
-  let saves = {};
-  if (currentUser) {
-    try {
-      const snap = await db.ref(`users/${currentUser.uid}/sessions`).once('value');
-      if (snap.exists()) saves = snap.val();
-    } catch(e) {}
-  } else {
-    try { saves = JSON.parse(localStorage.getItem(LS_KEY) || '{}'); } catch(e){}
+async function loadAllSessions(){
+  let saves={};
+  if(currentUser){
+    try{
+      const snap=await db.ref(`users/${currentUser.uid}/sessions`).once('value');
+      if(snap.exists()) saves=snap.val()||{};
+      // Resgate de save antigo (v1)
+      const oldSnap=await db.ref(`users/${currentUser.uid}/session`).once('value');
+      if(oldSnap.exists()){
+        const oldSave=oldSnap.val();
+        if(oldSave&&oldSave.charData&&!saves['save_legado']){
+          saves['save_legado']=oldSave;
+          await db.ref(`users/${currentUser.uid}/sessions/save_legado`).set(oldSave);
+          await db.ref(`users/${currentUser.uid}/session`).remove().catch(()=>{});
+        }
+      }
+    }catch(e){}
+  }else{
+    try{
+      saves=JSON.parse(localStorage.getItem(LS_KEY)||'{}');
+      const oldLocal=localStorage.getItem('rpg_session_v1');
+      if(oldLocal){
+        const parsedOld=JSON.parse(oldLocal);
+        if(parsedOld&&parsedOld.charData&&!saves['save_legado']){
+          saves['save_legado']=parsedOld;
+          localStorage.setItem(LS_KEY,JSON.stringify(saves));
+          localStorage.removeItem('rpg_session_v1');
+        }
+      }
+    }catch(e){}
   }
   return saves;
 }
 
-async function renderSavesList() {
-  const saves = await loadAllSessions();
-  const listEl = document.getElementById('saves-list');
-  const sectionEl = document.getElementById('saves-section');
-  const entries = Object.entries(saves).sort((a,b) => b[1].savedAt - a[1].savedAt);
-  
-  if (entries.length === 0) {
-    sectionEl.style.display = 'none';
-    return;
-  }
-  
-  sectionEl.style.display = 'flex';
-  listEl.innerHTML = entries.map(([id, data]) => {
-    const c = data.charData;
-    const date = new Date(data.savedAt).toLocaleDateString('pt-BR', {hour:'2-digit',minute:'2-digit'});
-    return `
-      <div class="save-card" onclick="resumeGame('${id}')">
-        <div class="save-icon">${c.avatar || '🧙'}</div>
-        <div class="save-info">
-          <div class="save-title">${c.name} · ${c.cls}</div>
-          <div class="save-desc">${c.world}</div>
-          <div class="save-date">${date}</div>
-        </div>
-        <button class="btn-del-save" onclick="event.stopPropagation(); deleteSave('${id}')">🗑</button>
-      </div>`;
+async function renderSavesList(){
+  const saves=await loadAllSessions();
+  const listEl=document.getElementById('saves-list');
+  const sectionEl=document.getElementById('saves-section');
+  const entries=Object.entries(saves).sort((a,b)=>b[1].savedAt-a[1].savedAt);
+  if(entries.length===0){sectionEl.style.display='none';return;}
+  sectionEl.style.display='flex';
+  listEl.innerHTML=entries.map(([id,data])=>{
+    const c=data.charData||{};
+    const date=data.savedAt?new Date(data.savedAt).toLocaleDateString('pt-BR',{hour:'2-digit',minute:'2-digit'}):'';
+    return`<div class="save-card" onclick="resumeGame('${id}')"><div class="save-icon">${c.avatar||'🧙'}</div><div class="save-info"><div class="save-title">${c.name||'Herói'} · ${c.cls||'Comum'}</div><div class="save-desc">${c.world||'Aventura'}</div><div class="save-date">${date}</div></div><button class="btn-del-save" onclick="event.stopPropagation();deleteSave('${id}')">🗑</button></div>`;
   }).join('');
 }
 
 function saveToFirebase(){
-  if(!currentSessionId) currentSessionId = 'save_' + Date.now();
-  const payload = buildSessionPayload();
-  
-  // Salvar Localmente
-  try {
-    let localSaves = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
-    localSaves[currentSessionId] = payload;
-    localStorage.setItem(LS_KEY, JSON.stringify(localSaves));
-  } catch(e){}
-
-  const ref = currentUser ? db.ref(`users/${currentUser.uid}/sessions/${currentSessionId}`) : null;
-  const b = document.getElementById('sync-badge');
+  if(!currentSessionId) currentSessionId='save_'+Date.now();
+  const payload=buildSessionPayload();
+  try{let ls=JSON.parse(localStorage.getItem(LS_KEY)||'{}');ls[currentSessionId]=payload;localStorage.setItem(LS_KEY,JSON.stringify(ls));}catch(e){}
+  const ref=currentUser?db.ref(`users/${currentUser.uid}/sessions/${currentSessionId}`):null;
+  const b=document.getElementById('sync-badge');
   if(!ref){if(b){b.textContent='💾 Salvo localmente';b.className='sync-badge ok';}return;}
-  
   if(b){b.textContent='⏳ Salvando...';b.className='sync-badge';}
   clearTimeout(saveTimeout);
   saveTimeout=setTimeout(async()=>{
     try{await ref.set(payload);if(b){b.textContent='☁ Salvo na nuvem';b.className='sync-badge ok';}}
     catch(e){if(b){b.textContent='⚠ Erro ao salvar';b.className='sync-badge';}}
-  }, 1000);
+  },1000);
 }
 
-async function deleteSave(id) {
+async function deleteSave(id){
   if(!confirm('Apagar esta aventura permanentemente?')) return;
-  if(currentUser) {
-    await db.ref(`users/${currentUser.uid}/sessions/${id}`).remove().catch(()=>{});
-  } else {
-    let localSaves = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
-    delete localSaves[id];
-    localStorage.setItem(LS_KEY, JSON.stringify(localSaves));
-  }
+  if(currentUser){await db.ref(`users/${currentUser.uid}/sessions/${id}`).remove().catch(()=>{});}
+  else{let ls=JSON.parse(localStorage.getItem(LS_KEY)||'{}');delete ls[id];localStorage.setItem(LS_KEY,JSON.stringify(ls));}
   renderSavesList();
 }
 
-async function resumeGame(id) {
-  const saves = await loadAllSessions();
-  const session = saves[id];
-  if(!session) return;
-  currentSessionId = id;
-  charData = session.charData;
-  stats = session.stats;
-  inventory = session.inventory || [];
-  conversationHistory = session.conversationHistory || [];
-  
-  if(!charData.avatar) charData.avatar='🧙';
-  if(!charData.clsIcon) charData.clsIcon='⚔';
-  
-  populateSidebar(); updateStats(); updateInventory();
-  const chatEl=document.getElementById('chat-msgs');chatEl.innerHTML='';
-  conversationHistory.forEach(m=>{if(m.role==='assistant')addMsg('gm',m.content);else if(m.role==='user')addMsg('player',m.content);});
-  chatEl.scrollTop=chatEl.scrollHeight;
-  
-  const btnC=document.getElementById('btn-custom-skill');
-  if(btnC){btnC.style.display=charData.customSkill?'':'none';if(charData.customSkill)btnC.textContent=charData.customSkill.icon+' '+charData.customSkill.name;}
-  
-  setNarrativeState('calmo'); goScreen('s-game');
+async function resumeGame(id){
+  try{
+    const saves=await loadAllSessions();
+    const session=saves[id];
+    if(!session){showToast('Save não encontrado!');return;}
+    currentSessionId=id;
+    charData=session.charData||{};
+    stats=session.stats||{hp:100,maxHp:100,mana:60,maxMana:60,stam:90,maxStam:90};
+    inventory=session.inventory||[];
+    conversationHistory=session.conversationHistory||[];
+    // Fallbacks
+    charData.name=charData.name||'Herói';
+    charData.world=charData.world||'Mundo Desconhecido';
+    charData.cls=charData.cls||'Comum';
+    charData.avatar=charData.avatar||'🧙';
+    charData.clsIcon=charData.clsIcon||'⚔';
+    charData.trait=charData.trait||'Livre';
+    charData.build=charData.build||'Médio';
+    charData.hair=charData.hair||'Desconhecido';
+    charData.eyes=charData.eyes||'Desconhecido';
+    populateSidebar();updateStats();updateInventory();
+    const chatEl=document.getElementById('chat-msgs');
+    chatEl.innerHTML='';
+    // FIX: Recarrega o histórico de mensagens corretamente
+    conversationHistory.forEach(m=>{
+      if(m&&m.role==='assistant') addMsg('gm',m.content||'');
+      else if(m&&m.role==='user') addMsg('player',m.content||'');
+    });
+    chatEl.scrollTop=chatEl.scrollHeight;
+    setNarrativeState('calmo');
+    goScreen('s-game');
+  }catch(err){
+    console.error(err);
+    showToast('Erro ao carregar aventura: '+err.message);
+  }
 }
 
-// ════ PAUSE MODAL ════
+// ════ PAUSE ════
 function openPause(){
   document.getElementById('pause-modal').classList.add('open');
-  if(charData&&charData.name)document.getElementById('pause-char').textContent=`${charData.avatar||'🧙'} ${charData.name} · ${charData.cls}`;
+  if(charData&&charData.name) document.getElementById('pause-char').textContent=`${charData.avatar||'🧙'} ${charData.name} · ${charData.cls}`;
   saveToFirebase();
 }
 function closePause(){document.getElementById('pause-modal').classList.remove('open');}
 function pauseGoWorlds(){saveToFirebase();closePause();goScreen('s-world');renderSavesList();}
 function pauseNewGame(){
-  if(!confirm('Isso excluirá a aventura que você está jogando agora. Tem certeza?'))return;
-  deleteSave(currentSessionId);
-  currentSessionId = null;
-  closePause(); goScreen('s-world'); renderSavesList();
+  if(!confirm('Isso excluirá a aventura que você está jogando agora. Tem certeza?')) return;
+  deleteSave(currentSessionId);currentSessionId=null;
+  closePause();goScreen('s-world');renderSavesList();
 }
 
-// ════ TIMESKIP MODAL ════
+// ════ TIMESKIP ════
 function openTimeskip(){
   if(busy)return;tsSelectedDuration='';tsSelectedActivity=null;
   document.querySelectorAll('.ts-dur-btn,.ts-act-opt').forEach(b=>b.classList.remove('selected'));
@@ -833,35 +873,37 @@ function openTimeskip(){
   updateTimeskipPreview();document.getElementById('ts-modal').classList.add('open');
 }
 function closeTimeskip(){document.getElementById('ts-modal').classList.remove('open');}
-function selectDuration(btn, label){document.querySelectorAll('.ts-dur-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');tsSelectedDuration=label;updateTimeskipPreview();}
-function selectActivity(el, key, name, desc){
+function selectDuration(btn,label){document.querySelectorAll('.ts-dur-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');tsSelectedDuration=label;updateTimeskipPreview();}
+function selectActivity(el,key,name,desc){
   document.querySelectorAll('.ts-act-opt').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');tsSelectedActivity={key,name,desc};
   document.getElementById('ts-custom-area').classList.toggle('show',key==='custom');updateTimeskipPreview();
 }
 function updateTimeskipPreview(){
   const pt=document.getElementById('ts-preview-text');
   document.getElementById('ts-btn-go').disabled=!(tsSelectedDuration&&tsSelectedActivity);
-  if(tsSelectedDuration&&tsSelectedActivity) pt.innerHTML=`<strong>${charData.name}</strong> passa <strong>${tsSelectedDuration}</strong> realizando ${tsSelectedActivity.name.toLowerCase()}.`;
+  if(tsSelectedDuration&&tsSelectedActivity) pt.innerHTML=`<strong>${charData.name||'Herói'}</strong> passa <strong>${tsSelectedDuration}</strong> realizando ${tsSelectedActivity.name.toLowerCase()}.`;
   else pt.innerHTML='Escolha a duração e a atividade.';
 }
-function buildTimeskipPrompt(){
-  const d=tsSelectedActivity.key==='custom'?document.getElementById('ts-custom-text').value:'';
-  return `PULO DE TEMPO: ${tsSelectedDuration} passam. Atividade: ${tsSelectedActivity.name}. ${d} \nDescreva os resultados em 3 parágrafos focados em mudança.`;
-}
 function executeTimeskip(){
-  if(!tsSelectedDuration||!tsSelectedActivity)return; closeTimeskip();
+  if(!tsSelectedDuration||!tsSelectedActivity) return;closeTimeskip();
   const d=document.createElement('div');d.className='msg-timeskip';d.textContent=`⏭ ${tsSelectedDuration.toUpperCase()} PASSAM`;
   document.getElementById('chat-msgs').appendChild(d);
   stats.hp=stats.maxHp;stats.mana=stats.maxMana;updateStats();
-  callGM(buildTimeskipPrompt());
+  callGM(`PULO DE TEMPO: ${tsSelectedDuration} passam. Atividade: ${tsSelectedActivity.name}. Narre o resultado.`);
 }
 
 // ════ BUILD CHAR ════
-function pickWorld(w){currentWorld=w;document.getElementById('cc-world-label').textContent=w;buildCharScreen(w);goScreen('s-char');}
+function pickWorld(w){
+  currentWorld=w;
+  document.getElementById('cc-world-label').textContent=w;
+  buildCharScreen(w);
+  goScreen('s-char');
+}
 function pickCustomWorld(){const v=document.getElementById('custom-world-inp').value.trim();if(v)pickWorld(v);}
 
 function buildCharScreen(w){
   document.getElementById('custom-world-box').style.display=WORLD_LORE[w]?'none':'block';
+  // Reset avatar
   const ag=document.getElementById('avatar-grid');ag.innerHTML='';selectedAvatar='🧙';
   document.getElementById('avatar-preview').textContent='🧙';
   AVATARS.forEach(a=>{
@@ -869,26 +911,33 @@ function buildCharScreen(w){
     d.onclick=()=>{document.querySelectorAll('.avatar-opt').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');selectedAvatar=a;document.getElementById('avatar-preview').textContent=a;};
     ag.appendChild(d);
   });
+  // Classes
   const classes=[...(WORLD_CLASSES[w]||WORLD_CLASSES['Westeros — Game of Thrones']),{icon:'🧑‍🌾',name:'Comum'}];
   const cg=document.getElementById('classes-grid');cg.innerHTML='';selectedClass=-1;
   classes.forEach((cl,i)=>{
-    const d=document.createElement('div');d.className='class-opt';d.innerHTML=`<div class="co-icon">${cl.icon}</div><div class="co-name">${cl.name}</div>`;
+    const d=document.createElement('div');d.className='class-opt';
+    d.innerHTML=`<div class="co-icon">${cl.icon}</div><div class="co-name">${cl.name}</div>`;
     d.onclick=()=>{document.querySelectorAll('.class-opt').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');selectedClass=i;checkReady();};
     cg.appendChild(d);
   });
+  // Atributos
   attrBonus=[0,0,0,0,0,0];totalPts=10;
   document.getElementById('attrs-grid').innerHTML=ATTR_NAMES.map((n,i)=>`<div class="attr-row"><div class="attr-top"><span class="attr-name">${n}</span><span class="attr-val" id="av-${i}">8</span></div><input class="attr-slider" type="range" min="0" max="5" value="0" id="asl-${i}" oninput="changeAttr(${i},this.value)"></div>`).join('');
   document.getElementById('pts-left').textContent=totalPts;
-  
+  // Habilidades
   const pool=WORLD_SKILLS[w]||WORLD_SKILLS_DEFAULT;selectedSkills=[];
   const sp=document.getElementById('skills-pool');sp.innerHTML='';
   pool.forEach((sk,i)=>{
-    const d=document.createElement('div');d.className='skill-opt';d.innerHTML=`<span class="sk-icon">${sk.icon}</span><div><div class="sk-name">${sk.name}</div><div class="sk-desc">${sk.desc}</div></div><span class="skill-check">✓</span>`;
+    const d=document.createElement('div');d.className='skill-opt';
+    d.innerHTML=`<span class="sk-icon">${sk.icon}</span><div><div class="sk-name">${sk.name}</div><div class="sk-desc">${sk.desc}</div></div><span class="skill-check">✓</span>`;
     d.onclick=()=>toggleSkill(i,d);sp.appendChild(d);
   });
-  
-  document.getElementById('trait-grid').innerHTML=TRAITS.map(t=>{return `<div class="trait-opt" onclick="document.querySelectorAll('.trait-opt').forEach(x=>x.classList.remove('selected'));this.classList.add('selected');selectedTrait='${t}'">${t}</div>`}).join('');
-  document.getElementById('cc-name').value='';document.getElementById('custom-skill-name').value='';
+  // Traços
+  document.getElementById('trait-grid').innerHTML=TRAITS.map(t=>`<div class="trait-opt" onclick="document.querySelectorAll('.trait-opt').forEach(x=>x.classList.remove('selected'));this.classList.add('selected');selectedTrait='${t}'">${t}</div>`).join('');
+  // Reset campos
+  document.getElementById('cc-name').value='';
+  document.getElementById('custom-skill-name').value='';
+  selectedTrait='';
   checkReady();
 }
 
@@ -902,103 +951,215 @@ function changeAttr(i,val){
 
 function toggleSkill(i,el){
   if(el.classList.contains('selected')){el.classList.remove('selected');selectedSkills=selectedSkills.filter(x=>x!==i);}
-  else{if(selectedSkills.length>=3){showToast('Máximo de 3 habilidades.');return;}el.classList.add('selected');selectedSkills.push(i);}
+  else{
+    // FIX: máximo 3, mínimo 1 para liberar botão
+    if(selectedSkills.length>=3){showToast('Máximo de 3 habilidades.');return;}
+    el.classList.add('selected');selectedSkills.push(i);
+  }
   checkReady();
 }
 
+// ═══ FIX PRINCIPAL: checkReady com feedback detalhado ═══
 function checkReady(){
-  const n=document.getElementById('cc-name').value.trim();
-  const ready=n.length>0&&selectedClass>=0&&selectedSkills.length===3;
-  document.getElementById('btn-start').disabled=!ready;
+  const name = document.getElementById('cc-name').value.trim();
+  const hasName    = name.length > 0;
+  const hasClass   = selectedClass >= 0;
+  // FIX: mínimo 1 habilidade, não mais obrigatório ter exatamente 3
+  const hasSkills  = selectedSkills.length >= 1;
+
+  const hintEl = document.getElementById('cc-hint');
+  const btnEl  = document.getElementById('btn-start');
+
+  // Monta feedback visual com badges
+  const nb = `<span class="req-badge ${hasName?'done':'todo'}">${hasName?'✓ Nome':'✗ Nome'}</span>`;
+  const cb = `<span class="req-badge ${hasClass?'done':'todo'}">${hasClass?'✓ Classe':'✗ Classe'}</span>`;
+  const sb = `<span class="req-badge ${hasSkills?'done':'todo'}">${hasSkills?`✓ ${selectedSkills.length} habilidade${selectedSkills.length>1?'s':''}` :'✗ Habilidade'}</span>`;
+
+  if(hasName && hasClass && hasSkills){
+    hintEl.innerHTML = `<span class="hint-ok">✦ Pronto para aventurar!</span>`;
+    btnEl.disabled = false;
+  } else {
+    hintEl.innerHTML = nb + cb + sb;
+    btnEl.disabled = true;
+  }
 }
 
 function startGame(){
-  currentSessionId = 'save_' + Date.now(); // NOVO ID ÚNICO PARA A AVENTURA
+  currentSessionId='save_'+Date.now();
   const cl=WORLD_CLASSES[currentWorld]||WORLD_CLASSES['Westeros — Game of Thrones'];
+  const classesList=[...(cl||[]),{icon:'🧑‍🌾',name:'Comum'}];
   const p=WORLD_SKILLS[currentWorld]||WORLD_SKILLS_DEFAULT;
   charData={
-    name:document.getElementById('cc-name').value.trim(), age:'25', gender:'Indefinido',
-    build:document.getElementById('cc-build').value, hair:document.getElementById('cc-hair').value, eyes:document.getElementById('cc-eyes').value,
-    avatar:selectedAvatar, cls:cl[selectedClass]?.name||'Comum', clsIcon:cl[selectedClass]?.icon||'🧑‍🌾',
-    attrs:ATTR_NAMES.map((n,i)=>({name:n,val:attrBase[i]+attrBonus[i]})), skills:selectedSkills.map(i=>p[i]),
+    name:document.getElementById('cc-name').value.trim(),
+    age:document.getElementById('cc-age').value||'25',
+    gender:document.getElementById('cc-gender').value,
+    build:document.getElementById('cc-build').value,
+    hair:document.getElementById('cc-hair').value,
+    eyes:document.getElementById('cc-eyes').value,
+    avatar:selectedAvatar,
+    cls:classesList[selectedClass]?.name||'Comum',
+    clsIcon:classesList[selectedClass]?.icon||'🧑‍🌾',
+    attrs:ATTR_NAMES.map((n,i)=>({name:n,val:attrBase[i]+attrBonus[i]})),
+    skills:selectedSkills.map(i=>p[i]),
     customSkill:document.getElementById('custom-skill-name').value?{icon:document.getElementById('custom-skill-icon').value||'🌀',name:document.getElementById('custom-skill-name').value,desc:document.getElementById('custom-skill-desc').value}:null,
-    trait:selectedTrait||'Livre', backstory:document.getElementById('cc-backstory').value, world:currentWorld
+    trait:selectedTrait||'Livre',
+    backstory:document.getElementById('cc-backstory').value,
+    world:currentWorld
   };
-  stats={hp:100,maxHp:100,mana:60,maxMana:60,stam:90,maxStam:90}; inventory=[]; conversationHistory=[];
+  stats={hp:100,maxHp:100,mana:60,maxMana:60,stam:90,maxStam:90};
+  inventory=[];conversationHistory=[];
   document.getElementById('chat-msgs').innerHTML='';
   populateSidebar();updateStats();
-  setNarrativeState('calmo');goScreen('s-game');saveToFirebase();beginGame();
+  setNarrativeState('calmo');
+  goScreen('s-game');
+  saveToFirebase();
+  beginGame();
 }
 
-// ════ GAME UI & CHAT ════
+// ════ GAME UI ════
 function populateSidebar(){
   document.getElementById('sb-avatar').textContent=charData.avatar;
   document.getElementById('sb-name').textContent=charData.name;
   document.getElementById('sb-class').textContent=`${charData.clsIcon} ${charData.cls}`;
-  document.getElementById('g-title').textContent=`⚔ ${charData.world.substring(0,18)}`;
-  document.getElementById('g-world-badge').textContent=charData.world.substring(0,22).toUpperCase();
-  document.getElementById('g-attrs').innerHTML=charData.attrs.map(a=>`<div class="attr-sb">${a.name} <span>${a.val}</span></div>`).join('');
-  document.getElementById('g-skills').innerHTML=charData.skills.map(s=>`<div class="sb-skill-tag">${s.icon} ${s.name}</div>`).join('')+(charData.customSkill?`<div class="sb-skill-tag" style="border-color:#6a3fa0;color:#c090ff">${charData.customSkill.icon} ${charData.customSkill.name} ✦</div>`:'');
+  document.getElementById('g-title').textContent=`⚔ ${(charData.world||'Aventura').substring(0,18)}`;
+  document.getElementById('g-world-badge').textContent=(charData.world||'Aventura').substring(0,22).toUpperCase();
+  document.getElementById('g-attrs').innerHTML=(charData.attrs||[]).map(a=>`<div class="attr-sb">${a.name} <span>${a.val}</span></div>`).join('');
+  document.getElementById('g-skills').innerHTML=(charData.skills||[]).map(s=>`<div class="sb-skill-tag">${s.icon} ${s.name}</div>`).join('')+(charData.customSkill?`<div class="sb-skill-tag" style="border-color:#6a3fa0;color:#c090ff">${charData.customSkill.icon||'🌀'} ${charData.customSkill.name||'Hab'} ✦</div>`:'');
   document.getElementById('g-trait').textContent=charData.trait;
   const btnC=document.getElementById('btn-custom-skill');
-  if(btnC){btnC.style.display=charData.customSkill?'':'none';if(charData.customSkill)btnC.textContent=charData.customSkill.icon+' '+charData.customSkill.name;}
+  if(btnC){btnC.style.display=charData.customSkill?'':'none';if(charData.customSkill)btnC.textContent=(charData.customSkill.icon||'🌀')+' '+(charData.customSkill.name||'Hab');}
 }
+
 function updateStats(){
-  document.getElementById('g-hp-v').textContent=`${stats.hp}/${stats.maxHp}`; document.getElementById('g-hp-b').style.width=`${Math.round(stats.hp/stats.maxHp*100)}%`;
-  document.getElementById('g-mana-v').textContent=`${stats.mana}/${stats.maxMana}`; document.getElementById('g-mana-b').style.width=`${Math.round(stats.mana/stats.maxMana*100)}%`;
-  document.getElementById('g-stam-v').textContent=`${stats.stam}/${stats.maxStam}`; document.getElementById('g-stam-b').style.width=`${Math.round(stats.stam/stats.maxStam*100)}%`;
+  document.getElementById('g-hp-v').textContent=`${stats.hp}/${stats.maxHp}`;
+  document.getElementById('g-hp-b').style.width=`${Math.round(stats.hp/stats.maxHp*100)}%`;
+  document.getElementById('g-mana-v').textContent=`${stats.mana}/${stats.maxMana}`;
+  document.getElementById('g-mana-b').style.width=`${Math.round(stats.mana/stats.maxMana*100)}%`;
+  document.getElementById('g-stam-v').textContent=`${stats.stam}/${stats.maxStam}`;
+  document.getElementById('g-stam-b').style.width=`${Math.round(stats.stam/stats.maxStam*100)}%`;
 }
 function updateInventory(){}
-let narrativeState='calmo';
-function setNarrativeState(state){narrativeState=state;document.getElementById('narrative-state-bar').className='narrative-state-bar '+state;}
+
+function renderGMContent(text){
+  if(!text) return '';
+  let safe=escapeHtml(text);
+  safe=safe.replace(/\[MISSÃO:\s*(.*?)\]/gi,'<div style="margin:12px 0;padding:10px;border:1px solid var(--gold);background:rgba(201,168,76,0.1);color:var(--gold);font-size:10px;font-family:var(--ft);letter-spacing:1px;text-transform:uppercase;text-align:center;border-radius:4px">📜 NOVA MISSÃO: $1</div>');
+  safe=safe.replace(/\[CONCLUÍDA:\s*(.*?)\]/gi,'<div style="margin:12px 0;padding:10px;border:1px solid #27ae60;background:rgba(39,174,96,0.1);color:#27ae60;font-size:10px;font-family:var(--ft);letter-spacing:1px;text-transform:uppercase;text-align:center;border-radius:4px">✔ MISSÃO CONCLUÍDA: $1</div>');
+  safe=safe.replace(/\[TESTE:\s*(.*?)\](.*?)($|\n)/gi,'<div style="margin:12px 0;padding:10px;border:1px solid var(--red2);background:rgba(192,57,43,0.1);color:var(--red2);font-size:10px;font-family:var(--ft);letter-spacing:1px;text-align:center;border-radius:4px">🎲 TESTE DE $1 $2</div>$3');
+  const paras=safe.split(/\n\n+/).map(p=>p.trim()).filter(Boolean);
+  if(paras.length===0) return '';
+  if(paras.length===1) return`<div class="gm-para action-result">${paras[0]}</div>`;
+  return paras.map((p,i)=>{
+    if(p.startsWith('<div')) return p;
+    let cls='action-result';
+    if(i===0) cls='sensory';
+    else if(i===paras.length-1) cls='hook';
+    else if(i===paras.length-2&&paras.length>=4) cls='consequence';
+    return`<div class="gm-para ${cls}">${p}</div>`;
+  }).join('');
+}
+
 function addMsg(type,content){
-  const c=document.getElementById('chat-msgs');const d=document.createElement('div');
+  if(!content) content='';
+  const c=document.getElementById('chat-msgs');
+  const d=document.createElement('div');
   if(type==='gm'){
-    d.className='msg-gm';d.innerHTML=`<span class="mlabel">✦ MESTRE</span><div class="gm-para action-result">${content.replace(/\n/g,'<br>')}</div>`;
-  } else if(type==='player'){
-    d.className='msg-player';d.innerHTML=`<span class="mlabel" style="text-align:right">${charData.name} ✦</span>${content}`;
-  } else {d.className='msg-action';d.innerHTML=`<span>${content}</span>`;}
+    const nsTag=`<span class="ns-tag ${narrativeState}">${narrativeState==='calmo'?'Tranquilo':narrativeState==='tensao'?'Tenso':'Ação'}</span>`;
+    d.className='msg-gm';d.innerHTML=`<span class="mlabel">✦ MESTRE ${nsTag}</span>${renderGMContent(content)}`;
+  }else if(type==='player'){
+    d.className='msg-player';d.innerHTML=`<span class="mlabel" style="text-align:right">${escapeHtml(charData.name||'Você')} ✦</span>${escapeHtml(content)}`;
+  }else{d.className='msg-action';d.innerHTML=`<span>${escapeHtml(content)}</span>`;}
   c.appendChild(d);c.scrollTop=c.scrollHeight;
 }
 
-// ════ CORE AI (SIMULADOR) ════
+// ════ DADOS 1D20 ════
+function rollD20(relevantAttrVal=0){
+  const base=Math.floor(Math.random()*20)+1;
+  const bonus=Math.floor(relevantAttrVal/10);
+  const total=Math.min(20,base+bonus);
+  return{base,bonus,total,success:total>=11,critical:total===20,fumble:base===1};
+}
+function diceHtml(roll,label=''){
+  let cls='neutral',icon='🎲';
+  if(roll.critical){cls='success';icon='⭐';}else if(roll.fumble){cls='fail';icon='💀';}else if(roll.success){cls='success';icon='✔';}else{cls='fail';icon='✖';}
+  const txt=roll.critical?'CRÍTICO!':roll.fumble?'FALHA CRÍTICA!':roll.success?'Sucesso':'Falha';
+  return`<div class="dice-roll ${cls}">${icon} 1d20: ${roll.base}${roll.bonus?'+'+roll.bonus:''} = ${roll.total} — ${txt}${label?' · '+label:''}</div>`;
+}
+function addDiceMsg(rollObj,label=''){
+  const c=document.getElementById('chat-msgs');const d=document.createElement('div');
+  d.className='msg-action';d.innerHTML=diceHtml(rollObj,label);c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+
+// ════ STAT EFFECTS ════
+function inferNarrativeState(msg,gmText){
+  const combined=(msg+' '+gmText).toLowerCase();
+  const fightWords=['combate','ataque','luta','inimigo','espada','golpe','ferido','morto','batalha','fugir','perseguição'];
+  const tenseWords=['perigo','armadilha','aviso','ameaça','sombra','espreita','suspeito','estranho','alerta','tensão'];
+  const calmWords=['descanso','paz','dormir','acampamento','tranquilo','conversa','comerciante','vila','seguro'];
+  if(fightWords.some(w=>combined.includes(w))) setNarrativeState('acao');
+  else if(tenseWords.some(w=>combined.includes(w))) setNarrativeState('tensao');
+  else if(calmWords.some(w=>combined.includes(w))) setNarrativeState('calmo');
+}
+function applyStatEffects(msg,roll=null){
+  const lo=msg.toLowerCase();
+  if(lo.includes('descansar')||lo.includes('dormir')||lo.includes('repouso')){stats.hp=Math.min(stats.maxHp,stats.hp+22);stats.mana=Math.min(stats.maxMana,stats.mana+18);stats.stam=Math.min(stats.maxStam,stats.stam+28);}
+  if(lo.includes('combate')||lo.includes('ataque')||lo.includes('lutar')||lo.includes('fight')){const dmg=roll?(roll.success?(roll.critical?4:8)+Math.floor(Math.random()*12):15+Math.floor(Math.random()*20)):8+Math.floor(Math.random()*18);stats.hp=Math.max(0,stats.hp-dmg);stats.stam=Math.max(0,stats.stam-12);}
+  if(lo.includes('habilidade')||lo.includes('jutsu')||lo.includes('magia')||lo.includes('feitiço')||lo.includes('ki')) stats.mana=Math.max(0,stats.mana-14);
+  if(stats.hp<=0) showToast('⚠️ Você caiu! Descanse para recuperar vida.');
+  updateStats();
+}
+
+// ════ CORE AI ════
 async function callGM(msg,rollResult=null){
-  if(busy)return;busy=true;
+  if(busy) return;
+  busy=true;
   document.querySelectorAll('.btn-act, #btn-send').forEach(b=>b.disabled=true);
+  document.getElementById('chat-input').disabled=true;
   document.getElementById('typing').classList.add('on');
   conversationHistory.push({role:'user',content:msg});
-  
-  try {
-    // ======== SIMULADOR DA IA (Para o código funcionar visualmente) ========
-    // Quando você ligar seu backend real, troque o setTimeout pelo fetch('/api/chat') original.
-    await new Promise(resolve => setTimeout(resolve, 1500)); 
-    const text = "O Mestre processa sua ação. Seus Múltiplos Saves estão ativados e funcionando! Abra o menu de pausa e volte aos mundos para testar a lixeira e criar novos personagens.";
-    // =======================================================================
 
+  try{
+    await new Promise(resolve=>setTimeout(resolve,1500));
+    const text="O Mestre observa atentamente. *(Sistema funcionando corretamente! Conecte seu backend de IA no código para respostas reais. O sistema de saves múltiplos, retomada de chat e criação de personagem foram corrigidos.)*";
     conversationHistory.push({role:'assistant',content:text});
     document.getElementById('typing').classList.remove('on');
+    if(rollResult) addDiceMsg(rollResult,'');
     addMsg('gm',text);
-    saveToFirebase(); // Salva a aventura automaticamente na nuvem após o Mestre narrar
-  } catch(e) {
+    applyStatEffects(msg,rollResult);
+    inferNarrativeState(msg,text);
+    saveToFirebase();
+  }catch(e){
     document.getElementById('typing').classList.remove('on');
-    showToast('Erro de Conexão.');
+    showToast('Erro de Conexão: '+e.message);
   }
-  
+
   busy=false;
   document.querySelectorAll('.btn-act, #btn-send').forEach(b=>b.disabled=false);
+  document.getElementById('chat-input').disabled=false;
   document.getElementById('chat-input').focus();
 }
 
-// ════ ACTIONS BUTTONS ════
+// ════ ACTIONS ════
 function doAction(type){
+  if(busy) return;
   const labels={rest:'🌙 [Descansa]',explore:'🔍 [Explora]',talk:'💬 [Fala]',fight:'⚔ [Ataca]',flee:'🏃 [Foge]',useSkill:'✨ [Habilidade]',useCustomSkill:'🌀 [Hab. Própria]',lore:'📜 [Busca Lore]'};
   addMsg('action',labels[type]||`[${type}]`);
-  if(type==='fight') { stats.hp -= 15; updateStats(); setNarrativeState('acao'); }
-  if(type==='rest') { stats.hp = stats.maxHp; updateStats(); setNarrativeState('calmo'); }
-  callGM(`O jogador decidiu: ${type}`);
+  let roll=null;
+  if(type==='fight'){roll=rollD20(charData.attrs?charData.attrs[0].val:8);setNarrativeState('acao');}
+  else if(type==='flee'){roll=rollD20(charData.attrs?charData.attrs[1].val:8);setNarrativeState('tensao');}
+  else if(type==='useSkill'||type==='useCustomSkill'){roll=rollD20(charData.attrs?charData.attrs[3].val:8);setNarrativeState('acao');}
+  callGM(`O jogador decidiu: ${type}`,roll);
 }
-function sendMsg(){const inp=document.getElementById('chat-input');if(!inp.value.trim()||busy)return;addMsg('player',inp.value);callGM(inp.value);inp.value='';}
-function beginGame(){callGM('Inicie a jornada de ' + charData.name);}
+
+function sendMsg(){
+  const inp=document.getElementById('chat-input');
+  if(!inp.value.trim()||busy) return;
+  addMsg('player',inp.value);
+  callGM(inp.value);
+  inp.value='';
+}
+
+function beginGame(){callGM('Inicie a jornada de '+charData.name);}
 
 function toggleSidebar(){document.getElementById('rpg-sidebar').classList.toggle('open');document.getElementById('sb-overlay').classList.toggle('show');}
 function closeSidebar(){document.getElementById('rpg-sidebar').classList.remove('open');document.getElementById('sb-overlay').classList.remove('show');}
