@@ -107,7 +107,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .char-body::-webkit-scrollbar-thumb{background:var(--border2)}
 .char-footer{background:var(--bg2);border-top:1px solid var(--border2);padding:10px 16px calc(10px + var(--sab));display:flex;justify-content:space-between;align-items:center;flex-shrink:0;gap:10px}
 .char-footer-hint{font-size:12px;color:var(--text3);font-style:italic;flex:1}
-/* hint colorido */
 .hint-ok{color:#27ae60}
 .hint-warn{color:var(--gold2)}
 .cc-card{background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:11px}
@@ -735,7 +734,7 @@ function renderUserBar(){
   else{bar.innerHTML=`<button class="btn-ghost" style="font-size:11px;padding:6px 12px" onclick="goScreen('s-auth')">Entrar</button>`;}
 }
 
-// ════ PERSISTENCE ════
+// ════ PERSISTENCE & MULTI-SAVE ════
 const LS_KEY='rpg_sessions_v2';
 let saveTimeout=null;
 let _savesCache = {};
@@ -748,7 +747,7 @@ async function loadAllSessions(){
     try{
       const snap=await db.ref(`users/${currentUser.uid}/sessions`).once('value');
       if(snap.exists()) saves=snap.val()||{};
-      // Resgate de save antigo (v1)
+      // Resgate de save antigo da gaveta antiga (v1)
       const oldSnap=await db.ref(`users/${currentUser.uid}/session`).once('value');
       if(oldSnap.exists()){
         const oldSave=oldSnap.val();
@@ -813,40 +812,68 @@ async function deleteSave(id){
   renderSavesList();
 }
 
+// === FIX: SISTEMA DE CARREGAMENTO DIRETO ===
 async function resumeGame(id){
-  try{
-    const saves=await loadAllSessions();
-    const session=saves[id];
-    if(!session){showToast('Save não encontrado!');return;}
-    currentSessionId=id;
-    charData=session.charData||{};
-    stats=session.stats||{hp:100,maxHp:100,mana:60,maxMana:60,stam:90,maxStam:90};
-    inventory=session.inventory||[];
-    conversationHistory=session.conversationHistory||[];
+  try {
+    // 1. Mostrar loading instantaneamente para dar resposta visual
+    document.getElementById('loading-overlay').classList.remove('hide');
     
-    charData.name=charData.name||'Herói';
-    charData.world=charData.world||'Mundo Desconhecido';
-    charData.cls=charData.cls||'Comum';
-    charData.avatar=charData.avatar||'🧙';
-    charData.clsIcon=charData.clsIcon||'⚔';
-    charData.trait=charData.trait||'Livre';
-    charData.build=charData.build||'Médio';
-    charData.hair=charData.hair||'Desconhecido';
-    charData.eyes=charData.eyes||'Desconhecido';
+    // 2. Usar o cache da memória (isso garante que carrega na hora!)
+    let session = _savesCache[id];
     
-    populateSidebar();updateStats();updateInventory();
-    const chatEl=document.getElementById('chat-msgs');
-    chatEl.innerHTML='';
+    // Fallback caso a memória limpou mas a sessão existe
+    if(!session){
+      const saves = await loadAllSessions();
+      session = saves[id];
+    }
     
-    conversationHistory.forEach(m=>{
-      if(m&&m.role==='assistant') addMsg('gm',m.content||'');
-      else if(m&&m.role==='user') addMsg('player',m.content||'');
+    if(!session){
+      document.getElementById('loading-overlay').classList.add('hide');
+      showToast('Save não encontrado!');
+      return;
+    }
+    
+    currentSessionId = id;
+    charData = session.charData || {};
+    stats = session.stats || {hp:100,maxHp:100,mana:60,maxMana:60,stam:90,maxStam:90};
+    inventory = session.inventory || [];
+    conversationHistory = session.conversationHistory || [];
+    
+    // Fallbacks para saves velhos não quebrarem
+    charData.name = charData.name || 'Herói';
+    charData.world = charData.world || 'Mundo Desconhecido';
+    charData.cls = charData.cls || 'Comum';
+    charData.avatar = charData.avatar || '🧙';
+    charData.clsIcon = charData.clsIcon || '⚔';
+    charData.trait = charData.trait || 'Livre';
+    charData.build = charData.build || 'Médio';
+    charData.hair = charData.hair || 'Desconhecido';
+    charData.eyes = charData.eyes || 'Desconhecido';
+    
+    populateSidebar(); 
+    updateStats(); 
+    updateInventory();
+    
+    const chatEl = document.getElementById('chat-msgs');
+    chatEl.innerHTML = '';
+    
+    conversationHistory.forEach(m => {
+      if(m && m.role === 'assistant') addMsg('gm', m.content || '');
+      else if(m && m.role === 'user') addMsg('player', m.content || '');
     });
-    chatEl.scrollTop=chatEl.scrollHeight;
+    
+    // Delay de 50ms para garantir que o chat rolou até a última linha
+    setTimeout(() => { chatEl.scrollTop = chatEl.scrollHeight; }, 50);
+    
     setNarrativeState('calmo');
+    
+    // Esconde o loading e entra direto no jogo
+    document.getElementById('loading-overlay').classList.add('hide');
     goScreen('s-game');
-  }catch(err){
+    
+  } catch(err) {
     console.error(err);
+    document.getElementById('loading-overlay').classList.add('hide');
     showToast('Erro ao carregar aventura: '+err.message);
   }
 }
@@ -1112,7 +1139,7 @@ function getLore() {
 function buildSystem() {
   const c = charData, lore = getLore();
   const skillList = c.skills.map(s => `${s.name} (${s.desc})`).join(', ');
-  const customPart = c.customSkill ? `\n- Habilidade própria: ${c.customSkill.name} — ${c.customSkill.desc}` : '';
+  const customPart = c.customSkill ? `\n- Habilidade própria exclusiva: ${c.customSkill.name} — ${c.customSkill.desc}` : '';
   const attrList = c.attrs.map(a => `${a.name}:${a.val}`).join(' ');
   const mode = WORLD_LORE[c.world] ? 'MUNDO PREDEFINIDO' : 'MUNDO PERSONALIZADO';
   const customLoreText = c.customLore ? `\n- LORE DEFINIDO PELO JOGADOR: ${c.customLore}` : '';
