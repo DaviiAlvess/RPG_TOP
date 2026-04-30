@@ -79,7 +79,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .btn-ghost{background:none;border:1px solid var(--border2);color:var(--text3);padding:9px 14px;font-family:var(--fb);font-size:14px;border-radius:4px;cursor:pointer;transition:all .15s;min-height:44px}
 .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
 
-/* SAVES MÚLTIPLOS */
+/* SAVES MULTIPLOS */
 .saves-section{width:100%;max-width:600px;display:none;flex-direction:column;gap:8px}
 .saves-header{font-family:var(--ft);font-size:11px;color:var(--gold);letter-spacing:1px;margin-bottom:4px;text-align:center}
 .saves-list{display:flex;flex-direction:column;gap:8px;max-height:240px;overflow-y:auto;padding-right:4px;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
@@ -327,8 +327,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .loading-overlay{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;z-index:9999}
 .loading-overlay.hide{display:none}
 .loading-title{font-family:var(--ft);font-size:13px;color:var(--gold);letter-spacing:2px}
-.loading-sub{font-size:13px;color:var(--text3);font-style:italic}
 .loading-dots{color:var(--text3);font-size:14px;font-style:italic}
+.req-badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:3px;margin-right:4px;font-style:normal;font-family:var(--ft);letter-spacing:.3px}
+.req-badge.done{background:rgba(39,174,96,.15);color:#27ae60;border:1px solid rgba(39,174,96,.4)}
+.req-badge.todo{background:rgba(192,57,43,.12);color:#e07070;border:1px solid rgba(192,57,43,.3)}
 </style>
 </head>
 <body>
@@ -457,6 +459,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
       <div id="user-bar" style="display:flex;align-items:center;gap:6px"></div>
     </div>
 
+    <!-- SAVES MÚLTIPLOS -->
     <div class="saves-section" id="saves-section">
       <div class="saves-header">✦ SUAS AVENTURAS SALVAS ✦</div>
       <div class="saves-list" id="saves-list"></div>
@@ -682,6 +685,7 @@ const ATTR_NAMES=['FOR','DES','CON','INT','SAB','CAR'];
 const ATTR_FULL=['Força','Destreza','Constituição','Inteligência','Sabedoria','Carisma'];
 
 // ════ STATE ════
+window.appSaves = {}; // Armazena todos os saves na memória para o clique ser instantâneo
 let currentSessionId = null;
 let currentWorld = '';
 let charData = {};
@@ -735,18 +739,15 @@ function renderUserBar(){
 // ════ PERSISTENCE & MULTI-SAVE ════
 const LS_KEY='rpg_sessions_v2';
 let saveTimeout=null;
-let _savesCache = {};
 
 function buildSessionPayload(){return{charData,stats,inventory,conversationHistory:conversationHistory.slice(-80),savedAt:Date.now()};}
 
-// ✅ CORRIGIDO: loadAllSessions agora sempre retorna dados atualizados e popula o cache
 async function loadAllSessions(){
   let saves={};
   if(currentUser){
     try{
       const snap=await db.ref(`users/${currentUser.uid}/sessions`).once('value');
       if(snap.exists()) saves=snap.val()||{};
-      // migração de save legado
       const oldSnap=await db.ref(`users/${currentUser.uid}/session`).once('value');
       if(oldSnap.exists()){
         const oldSave=oldSnap.val();
@@ -756,22 +757,22 @@ async function loadAllSessions(){
           await db.ref(`users/${currentUser.uid}/session`).remove().catch(()=>{});
         }
       }
-    }catch(e){console.warn('Firebase load error, usando localStorage:', e);}
+    }catch(e){}
+  }else{
+    try{
+      saves=JSON.parse(localStorage.getItem(LS_KEY)||'{}');
+      const oldLocal=localStorage.getItem('rpg_session_v1');
+      if(oldLocal){
+        const parsedOld=JSON.parse(oldLocal);
+        if(parsedOld&&parsedOld.charData&&!saves['save_legado']){
+          saves['save_legado']=parsedOld;
+          localStorage.setItem(LS_KEY,JSON.stringify(saves));
+          localStorage.removeItem('rpg_session_v1');
+        }
+      }
+    }catch(e){}
   }
-  // Sempre busca localStorage também (fallback e modo anônimo)
-  try{
-    const lsSaves=JSON.parse(localStorage.getItem(LS_KEY)||'{}');
-    // Mescla: Firebase tem prioridade para usuários logados
-    if(!currentUser){
-      saves = lsSaves;
-    } else {
-      // Para usuários logados, também migra saves locais antigos
-      Object.entries(lsSaves).forEach(([id, data]) => {
-        if(!saves[id]) saves[id] = data;
-      });
-    }
-  }catch(e){}
-  _savesCache = {...saves};
+  window.appSaves = saves; // Guarda tudo na memória para carregamento instantâneo
   return saves;
 }
 
@@ -779,135 +780,94 @@ async function renderSavesList(){
   const saves=await loadAllSessions();
   const listEl=document.getElementById('saves-list');
   const sectionEl=document.getElementById('saves-section');
-  const entries=Object.entries(saves).sort((a,b)=>(b[1].savedAt||0)-(a[1].savedAt||0));
+  const entries=Object.entries(saves).sort((a,b)=>b[1].savedAt-a[1].savedAt);
   if(entries.length===0){sectionEl.style.display='none';return;}
   sectionEl.style.display='flex';
   listEl.innerHTML=entries.map(([id,data])=>{
     const c=data.charData||{};
     const date=data.savedAt?new Date(data.savedAt).toLocaleDateString('pt-BR',{hour:'2-digit',minute:'2-digit'}):'';
-    // Escapar o id para uso seguro no onclick
-    const safeId=id.replace(/'/g,"\\'");
-    return`<div class="save-card" onclick="resumeGame('${safeId}')"><div class="save-icon">${c.avatar||'🧙'}</div><div class="save-info"><div class="save-title">${escapeHtml(c.name||'Herói')} · ${escapeHtml(c.cls||'Comum')}</div><div class="save-desc">${escapeHtml(c.world||'Aventura')}</div><div class="save-date">${date}</div></div><button class="btn-del-save" onclick="event.stopPropagation();deleteSave('${safeId}')">🗑</button></div>`;
+    return`<div class="save-card" onclick="resumeGame('${id}')"><div class="save-icon">${c.avatar||'🧙'}</div><div class="save-info"><div class="save-title">${c.name||'Herói'} · ${c.cls||'Comum'}</div><div class="save-desc">${c.world||'Aventura'}</div><div class="save-date">${date}</div></div><button class="btn-del-save" onclick="event.stopPropagation();deleteSave('${id}')">🗑</button></div>`;
   }).join('');
 }
 
 function saveToFirebase(){
   if(!currentSessionId) currentSessionId='save_'+Date.now();
   const payload=buildSessionPayload();
-  // Sempre salva localmente primeiro (instantâneo)
-  try{
-    let ls=JSON.parse(localStorage.getItem(LS_KEY)||'{}');
-    ls[currentSessionId]=payload;
-    localStorage.setItem(LS_KEY,JSON.stringify(ls));
-    _savesCache[currentSessionId]=payload;
-  }catch(e){}
+  try{let ls=JSON.parse(localStorage.getItem(LS_KEY)||'{}');ls[currentSessionId]=payload;localStorage.setItem(LS_KEY,JSON.stringify(ls));}catch(e){}
+  const ref=currentUser?db.ref(`users/${currentUser.uid}/sessions/${currentSessionId}`):null;
   const b=document.getElementById('sync-badge');
-  if(!currentUser){if(b){b.textContent='💾 Salvo localmente';b.className='sync-badge ok';}return;}
+  if(!ref){if(b){b.textContent='💾 Salvo localmente';b.className='sync-badge ok';}return;}
   if(b){b.textContent='⏳ Salvando...';b.className='sync-badge';}
   clearTimeout(saveTimeout);
   saveTimeout=setTimeout(async()=>{
-    try{
-      await db.ref(`users/${currentUser.uid}/sessions/${currentSessionId}`).set(payload);
-      if(b){b.textContent='☁ Salvo na nuvem';b.className='sync-badge ok';}
-    }catch(e){if(b){b.textContent='⚠ Erro ao salvar';b.className='sync-badge';}}
+    try{await ref.set(payload);if(b){b.textContent='☁ Salvo na nuvem';b.className='sync-badge ok';}}
+    catch(e){if(b){b.textContent='⚠ Erro ao salvar';b.className='sync-badge';}}
   },1000);
 }
 
 async function deleteSave(id){
   if(!confirm('Apagar esta aventura permanentemente?')) return;
-  // Remove do cache local
-  delete _savesCache[id];
-  // Remove do localStorage
-  try{let ls=JSON.parse(localStorage.getItem(LS_KEY)||'{}');delete ls[id];localStorage.setItem(LS_KEY,JSON.stringify(ls));}catch(e){}
-  // Remove do Firebase
   if(currentUser){await db.ref(`users/${currentUser.uid}/sessions/${id}`).remove().catch(()=>{});}
+  else{let ls=JSON.parse(localStorage.getItem(LS_KEY)||'{}');delete ls[id];localStorage.setItem(LS_KEY,JSON.stringify(ls));}
   renderSavesList();
 }
 
-// ✅ CORRIGIDO: resumeGame reescrita — busca dados sem depender só do cache
-async function resumeGame(id){
-  // Mostra loading overlay enquanto carrega
-  const overlay = document.getElementById('loading-overlay');
-  overlay.classList.remove('hide');
-  overlay.querySelector('.loading-dots').innerHTML = '<span class="dot">●</span><span class="dot">●</span><span class="dot">●</span>';
-
-  try {
-    let session = null;
-
-    // 1ª tentativa: cache em memória (mais rápido)
-    if(_savesCache[id]){
-      session = _savesCache[id];
-    }
-
-    // 2ª tentativa: localStorage
-    if(!session){
-      try{
-        const ls = JSON.parse(localStorage.getItem(LS_KEY)||'{}');
-        if(ls[id]) session = ls[id];
-      }catch(e){}
-    }
-
-    // 3ª tentativa: Firebase (só se usuário logado)
-    if(!session && currentUser){
-      try{
-        const snap = await db.ref(`users/${currentUser.uid}/sessions/${id}`).once('value');
-        if(snap.exists()) session = snap.val();
-      }catch(e){console.warn('Firebase read error:', e);}
-    }
-
-    if(!session || !session.charData){
-      overlay.classList.add('hide');
-      showToast('❌ Save não encontrado. Pode ter sido deletado.');
-      return;
-    }
-
-    // Preenche estado global
-    currentSessionId = id;
-    charData         = session.charData   || {};
-    stats            = session.stats      || {hp:100,maxHp:100,mana:60,maxMana:60,stam:90,maxStam:90};
-    inventory        = session.inventory  || [];
-    conversationHistory = session.conversationHistory || [];
-
-    // Garante campos mínimos para não quebrar a UI
-    charData.name    = charData.name    || 'Herói';
-    charData.world   = charData.world   || 'Aventura';
-    charData.cls     = charData.cls     || 'Comum';
-    charData.avatar  = charData.avatar  || '🧙';
-    charData.clsIcon = charData.clsIcon || '⚔';
-    charData.trait   = charData.trait   || 'Livre';
-    charData.build   = charData.build   || 'Médio';
-    charData.hair    = charData.hair    || 'Desconhecido';
-    charData.eyes    = charData.eyes    || 'Desconhecido';
-    charData.attrs   = charData.attrs   || ATTR_NAMES.map(n=>({name:n,val:8}));
-    charData.skills  = charData.skills  || [];
-
-    // Agora vai para a tela de jogo
-    goScreen('s-game');
-    populateSidebar();
-    updateStats();
-    updateInventory();
-
-    // Renderiza histórico de chat
-    const chatEl = document.getElementById('chat-msgs');
-    chatEl.innerHTML = '';
-    conversationHistory.forEach(m=>{
-      if(!m) return;
-      if(m.role==='assistant') addMsg('gm', m.content||'');
-      else if(m.role==='user') addMsg('player', m.content||'');
-    });
-
-    setNarrativeState('calmo');
-
-    // Rola pro fim após render
-    requestAnimationFrame(()=>{ chatEl.scrollTop = chatEl.scrollHeight; });
-
-  }catch(err){
-    console.error('resumeGame error:', err);
-    showToast('❌ Erro ao carregar: ' + err.message);
-    goScreen('s-world');
-  }finally{
-    overlay.classList.add('hide');
+// === LÓGICA DE CARREGAMENTO INSTANTÂNEO (IDÊNTICO AO SEU CÓDIGO BASE) ===
+function resumeGame(id){
+  const session = window.appSaves[id];
+  
+  if(!session){
+    showToast('Nenhuma sessão encontrada.');
+    return;
   }
+
+  // Aplica as variáveis globalmente
+  currentSessionId = id;
+  charData = session.charData || {};
+  stats = session.stats || {hp:100,maxHp:100,mana:60,maxMana:60,stam:90,maxStam:90};
+  inventory = session.inventory || [];
+  conversationHistory = session.conversationHistory || [];
+  
+  // Fallbacks para não quebrar a tela de jogo
+  if(!charData.avatar) charData.avatar='🧙';
+  if(!charData.clsIcon) charData.clsIcon='⚔';
+  if(!charData.customSkill) charData.customSkill=null;
+  charData.world = charData.world || 'Aventura';
+  charData.name = charData.name || 'Herói';
+  charData.cls = charData.cls || 'Comum';
+  
+  populateSidebar();
+  updateStats();
+  updateInventory();
+  
+  const chatEl = document.getElementById('chat-msgs');
+  chatEl.innerHTML = '';
+  
+  // Renderiza todo o histórico com proteção contra arrays corrompidos
+  conversationHistory.forEach(m => {
+    if(!m) return;
+    if(m.role === 'assistant') addMsg('gm', m.content || '');
+    else if(m.role === 'user') addMsg('player', m.content || '');
+  });
+  
+  // Aguarda os elementos entrarem na tela e rola pro fundo
+  setTimeout(() => { chatEl.scrollTop = chatEl.scrollHeight; }, 50);
+  
+  const btnC = document.getElementById('btn-custom-skill');
+  if(btnC){
+    if(charData.customSkill){
+      btnC.style.display='';
+      btnC.textContent=(charData.customSkill.icon||'🌀')+' '+(charData.customSkill.name||'Hab');
+    } else {
+      btnC.style.display='none';
+    }
+  }
+  
+  setNarrativeState('calmo');
+  
+  // O comando exato do seu código base que pula direto pro chat
+  goScreen('s-game');
+  document.getElementById('chat-input').focus();
 }
 
 // ════ PAUSE ════
@@ -1072,14 +1032,14 @@ function startGame(){
 
 // ════ GAME UI ════
 function populateSidebar(){
-  document.getElementById('sb-avatar').textContent=charData.avatar||'🧙';
-  document.getElementById('sb-name').textContent=charData.name||'Herói';
+  document.getElementById('sb-avatar').textContent=charData.avatar || '🧙';
+  document.getElementById('sb-name').textContent=charData.name || 'Herói';
   document.getElementById('sb-class').textContent=`${charData.clsIcon||'⚔'} ${charData.cls||'Comum'}`;
   document.getElementById('g-title').textContent=`⚔ ${(charData.world||'Aventura').substring(0,18)}`;
   document.getElementById('g-world-badge').textContent=(charData.world||'Aventura').substring(0,22).toUpperCase();
   document.getElementById('g-attrs').innerHTML=(charData.attrs||[]).map(a=>`<div class="attr-sb">${a.name} <span>${a.val}</span></div>`).join('');
-  document.getElementById('g-skills').innerHTML=(charData.skills||[]).map(s=>`<div class="sb-skill-tag">${s.icon||''} ${s.name||''}</div>`).join('')+(charData.customSkill?`<div class="sb-skill-tag" style="border-color:#6a3fa0;color:#c090ff">${charData.customSkill.icon||'🌀'} ${charData.customSkill.name||'Hab'} ✦</div>`:'');
-  document.getElementById('g-trait').textContent=charData.trait||'—';
+  document.getElementById('g-skills').innerHTML=(charData.skills||[]).filter(Boolean).map(s=>`<div class="sb-skill-tag">${s.icon||'✨'} ${s.name||'Hab'}</div>`).join('')+(charData.customSkill?`<div class="sb-skill-tag" style="border-color:#6a3fa0;color:#c090ff">${charData.customSkill.icon||'🌀'} ${charData.customSkill.name||'Hab'} ✦</div>`:'');
+  document.getElementById('g-trait').textContent=charData.trait || 'Livre';
   const btnC=document.getElementById('btn-custom-skill');
   if(btnC){btnC.style.display=charData.customSkill?'':'none';if(charData.customSkill)btnC.textContent=(charData.customSkill.icon||'🌀')+' '+(charData.customSkill.name||'Hab');}
 }
@@ -1164,16 +1124,19 @@ function applyStatEffects(msg,roll=null){
 }
 
 // ════ LORE & SYSTEM PROMPT ════
-function getLore(){return WORLD_LORE[charData.world]||WORLD_LORE_DEFAULT;}
+function getLore() {
+  return WORLD_LORE[charData.world] || WORLD_LORE_DEFAULT;
+}
 
-function buildSystem(){
-  const c=charData,lore=getLore();
-  const skillList=(c.skills||[]).map(s=>`${s.name} (${s.desc})`).join(', ')||'Nenhuma';
-  const customPart=c.customSkill?`\n- Habilidade própria exclusiva: ${c.customSkill.name} — ${c.customSkill.desc}`:'';
-  const attrList=(c.attrs||[]).map(a=>`${a.name}:${a.val}`).join(' ');
-  const mode=WORLD_LORE[c.world]?'MUNDO PREDEFINIDO':'MUNDO PERSONALIZADO';
-  const customLoreText=c.customLore?`\n- LORE DEFINIDO PELO JOGADOR: ${c.customLore}`:'';
-  return`Você é o Mestre do jogo. Seu objetivo é imersão absoluta.
+function buildSystem() {
+  const c = charData, lore = getLore();
+  const skillList = (c.skills||[]).filter(Boolean).map(s => `${s.name} (${s.desc})`).join(', ');
+  const customPart = c.customSkill ? `\n- Habilidade própria exclusiva: ${c.customSkill.name} — ${c.customSkill.desc}` : '';
+  const attrList = (c.attrs||[]).map(a => `${a.name}:${a.val}`).join(' ');
+  const mode = WORLD_LORE[c.world] ? 'MUNDO PREDEFINIDO' : 'MUNDO PERSONALIZADO';
+  const customLoreText = c.customLore ? `\n- LORE DEFINIDO PELO JOGADOR: ${c.customLore}` : '';
+  
+  return `Você é o Mestre do jogo. Seu objetivo é imersão absoluta.
 IDIOMA: Responda SEMPRE em português do Brasil.
 MODO ATIVO: ${mode}
 
@@ -1184,7 +1147,7 @@ FICHA DO JOGADOR:
 - Atributos: ${attrList}
 - Habilidades: ${skillList}${customPart}
 - Traço: ${c.trait}
-${c.backstory?`- Contexto: ${c.backstory}`:''}
+${c.backstory ? `- Contexto: ${c.backstory}` : ''}
 
 UNIVERSO: "${c.world}"
 - Tom sensorial: "${lore.sensory}"
@@ -1202,34 +1165,46 @@ REGRAS ESTRITAS DE NARRAÇÃO:
 7. MISSÕES: Ao surgir missão use "[MISSÃO: descrição]". Ao concluir: "[CONCLUÍDA: descrição]".`;
 }
 
-// ════ CORE AI ════
-async function callGM(msg,rollResult=null){
+// ════ CORE AI (CONEXÃO REAL COM O GEMINI) ════
+async function callGM(msg, rollResult=null){
   if(busy) return;
-  busy=true;
-  document.querySelectorAll('.btn-act, #btn-send').forEach(b=>b.disabled=true);
-  document.getElementById('chat-input').disabled=true;
+  busy = true;
+  document.querySelectorAll('.btn-act, #btn-send').forEach(b => b.disabled = true);
+  document.getElementById('chat-input').disabled = true;
   document.getElementById('typing').classList.add('on');
-  conversationHistory.push({role:'user',content:msg});
-  try{
-    const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system:buildSystem(),messages:conversationHistory})});
-    const data=await r.json();
-    if(!r.ok) throw new Error(data.error||`Erro ${r.status}`);
-    const text=data.text||'O silêncio toma conta do local...';
-    conversationHistory.push({role:'assistant',content:text});
+  
+  conversationHistory.push({role: 'user', content: msg});
+
+  try {
+    const r = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ system: buildSystem(), messages: conversationHistory })
+    });
+    
+    const data = await r.json();
+    if(!r.ok) throw new Error(data.error || `Erro ${r.status}`);
+    
+    const text = data.text || 'O silêncio toma conta do local...';
+    
+    conversationHistory.push({role: 'assistant', content: text});
     document.getElementById('typing').classList.remove('on');
-    if(rollResult) addDiceMsg(rollResult,'');
-    addMsg('gm',text);
-    applyStatEffects(msg,rollResult);
-    inferNarrativeState(msg,text);
-    saveToFirebase();
-  }catch(e){
+    
+    if(rollResult) addDiceMsg(rollResult, '');
+    addMsg('gm', text);
+    
+    applyStatEffects(msg, rollResult);
+    inferNarrativeState(msg, text);
+    saveToFirebase(); 
+  } catch(e) {
     document.getElementById('typing').classList.remove('on');
-    showToast('Erro de Conexão com o Mestre: '+e.message);
-    conversationHistory.pop();
+    showToast('Erro de Conexão com o Mestre: ' + e.message);
+    conversationHistory.pop(); 
   }
-  busy=false;
-  document.querySelectorAll('.btn-act, #btn-send').forEach(b=>b.disabled=false);
-  document.getElementById('chat-input').disabled=false;
+
+  busy = false;
+  document.querySelectorAll('.btn-act, #btn-send').forEach(b => b.disabled = false);
+  document.getElementById('chat-input').disabled = false;
   document.getElementById('chat-input').focus();
 }
 
@@ -1253,7 +1228,9 @@ function sendMsg(){
   inp.value='';
 }
 
-function beginGame(){callGM('Inicie a jornada de '+charData.name);}
+function beginGame(){
+    callGM('Inicie a jornada de '+charData.name);
+}
 
 function toggleSidebar(){document.getElementById('rpg-sidebar').classList.toggle('open');document.getElementById('sb-overlay').classList.toggle('show');}
 function closeSidebar(){document.getElementById('rpg-sidebar').classList.remove('open');document.getElementById('sb-overlay').classList.remove('show');}
