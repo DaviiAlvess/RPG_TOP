@@ -90,7 +90,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .save-card:active{transform:scale(0.98);}
 .save-icon{font-size:26px;flex-shrink:0;width:36px;text-align:center;}
 .save-info{flex:1;min-width:0;}
-.save-title{font-family:var(--ft);font-size:10px;color:var(--gold);letter-spacing:1px;margin-bottom:2px;}
+.save-title{font-family:var(--ft);font-size:10px;color:var(--gold);letter-spacing:1px;margin-bottom:2px;text-transform:uppercase;}
 .save-desc{font-size:13px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .save-date{font-size:10px;color:var(--text3);font-style:italic;}
 .btn-del-save{background:none;border:1px solid var(--border2);color:var(--text3);border-radius:4px;padding:8px 12px;font-size:14px;cursor:pointer;min-height:40px;flex-shrink:0;transition:all 0.15s;}
@@ -665,10 +665,13 @@ let selectedClass=-1, selectedSkills=[], selectedTrait='', selectedAvatar='🧙'
 let conversationHistory=[], inventory=[];
 let busy=false, stats={hp:100,maxHp:100,mana:60,maxMana:60,stam:90,maxStam:90};
 let tsSelectedDuration='', tsSelectedActivity=null;
+let narrativeState='calmo';
 
-// ════ HELPERS ════
+// ════ HELPERS & UI ════
 function goScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
 function showToast(msg,dur=3000){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),dur);}
+function setNarrativeState(state){narrativeState=state;document.getElementById('narrative-state-bar').className='narrative-state-bar '+state;}
+function escapeHtml(s){return String(s||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');}
 
 // ════ AUTH ════
 function switchTab(mode) {
@@ -705,7 +708,7 @@ function renderUserBar(){
   else{bar.innerHTML=`<button class="btn-ghost" style="font-size:11px;padding:6px 12px" onclick="goScreen('s-auth')">Entrar</button>`;}
 }
 
-// ════ PERSISTENCE (MULTI-SAVE COM RESGATE DE SAVE ANTIGO) ════
+// ════ PERSISTENCE (MULTI-SAVE COM RESGATE SEGURO) ════
 const LS_KEY='rpg_sessions_v2';
 let saveTimeout=null;
 
@@ -716,37 +719,29 @@ async function loadAllSessions() {
   
   if (currentUser) {
     try {
-      // 1. Tenta carregar os múltiplos saves novos
       const snap = await db.ref(`users/${currentUser.uid}/sessions`).once('value');
       if (snap.exists()) saves = snap.val() || {};
       
-      // 2. RESGATE: Tenta achar o SAVE ANTIGO (versão 1) no Firebase
+      // RESGATE SEGURO: Tenta achar o SAVE ANTIGO (versão 1) no Firebase
       const oldSnap = await db.ref(`users/${currentUser.uid}/session`).once('value');
       if (oldSnap.exists()) {
          const oldSave = oldSnap.val();
          if (oldSave && oldSave.charData && !saves['save_legado']) {
              saves['save_legado'] = oldSave;
-             // Copia o save antigo para a gaveta nova automaticamente
              await db.ref(`users/${currentUser.uid}/sessions/save_legado`).set(oldSave);
-             // Apaga da gaveta velha para não duplicar no futuro
              await db.ref(`users/${currentUser.uid}/session`).remove().catch(()=>{}); 
          }
       }
     } catch(e) {}
   } else {
     try { 
-      // 1. Tenta carregar os múltiplos saves locais
       saves = JSON.parse(localStorage.getItem(LS_KEY) || '{}'); 
-      
-      // 2. RESGATE: Tenta achar o SAVE LOCAL ANTIGO no navegador
       const oldLocal = localStorage.getItem('rpg_session_v1');
       if (oldLocal) {
          const parsedOld = JSON.parse(oldLocal);
          if (parsedOld && parsedOld.charData && !saves['save_legado']) {
              saves['save_legado'] = parsedOld;
-             // Salva no formato novo
              localStorage.setItem(LS_KEY, JSON.stringify(saves));
-             // Limpa o formato antigo
              localStorage.removeItem('rpg_session_v1');
          }
       }
@@ -768,14 +763,14 @@ async function renderSavesList() {
   
   sectionEl.style.display = 'flex';
   listEl.innerHTML = entries.map(([id, data]) => {
-    const c = data.charData;
-    const date = new Date(data.savedAt).toLocaleDateString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+    const c = data.charData || {};
+    const date = data.savedAt ? new Date(data.savedAt).toLocaleDateString('pt-BR', {hour:'2-digit',minute:'2-digit'}) : '';
     return `
       <div class="save-card" onclick="resumeGame('${id}')">
         <div class="save-icon">${c.avatar || '🧙'}</div>
         <div class="save-info">
-          <div class="save-title">${c.name} · ${c.cls}</div>
-          <div class="save-desc">${c.world}</div>
+          <div class="save-title">${c.name||'Herói'} · ${c.cls||'Comum'}</div>
+          <div class="save-desc">${c.world||'Aventura'}</div>
           <div class="save-date">${date}</div>
         </div>
         <button class="btn-del-save" onclick="event.stopPropagation(); deleteSave('${id}')">🗑</button>
@@ -787,7 +782,6 @@ function saveToFirebase(){
   if(!currentSessionId) currentSessionId = 'save_' + Date.now();
   const payload = buildSessionPayload();
   
-  // Salvar Localmente
   try {
     let localSaves = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
     localSaves[currentSessionId] = payload;
@@ -818,28 +812,49 @@ async function deleteSave(id) {
   renderSavesList();
 }
 
+// === FUNÇÃO RESUME GAME PROTEGIDA CONTRA ERROS ===
 async function resumeGame(id) {
-  const saves = await loadAllSessions();
-  const session = saves[id];
-  if(!session) return;
-  currentSessionId = id;
-  charData = session.charData;
-  stats = session.stats;
-  inventory = session.inventory || [];
-  conversationHistory = session.conversationHistory || [];
-  
-  if(!charData.avatar) charData.avatar='🧙';
-  if(!charData.clsIcon) charData.clsIcon='⚔';
-  
-  populateSidebar(); updateStats(); updateInventory();
-  const chatEl=document.getElementById('chat-msgs');chatEl.innerHTML='';
-  conversationHistory.forEach(m=>{if(m.role==='assistant')addMsg('gm',m.content);else if(m.role==='user')addMsg('player',m.content);});
-  chatEl.scrollTop=chatEl.scrollHeight;
-  
-  const btnC=document.getElementById('btn-custom-skill');
-  if(btnC){btnC.style.display=charData.customSkill?'':'none';if(charData.customSkill)btnC.textContent=charData.customSkill.icon+' '+charData.customSkill.name;}
-  
-  setNarrativeState('calmo'); goScreen('s-game');
+  try {
+    const saves = await loadAllSessions();
+    const session = saves[id];
+    if(!session) { showToast('Save não encontrado!'); return; }
+    
+    currentSessionId = id;
+    charData = session.charData || {};
+    stats = session.stats || {hp:100,maxHp:100,mana:60,maxMana:60,stam:90,maxStam:90};
+    inventory = session.inventory || [];
+    conversationHistory = session.conversationHistory || [];
+    
+    // Fallbacks para garantir que propriedades antigas não quebrem a tela
+    charData.name = charData.name || 'Herói';
+    charData.world = charData.world || 'Mundo Desconhecido';
+    charData.cls = charData.cls || 'Comum';
+    charData.avatar = charData.avatar || '🧙';
+    charData.clsIcon = charData.clsIcon || '⚔';
+    charData.trait = charData.trait || 'Livre';
+    charData.build = charData.build || 'Médio';
+    charData.hair = charData.hair || 'Desconhecido';
+    charData.eyes = charData.eyes || 'Desconhecido';
+    
+    populateSidebar(); 
+    updateStats(); 
+    updateInventory();
+    
+    const chatEl = document.getElementById('chat-msgs');
+    chatEl.innerHTML='';
+    
+    conversationHistory.forEach(m => {
+      if(m && m.role==='assistant') addMsg('gm', m.content || '');
+      else if(m && m.role==='user') addMsg('player', m.content || '');
+    });
+    chatEl.scrollTop = chatEl.scrollHeight;
+    
+    setNarrativeState('calmo'); 
+    goScreen('s-game');
+  } catch (err) {
+    console.error(err);
+    showToast('Erro ao carregar aventura: ' + err.message);
+  }
 }
 
 // ════ PAUSE MODAL ════
@@ -876,16 +891,12 @@ function updateTimeskipPreview(){
   if(tsSelectedDuration&&tsSelectedActivity) pt.innerHTML=`<strong>${charData.name}</strong> passa <strong>${tsSelectedDuration}</strong> realizando ${tsSelectedActivity.name.toLowerCase()}.`;
   else pt.innerHTML='Escolha a duração e a atividade.';
 }
-function buildTimeskipPrompt(){
-  const d=tsSelectedActivity.key==='custom'?document.getElementById('ts-custom-text').value:'';
-  return `PULO DE TEMPO: ${tsSelectedDuration} passam. Atividade: ${tsSelectedActivity.name}. ${d} \nDescreva os resultados em 3 parágrafos focados em mudança.`;
-}
 function executeTimeskip(){
   if(!tsSelectedDuration||!tsSelectedActivity)return; closeTimeskip();
   const d=document.createElement('div');d.className='msg-timeskip';d.textContent=`⏭ ${tsSelectedDuration.toUpperCase()} PASSAM`;
   document.getElementById('chat-msgs').appendChild(d);
   stats.hp=stats.maxHp;stats.mana=stats.maxMana;updateStats();
-  callGM(buildTimeskipPrompt());
+  callGM(`PULO DE TEMPO: ${tsSelectedDuration} passam. Atividade: ${tsSelectedActivity.name}. Narre o resultado.`);
 }
 
 // ════ BUILD CHAR ════
@@ -967,67 +978,135 @@ function populateSidebar(){
   document.getElementById('sb-avatar').textContent=charData.avatar;
   document.getElementById('sb-name').textContent=charData.name;
   document.getElementById('sb-class').textContent=`${charData.clsIcon} ${charData.cls}`;
-  document.getElementById('g-title').textContent=`⚔ ${charData.world.substring(0,18)}`;
-  document.getElementById('g-world-badge').textContent=charData.world.substring(0,22).toUpperCase();
-  document.getElementById('g-attrs').innerHTML=charData.attrs.map(a=>`<div class="attr-sb">${a.name} <span>${a.val}</span></div>`).join('');
-  document.getElementById('g-skills').innerHTML=charData.skills.map(s=>`<div class="sb-skill-tag">${s.icon} ${s.name}</div>`).join('')+(charData.customSkill?`<div class="sb-skill-tag" style="border-color:#6a3fa0;color:#c090ff">${charData.customSkill.icon} ${charData.customSkill.name} ✦</div>`:'');
+  document.getElementById('g-title').textContent=`⚔ ${(charData.world||'Aventura').substring(0,18)}`;
+  document.getElementById('g-world-badge').textContent=(charData.world||'Aventura').substring(0,22).toUpperCase();
+  document.getElementById('g-attrs').innerHTML=(charData.attrs||[]).map(a=>`<div class="attr-sb">${a.name} <span>${a.val}</span></div>`).join('');
+  document.getElementById('g-skills').innerHTML=(charData.skills||[]).map(s=>`<div class="sb-skill-tag">${s.icon} ${s.name}</div>`).join('')+(charData.customSkill?`<div class="sb-skill-tag" style="border-color:#6a3fa0;color:#c090ff">${charData.customSkill.icon||'🌀'} ${charData.customSkill.name||'Hab'} ✦</div>`:'');
   document.getElementById('g-trait').textContent=charData.trait;
   const btnC=document.getElementById('btn-custom-skill');
-  if(btnC){btnC.style.display=charData.customSkill?'':'none';if(charData.customSkill)btnC.textContent=charData.customSkill.icon+' '+charData.customSkill.name;}
+  if(btnC){btnC.style.display=charData.customSkill?'':'none';if(charData.customSkill)btnC.textContent=(charData.customSkill.icon||'🌀')+' '+(charData.customSkill.name||'Hab');}
 }
+
 function updateStats(){
   document.getElementById('g-hp-v').textContent=`${stats.hp}/${stats.maxHp}`; document.getElementById('g-hp-b').style.width=`${Math.round(stats.hp/stats.maxHp*100)}%`;
   document.getElementById('g-mana-v').textContent=`${stats.mana}/${stats.maxMana}`; document.getElementById('g-mana-b').style.width=`${Math.round(stats.mana/stats.maxMana*100)}%`;
   document.getElementById('g-stam-v').textContent=`${stats.stam}/${stats.maxStam}`; document.getElementById('g-stam-b').style.width=`${Math.round(stats.stam/stats.maxStam*100)}%`;
 }
 function updateInventory(){}
-let narrativeState='calmo';
-function setNarrativeState(state){narrativeState=state;document.getElementById('narrative-state-bar').className='narrative-state-bar '+state;}
+
+// === RENDERIZADOR DE CHAT ROBUSTO ===
+function renderGMContent(text){
+  if(!text) return '';
+  let safe=escapeHtml(text);
+  safe=safe.replace(/\[MISSÃO:\s*(.*?)\]/gi,'<div style="margin:12px 0;padding:10px;border:1px solid var(--gold);background:rgba(201,168,76,0.1);color:var(--gold);font-size:10px;font-family:var(--ft);letter-spacing:1px;text-transform:uppercase;text-align:center;border-radius:4px">📜 NOVA MISSÃO: $1</div>');
+  safe=safe.replace(/\[CONCLUÍDA:\s*(.*?)\]/gi,'<div style="margin:12px 0;padding:10px;border:1px solid #27ae60;background:rgba(39,174,96,0.1);color:#27ae60;font-size:10px;font-family:var(--ft);letter-spacing:1px;text-transform:uppercase;text-align:center;border-radius:4px">✔ MISSÃO CONCLUÍDA: $1</div>');
+  safe=safe.replace(/\[TESTE:\s*(.*?)\](.*?)($|\n)/gi,'<div style="margin:12px 0;padding:10px;border:1px solid var(--red2);background:rgba(192,57,43,0.1);color:var(--red2);font-size:10px;font-family:var(--ft);letter-spacing:1px;text-align:center;border-radius:4px">🎲 TESTE DE $1 $2</div>$3');
+  const paras=safe.split(/\n\n+/).map(p=>p.trim()).filter(Boolean);
+  if(paras.length===0)return'';
+  if(paras.length===1)return`<div class="gm-para action-result">${paras[0]}</div>`;
+  return paras.map((p,i)=>{
+    if(p.startsWith('<div'))return p;
+    let cls='action-result';
+    if(i===0)cls='sensory';
+    else if(i===paras.length-1)cls='hook';
+    else if(i===paras.length-2&&paras.length>=4)cls='consequence';
+    return`<div class="gm-para ${cls}">${p}</div>`;
+  }).join('');
+}
+
 function addMsg(type,content){
+  if(!content) content = '';
   const c=document.getElementById('chat-msgs');const d=document.createElement('div');
   if(type==='gm'){
-    d.className='msg-gm';d.innerHTML=`<span class="mlabel">✦ MESTRE</span><div class="gm-para action-result">${content.replace(/\n/g,'<br>')}</div>`;
+    const nsTag=`<span class="ns-tag ${narrativeState}">${narrativeState==='calmo'?'Tranquilo':narrativeState==='tensao'?'Tenso':'Ação'}</span>`;
+    d.className='msg-gm';d.innerHTML=`<span class="mlabel">✦ MESTRE ${nsTag}</span>${renderGMContent(content)}`;
   } else if(type==='player'){
-    d.className='msg-player';d.innerHTML=`<span class="mlabel" style="text-align:right">${charData.name} ✦</span>${content}`;
-  } else {d.className='msg-action';d.innerHTML=`<span>${content}</span>`;}
+    d.className='msg-player';d.innerHTML=`<span class="mlabel" style="text-align:right">${escapeHtml(charData.name||'Você')} ✦</span>${escapeHtml(content)}`;
+  } else {d.className='msg-action';d.innerHTML=`<span>${escapeHtml(content)}</span>`;}
   c.appendChild(d);c.scrollTop=c.scrollHeight;
 }
 
-// ════ CORE AI (SIMULADOR) ════
+// ════ DADOS 1D20 ════
+function rollD20(relevantAttrVal=0){
+  const base=Math.floor(Math.random()*20)+1;const bonus=Math.floor(relevantAttrVal/10);const total=Math.min(20,base+bonus);
+  return{base,bonus,total,success:total>=11,critical:total===20,fumble:base===1};
+}
+function diceHtml(roll,label=''){
+  let cls='neutral',icon='🎲';
+  if(roll.critical){cls='success';icon='⭐';}else if(roll.fumble){cls='fail';icon='💀';}else if(roll.success){cls='success';icon='✔';}else{cls='fail';icon='✖';}
+  const txt=roll.critical?'CRÍTICO!':roll.fumble?'FALHA CRÍTICA!':roll.success?'Sucesso':'Falha';
+  return`<div class="dice-roll ${cls}">${icon} 1d20: ${roll.base}${roll.bonus?'+'+roll.bonus:''} = ${roll.total} — ${txt}${label?' · '+label:''}</div>`;
+}
+function addDiceMsg(rollObj,label=''){
+  const c=document.getElementById('chat-msgs');const d=document.createElement('div');
+  d.className='msg-action';d.innerHTML=diceHtml(rollObj,label);c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+
+// ════ STAT EFFECTS & NARRATIVE STATE ════
+function inferNarrativeState(msg,gmText){
+  const combined=(msg+' '+gmText).toLowerCase();
+  const fightWords=['combate','ataque','luta','inimigo','espada','golpe','ferido','morto','batalha','fugir','perseguição'];
+  const tenseWords=['perigo','armadilha','aviso','ameaça','sombra','espreita','suspeito','estranho','alerta','tensão'];
+  const calmWords=['descanso','paz','dormir','acampamento','tranquilo','conversa','comerciante','vila','seguro'];
+  if(fightWords.some(w=>combined.includes(w)))setNarrativeState('acao');
+  else if(tenseWords.some(w=>combined.includes(w)))setNarrativeState('tensao');
+  else if(calmWords.some(w=>combined.includes(w)))setNarrativeState('calmo');
+}
+function applyStatEffects(msg,roll=null){
+  const lo=msg.toLowerCase();
+  if(lo.includes('descansar')||lo.includes('dormir')||lo.includes('repouso')){stats.hp=Math.min(stats.maxHp,stats.hp+22);stats.mana=Math.min(stats.maxMana,stats.mana+18);stats.stam=Math.min(stats.maxStam,stats.stam+28);}
+  if(lo.includes('combate')||lo.includes('ataque')||lo.includes('lutar')||lo.includes('fight')){const dmg=roll?(roll.success?(roll.critical?4:8)+Math.floor(Math.random()*12):15+Math.floor(Math.random()*20)):8+Math.floor(Math.random()*18);stats.hp=Math.max(0,stats.hp-dmg);stats.stam=Math.max(0,stats.stam-12);}
+  if(lo.includes('habilidade')||lo.includes('jutsu')||lo.includes('magia')||lo.includes('feitiço')||lo.includes('ki'))stats.mana=Math.max(0,stats.mana-14);
+  if(stats.hp<=0)showToast('⚠️ Você caiu! Descanse para recuperar vida.');
+  updateStats();
+}
+
+// ════ CORE AI (SIMULADOR OTIMIZADO) ════
 async function callGM(msg,rollResult=null){
   if(busy)return;busy=true;
   document.querySelectorAll('.btn-act, #btn-send').forEach(b=>b.disabled=true);
+  document.getElementById('chat-input').disabled=true;
   document.getElementById('typing').classList.add('on');
   conversationHistory.push({role:'user',content:msg});
   
   try {
-    // ======== SIMULADOR DA IA (Para o código funcionar visualmente) ========
-    // Quando você ligar seu backend real, troque o setTimeout pelo fetch('/api/chat') original.
+    // ======== SIMULADOR DA IA (Para a interface rodar liso) ========
     await new Promise(resolve => setTimeout(resolve, 1500)); 
-    const text = "O Mestre processa sua ação. Seus Múltiplos Saves estão ativados e funcionando! Abra o menu de pausa e volte aos mundos para testar a lixeira e criar novos personagens.";
-    // =======================================================================
+    const text = "O Mestre observa atentamente. *(O erro da tela foi corrigido. Seus saves estão protegidos e o sistema carregará formatações antigas e novas com sucesso! Conecte seu backend no código fonte para respostas reais da IA).*";
+    // ===============================================================
 
     conversationHistory.push({role:'assistant',content:text});
     document.getElementById('typing').classList.remove('on');
+    
+    if(rollResult) addDiceMsg(rollResult,'');
     addMsg('gm',text);
-    saveToFirebase(); // Salva a aventura automaticamente na nuvem após o Mestre narrar
+    
+    applyStatEffects(msg,rollResult);
+    inferNarrativeState(msg,text);
+    saveToFirebase();
   } catch(e) {
     document.getElementById('typing').classList.remove('on');
-    showToast('Erro de Conexão.');
+    showToast('Erro de Conexão: ' + e.message);
   }
   
   busy=false;
   document.querySelectorAll('.btn-act, #btn-send').forEach(b=>b.disabled=false);
+  document.getElementById('chat-input').disabled=false;
   document.getElementById('chat-input').focus();
 }
 
 // ════ ACTIONS BUTTONS ════
 function doAction(type){
+  if(busy)return;
   const labels={rest:'🌙 [Descansa]',explore:'🔍 [Explora]',talk:'💬 [Fala]',fight:'⚔ [Ataca]',flee:'🏃 [Foge]',useSkill:'✨ [Habilidade]',useCustomSkill:'🌀 [Hab. Própria]',lore:'📜 [Busca Lore]'};
   addMsg('action',labels[type]||`[${type}]`);
-  if(type==='fight') { stats.hp -= 15; updateStats(); setNarrativeState('acao'); }
-  if(type==='rest') { stats.hp = stats.maxHp; updateStats(); setNarrativeState('calmo'); }
-  callGM(`O jogador decidiu: ${type}`);
+  
+  let roll=null;
+  if(type==='fight'){roll=rollD20(charData.attrs?charData.attrs[0].val:8);setNarrativeState('acao');}
+  else if(type==='flee'){roll=rollD20(charData.attrs?charData.attrs[1].val:8);setNarrativeState('tensao');}
+  else if(type==='useSkill'||type==='useCustomSkill'){roll=rollD20(charData.attrs?charData.attrs[3].val:8);setNarrativeState('acao');}
+  
+  callGM(`O jogador decidiu: ${type}`, roll);
 }
 function sendMsg(){const inp=document.getElementById('chat-input');if(!inp.value.trim()||busy)return;addMsg('player',inp.value);callGM(inp.value);inp.value='';}
 function beginGame(){callGM('Inicie a jornada de ' + charData.name);}
