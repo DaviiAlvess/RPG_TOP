@@ -342,7 +342,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 
 <div class="toast" id="toast"></div>
 
-<!-- PAUSE MODAL -->
 <div class="pause-modal" id="pause-modal">
   <div class="pause-box">
     <div class="pause-title">⏸ PAUSA</div>
@@ -354,7 +353,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
   </div>
 </div>
 
-<!-- TIMESKIP MODAL -->
 <div class="ts-modal" id="ts-modal">
   <div class="ts-box">
     <div class="ts-header">
@@ -427,7 +425,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
   </div>
 </div>
 
-<!-- AUTH SCREEN -->
 <div id="s-auth" class="screen">
   <div class="auth-box">
     <div class="auth-logo">⚔ RPG · Mestre Inteligente</div>
@@ -451,7 +448,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
   </div>
 </div>
 
-<!-- WORLD SELECT & SAVES SCREEN -->
 <div id="s-world" class="screen">
   <div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:16px;min-height:100%;width:100%">
     <div class="ws-top-bar">
@@ -459,7 +455,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
       <div id="user-bar" style="display:flex;align-items:center;gap:6px"></div>
     </div>
 
-    <!-- SAVES MÚLTIPLOS -->
     <div class="saves-section" id="saves-section">
       <div class="saves-header">✦ SUAS AVENTURAS SALVAS ✦</div>
       <div class="saves-list" id="saves-list"></div>
@@ -487,7 +482,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
   </div>
 </div>
 
-<!-- CHAR CREATION SCREEN -->
 <div id="s-char" class="screen">
   <div class="char-header">
     <div>
@@ -551,7 +545,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
   </div>
 </div>
 
-<!-- GAME SCREEN -->
 <div id="s-game" class="screen">
   <div class="rpg-header">
     <div>
@@ -685,7 +678,7 @@ const ATTR_NAMES=['FOR','DES','CON','INT','SAB','CAR'];
 const ATTR_FULL=['Força','Destreza','Constituição','Inteligência','Sabedoria','Carisma'];
 
 // ════ STATE ════
-window.appSaves = {}; // Armazena todos os saves na memória para o clique ser instantâneo
+window.appSaves = {}; // Guarda tudo na memória para carregamento instantâneo
 let currentSessionId = null;
 let currentWorld = '';
 let charData = {};
@@ -748,6 +741,7 @@ async function loadAllSessions(){
     try{
       const snap=await db.ref(`users/${currentUser.uid}/sessions`).once('value');
       if(snap.exists()) saves=snap.val()||{};
+      // Resgata o save da V1 antiga
       const oldSnap=await db.ref(`users/${currentUser.uid}/session`).once('value');
       if(oldSnap.exists()){
         const oldSave=oldSnap.val();
@@ -772,7 +766,7 @@ async function loadAllSessions(){
       }
     }catch(e){}
   }
-  window.appSaves = saves; // Guarda tudo na memória para carregamento instantâneo
+  window.appSaves = saves; // O segredo para o clique instantâneo
   return saves;
 }
 
@@ -812,7 +806,7 @@ async function deleteSave(id){
   renderSavesList();
 }
 
-// === LÓGICA DE CARREGAMENTO INSTANTÂNEO (IDÊNTICO AO SEU CÓDIGO BASE) ===
+// === LÓGICA DE CARREGAMENTO INSTANTÂNEO IGUAL AO SEU CÓDIGO ORIGINAL ===
 function resumeGame(id){
   const session = window.appSaves[id];
   
@@ -821,14 +815,12 @@ function resumeGame(id){
     return;
   }
 
-  // Aplica as variáveis globalmente
   currentSessionId = id;
   charData = session.charData || {};
   stats = session.stats || {hp:100,maxHp:100,mana:60,maxMana:60,stam:90,maxStam:90};
   inventory = session.inventory || [];
   conversationHistory = session.conversationHistory || [];
   
-  // Fallbacks para não quebrar a tela de jogo
   if(!charData.avatar) charData.avatar='🧙';
   if(!charData.clsIcon) charData.clsIcon='⚔';
   if(!charData.customSkill) charData.customSkill=null;
@@ -843,14 +835,12 @@ function resumeGame(id){
   const chatEl = document.getElementById('chat-msgs');
   chatEl.innerHTML = '';
   
-  // Renderiza todo o histórico com proteção contra arrays corrompidos
   conversationHistory.forEach(m => {
     if(!m) return;
     if(m.role === 'assistant') addMsg('gm', m.content || '');
     else if(m.role === 'user') addMsg('player', m.content || '');
   });
   
-  // Aguarda os elementos entrarem na tela e rola pro fundo
   setTimeout(() => { chatEl.scrollTop = chatEl.scrollHeight; }, 50);
   
   const btnC = document.getElementById('btn-custom-skill');
@@ -865,7 +855,7 @@ function resumeGame(id){
   
   setNarrativeState('calmo');
   
-  // O comando exato do seu código base que pula direto pro chat
+  // PULA DIRETO PRA TELA DE JOGO COMO NO CÓDIGO BASE!
   goScreen('s-game');
   document.getElementById('chat-input').focus();
 }
@@ -879,7 +869,7 @@ function openPause(){
 function closePause(){document.getElementById('pause-modal').classList.remove('open');}
 function pauseGoWorlds(){saveToFirebase();closePause();goScreen('s-world');renderSavesList();}
 function pauseNewGame(){
-  if(!confirm('Isso excluirá a aventura que você está jogando agora. Tem certeza?')) return;
+  if(!confirm('Isso excluirá o seu personagem desta aventura. Tem certeza?')) return;
   deleteSave(currentSessionId);currentSessionId=null;
   closePause();goScreen('s-world');renderSavesList();
 }
@@ -1237,3 +1227,4 @@ function closeSidebar(){document.getElementById('rpg-sidebar').classList.remove(
 </script>
 </body>
 </html>
+
