@@ -60,7 +60,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 #s-world{align-items:center;justify-content:flex-start;min-height:100vh;padding:calc(16px + var(--sat)) 16px calc(16px + var(--sab));gap:14px;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .ws-top-bar{width:100%;max-width:600px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
 .ws-logo{font-family:var(--ft);font-size:clamp(10px,2.5vw,14px);color:var(--gold);letter-spacing:2px}
-.ws-sub{font-size:13px;color:var(--text3);text-align:center;font-style:italic;width:100%;max-width:600px}
+.ws-sub{font-size:13px;color:var(--text3);text-align:center;font-style:italic;width:100%;max-width:600px;margin-bottom:8px}
 .worlds-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;max-width:600px}
 @media(min-width:400px){.worlds-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr))}}
 .world-card{background:var(--bg2);border:1px solid var(--border2);border-radius:6px;padding:13px 8px;cursor:pointer;transition:all .2s;text-align:center;min-height:80px;display:flex;flex-direction:column;align-items:center;justify-content:center}
@@ -68,10 +68,11 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .wc-icon{font-size:22px;margin-bottom:5px}
 .wc-name{font-family:var(--ft);font-size:clamp(6px,1.8vw,8px);color:var(--gold);letter-spacing:.5px}
 .wc-desc{font-size:clamp(9px,2.2vw,11px);color:var(--text3);margin-top:2px;font-style:italic}
-.ws-divider{display:flex;align-items:center;gap:10px;width:100%;max-width:600px;color:var(--text3);font-size:13px}
+.ws-divider{display:flex;align-items:center;gap:10px;width:100%;max-width:600px;color:var(--text3);font-size:13px;margin: 8px 0;}
 .ws-divider::before,.ws-divider::after{content:'';flex:1;border-top:1px solid var(--border2)}
 .custom-row{display:flex;gap:8px;width:100%;max-width:600px}
 .field-input{flex:1;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:11px 12px;font-family:var(--fb);font-size:16px;border-radius:4px;outline:none;font-style:italic;-webkit-appearance:none}
+.field-input::placeholder{color:var(--text3)}
 .field-input:focus{border-color:var(--gold)}
 .btn-gold{background:var(--red);border:1px solid var(--red2);color:#f0d0a0;padding:11px 16px;font-family:var(--ft);font-size:8px;letter-spacing:.5px;border-radius:4px;cursor:pointer;white-space:nowrap;transition:all .15s;min-height:48px}
 .btn-gold:hover{background:var(--red2)}
@@ -79,21 +80,21 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:16px
 .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
 
 /* LISTA DE SAVES MULTIPLOS */
-.saves-section{width:100%;max-width:600px;display:none;flex-direction:column;gap:8px}
-.saves-header{font-family:var(--ft);font-size:11px;color:var(--gold);letter-spacing:1px;margin-bottom:4px;text-align:center}
-.saves-list{display:flex;flex-direction:column;gap:8px;max-height:240px;overflow-y:auto;padding-right:4px;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
-.saves-list::-webkit-scrollbar{width:4px}
-.saves-list::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
-.save-card{background:linear-gradient(135deg,#1a1408,#251c10);border:1px solid var(--border2);border-radius:6px;padding:10px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all 0.15s}
-.save-card:hover{border-color:var(--gold)}
-.save-card:active{transform:scale(0.98)}
-.save-icon{font-size:26px;flex-shrink:0;width:36px;text-align:center}
-.save-info{flex:1;min-width:0}
-.save-title{font-family:var(--ft);font-size:10px;color:var(--gold);letter-spacing:1px;margin-bottom:2px}
-.save-desc{font-size:13px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.save-date{font-size:10px;color:var(--text3);font-style:italic}
-.btn-del-save{background:none;border:1px solid var(--border2);color:var(--text3);border-radius:4px;padding:8px 12px;font-size:14px;cursor:pointer;min-height:40px;flex-shrink:0;transition:all 0.15s}
-.btn-del-save:hover{border-color:var(--red2);color:var(--red2);background:rgba(192,57,43,0.1)}
+.saves-section{width:100%;max-width:600px;display:none;flex-direction:column;gap:8px;}
+.saves-header{font-family:var(--ft);font-size:11px;color:var(--gold);letter-spacing:1px;margin-bottom:4px;text-align:center;}
+.saves-list{display:flex;flex-direction:column;gap:8px;max-height:240px;overflow-y:auto;padding-right:4px;scrollbar-width:thin;scrollbar-color:var(--border2) transparent;}
+.saves-list::-webkit-scrollbar{width:4px;}
+.saves-list::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+.save-card{background:linear-gradient(135deg,#1a1408,#251c10);border:1px solid var(--border2);border-radius:6px;padding:10px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all 0.15s;}
+.save-card:hover{border-color:var(--gold);}
+.save-card:active{transform:scale(0.98);}
+.save-icon{font-size:26px;flex-shrink:0;width:36px;text-align:center;}
+.save-info{flex:1;min-width:0;}
+.save-title{font-family:var(--ft);font-size:10px;color:var(--gold);letter-spacing:1px;margin-bottom:2px;}
+.save-desc{font-size:13px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.save-date{font-size:10px;color:var(--text3);font-style:italic;}
+.btn-del-save{background:none;border:1px solid var(--border2);color:var(--text3);border-radius:4px;padding:8px 12px;font-size:14px;cursor:pointer;min-height:40px;flex-shrink:0;transition:all 0.15s;}
+.btn-del-save:hover{border-color:var(--red2);color:var(--red2);background:rgba(192,57,43,0.1);}
 
 /* CHAR CREATION */
 #s-char{height:100vh;overflow:hidden;display:flex;flex-direction:column}
@@ -704,7 +705,7 @@ function renderUserBar(){
   else{bar.innerHTML=`<button class="btn-ghost" style="font-size:11px;padding:6px 12px" onclick="goScreen('s-auth')">Entrar</button>`;}
 }
 
-// ════ PERSISTENCE (MULTI-SAVE) ════
+// ════ PERSISTENCE (MULTI-SAVE COM RESGATE DE SAVE ANTIGO) ════
 const LS_KEY='rpg_sessions_v2';
 let saveTimeout=null;
 
@@ -712,13 +713,44 @@ function buildSessionPayload(){return{charData,stats,inventory,conversationHisto
 
 async function loadAllSessions() {
   let saves = {};
+  
   if (currentUser) {
     try {
+      // 1. Tenta carregar os múltiplos saves novos
       const snap = await db.ref(`users/${currentUser.uid}/sessions`).once('value');
-      if (snap.exists()) saves = snap.val();
+      if (snap.exists()) saves = snap.val() || {};
+      
+      // 2. RESGATE: Tenta achar o SAVE ANTIGO (versão 1) no Firebase
+      const oldSnap = await db.ref(`users/${currentUser.uid}/session`).once('value');
+      if (oldSnap.exists()) {
+         const oldSave = oldSnap.val();
+         if (oldSave && oldSave.charData && !saves['save_legado']) {
+             saves['save_legado'] = oldSave;
+             // Copia o save antigo para a gaveta nova automaticamente
+             await db.ref(`users/${currentUser.uid}/sessions/save_legado`).set(oldSave);
+             // Apaga da gaveta velha para não duplicar no futuro
+             await db.ref(`users/${currentUser.uid}/session`).remove().catch(()=>{}); 
+         }
+      }
     } catch(e) {}
   } else {
-    try { saves = JSON.parse(localStorage.getItem(LS_KEY) || '{}'); } catch(e){}
+    try { 
+      // 1. Tenta carregar os múltiplos saves locais
+      saves = JSON.parse(localStorage.getItem(LS_KEY) || '{}'); 
+      
+      // 2. RESGATE: Tenta achar o SAVE LOCAL ANTIGO no navegador
+      const oldLocal = localStorage.getItem('rpg_session_v1');
+      if (oldLocal) {
+         const parsedOld = JSON.parse(oldLocal);
+         if (parsedOld && parsedOld.charData && !saves['save_legado']) {
+             saves['save_legado'] = parsedOld;
+             // Salva no formato novo
+             localStorage.setItem(LS_KEY, JSON.stringify(saves));
+             // Limpa o formato antigo
+             localStorage.removeItem('rpg_session_v1');
+         }
+      }
+    } catch(e){}
   }
   return saves;
 }
