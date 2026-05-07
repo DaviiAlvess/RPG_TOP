@@ -354,7 +354,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   </div>
 </div>
 
-<!-- AUTH -->
 <div id="s-auth" class="screen">
   <div class="auth-box">
     <div class="auth-logo">⚔ RPG · Mestre Inteligente</div>
@@ -372,7 +371,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   </div>
 </div>
 
-<!-- WORLD SELECT -->
 <div id="s-world" class="screen">
   <div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:16px;min-height:100%;width:100%">
     <div class="ws-top-bar">
@@ -406,7 +404,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   </div>
 </div>
 
-<!-- CHAR CREATION -->
 <div id="s-char" class="screen">
   <div class="char-header">
     <div>
@@ -438,7 +435,23 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       <div class="avatar-grid" id="avatar-grid"></div>
     </div>
     <div class="cc-card full-col"><span class="cc-label">Classe</span><div class="classes-grid" id="classes-grid"></div></div>
-    <div class="cc-card full-col"><span class="cc-label">Habilidades <span style="font-family:var(--fb);font-style:italic;font-size:10px;color:var(--text3)">(escolha 1 a 3)</span></span><div class="skills-pool" id="skills-pool"></div></div>
+    <div class="cc-card full-col"><span class="cc-label">Habilidades <span style="font-family:var(--fb);font-style:italic;font-size:10px;color:var(--text3)">(escolha 1 a 3)</span></span><div class="skills-pool" id="skills-pool"></div>
+    
+      <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:12px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <span style="font-family:var(--ft);font-size:8px;color:var(--purple2);letter-spacing:1px">✦ Criar habilidade própria</span>
+          <span style="font-size:10px;color:var(--text4);font-style:italic">opcional</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <input class="cc-input" id="custom-skill-icon" placeholder="🌀" maxlength="2" style="width:52px;text-align:center;font-size:22px;padding:7px 4px;flex-shrink:0">
+          <div style="flex:1;display:flex;flex-direction:column;gap:6px">
+            <input class="cc-input" id="custom-skill-name" placeholder="Nome da habilidade..." style="font-size:15px;padding:8px 10px">
+            <input class="cc-input" id="custom-skill-desc" placeholder="Descrição do efeito..." style="font-size:13px;padding:7px 10px">
+          </div>
+        </div>
+      </div>
+    
+    </div>
     <div class="cc-card full-col"><span class="cc-label">Traço de Personalidade</span><div class="trait-grid" id="trait-grid"></div></div>
     <div class="cc-card full-col"><span class="cc-label">Contexto / Motivação <span style="font-family:var(--fb);font-style:italic;font-size:10px;color:var(--text3)">(opcional — quanto mais detalhe, melhor o mestre narra!)</span></span><textarea class="cc-input" id="cc-backstory" rows="3" placeholder="História, motivação ou segredo do personagem..." style="resize:vertical"></textarea></div>
     <div class="cc-card full-col" id="custom-world-box" style="display:none"><span class="cc-label">Lore do Mundo</span><textarea class="cc-input" id="cc-world-lore" rows="3" placeholder="Como funciona esse universo..." style="resize:vertical"></textarea></div>
@@ -449,7 +462,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   </div>
 </div>
 
-<!-- GAME -->
 <div id="s-game" class="screen">
   <div class="rpg-header">
     <div>
@@ -516,6 +528,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       <button class="btn-act" style="border-color:var(--red2);color:var(--red2)" onclick="doAction('fight')">⚔ Combater</button>
       <button class="btn-act" onclick="doAction('flee')">🏃 Fugir</button>
       <button class="btn-act special" onclick="doAction('useSkill')">✨ Usar Habilidade</button>
+      <button class="btn-act special" id="btn-custom-skill" style="display:none" onclick="doAction('useCustomSkill')">🌀 Hab. Própria</button>
       <button class="btn-act" onclick="doAction('lore')">📜 Investigar</button>
     </div>
     <div class="input-row">
@@ -641,16 +654,38 @@ async function deleteSave(id){
   else{let ls=JSON.parse(localStorage.getItem(LS_KEY)||'{}');delete ls[id];localStorage.setItem(LS_KEY,JSON.stringify(ls));}
   renderSavesList();
 }
+
 function resumeGame(id){
-  const session=window.appSaves[id];if(!session){showToast('Sessão não encontrada.');return;}
-  currentSessionId=id;charData=session.charData||{};stats=session.stats||{hp:100,maxHp:100,mana:60,maxMana:60,stam:90,maxStam:90};inventory=session.inventory||[];conversationHistory=session.conversationHistory||[];
+  // Feedback imediato
+  document.getElementById('loading-overlay').classList.remove('hide');
+  const session=window.appSaves[id];
+  if(!session){
+      document.getElementById('loading-overlay').classList.add('hide');
+      showToast('Sessão não encontrada.');return;
+  }
+  
+  currentSessionId=id;
+  charData=session.charData||{};
+  stats=session.stats||{hp:100,maxHp:100,mana:60,maxMana:60,stam:90,maxStam:90};
+  inventory=session.inventory||[];
+  conversationHistory=session.conversationHistory||[];
+  
   if(!charData.avatar)charData.avatar='🧙';if(!charData.clsIcon)charData.clsIcon='⚔';
+  
   populateSidebar();updateStats();
+  
+  // Renderiza itens
+  const inv=document.getElementById('g-inv');
+  inv.innerHTML = inventory.length === 0 ? '<div class="inv-empty">Vazio</div>' : inventory.map(item => `<div class="inv-item">🎒 ${item}</div>`).join('');
+  
+  // Renderiza o chat
   const chatEl=document.getElementById('chat-msgs');chatEl.innerHTML='';
   conversationHistory.forEach(m=>{if(!m)return;if(m.role==='assistant')addMsg('gm',m.content||'');else if(m.role==='user')addMsg('player',m.content||'');});
-  setTimeout(()=>{chatEl.scrollTop=chatEl.scrollHeight;},50);
+  
   setNarrativeState('calmo');
   goScreen('s-game');
+  document.getElementById('loading-overlay').classList.add('hide');
+  setTimeout(()=>{chatEl.scrollTop=chatEl.scrollHeight;},50);
   document.getElementById('chat-input').focus();
 }
 
@@ -660,7 +695,7 @@ function closePause(){document.getElementById('pause-modal').classList.remove('o
 function pauseGoWorlds(){saveToFirebase();closePause();goScreen('s-world');renderSavesList();}
 function pauseNewGame(){if(!confirm('Isso excluirá o personagem. Tem certeza?'))return;deleteSave(currentSessionId);currentSessionId=null;closePause();goScreen('s-world');renderSavesList();}
 
-// ════ TIMESKIP ════
+// ════ TIMESKIP (AGORA 100% PERSONALIZADO) ════
 function openTimeskip(){if(busy)return;tsSelectedDuration='';tsSelectedActivity=null;document.querySelectorAll('.ts-dur-btn,.ts-act-opt').forEach(b=>b.classList.remove('selected'));updateTimeskipPreview();document.getElementById('ts-modal').classList.add('open');}
 function closeTimeskip(){document.getElementById('ts-modal').classList.remove('open');}
 function selectDuration(btn,label){document.querySelectorAll('.ts-dur-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');tsSelectedDuration=label;updateTimeskipPreview();}
@@ -669,12 +704,47 @@ function updateTimeskipPreview(){
   document.getElementById('ts-btn-go').disabled=!(tsSelectedDuration&&tsSelectedActivity);
   document.getElementById('ts-preview-text').innerHTML=tsSelectedDuration&&tsSelectedActivity?`<strong style="color:var(--gold)">${charData.name||'Herói'}</strong> passa <strong style="color:var(--gold)">${tsSelectedDuration}</strong> — ${tsSelectedActivity.desc}`:'Escolha a duração e atividade.';
 }
+function buildTimeskipPrompt(){
+  const c = charData;
+  const dur = tsSelectedDuration;
+  const act = tsSelectedActivity;
+  
+  const actDirectives={
+    treino:`Foque na evolução física e na maestria das habilidades. Descreva suor, repetição e um momento de superação.`,
+    descanso:`Narre a recuperação profunda. Pensamentos noturnos no silêncio. Como a mente do herói processou os eventos recentes.`,
+    missao:`Faça um resumo épico de pequenos contratos/trabalhos realizados. Descreva um oponente menor derrotado e a recompensa.`,
+    estudo:`O que foi lido nos pergaminhos antigos? Narre o processo de aprendizado e uma nova compreensão sobre as leis da magia/mundo.`,
+    viagem:`Descreva paisagens mudando, o cansaço da estrada, noites em claro. Um encontro inesperado que apenas observou de longe.`,
+    social:`Narre as negociações nos bastidores. Tavernas, salões nobres. Quem ganhou sua confiança e de quem ele passou a suspeitar?`,
+    espiritual:`Tom poético. Meditação, visões, conexão com forças superiores. Dúvidas virando certezas inabaláveis.`,
+    escondido:`Narre a paranoia, a vida nas sombras. O medo de ser descoberto e a disciplina para não deixar rastros.`,
+    trabalho:`O contraste da vida perigosa com o tédio do trabalho comum para sobreviver. O disfarce perfeito na multidão.`,
+    cura_espiritual:`Dor, luto e aceitação. Visitas a túmulos ou lugares silenciosos. Uma decisão forjada na tristeza.`,
+    busca:`A obsessão. Pistas seguidas até o fim, interrogatórios em becos escuros. A frustração antes da descoberta.`
+  };
+  
+  const directive=actDirectives[act.key]||`Adapte a narração à seguinte ação: ${act.name}`;
+  
+  return `[TIMESKIP - PULO DE TEMPO: ${dur}]
+O personagem ${c.name} passou todo esse tempo focando em: ${act.name}
+
+DIRETRIZES DO MESTRE:
+${directive}
+
+ESTRUTURA DA RESPOSTA:
+1. (Passagem do tempo) Um flash sensorial de como os dias ou anos correram, usando o clima do universo ${c.world}.
+2. (O que fez) Dois ou três recortes/cenas curtas mostrando as ações dele durante esse tempo, influenciadas pelo traço "${c.trait}".
+3. (Evolução) O que mudou definitivamente em ${c.name}? Uma cicatriz nova, uma mentalidade mais fria, uma técnica refinada?
+4. (O Retorno) ${c.name} desperta para o PRESENTE exato de agora. Qual é a nova ameaça ou oportunidade que está bem na frente dele EXIGINDO ação imediata?`;
+}
+
 function executeTimeskip(){
   if(!tsSelectedDuration||!tsSelectedActivity)return;closeTimeskip();
   const d=document.createElement('div');d.className='msg-timeskip';d.textContent=`⏭ ${tsSelectedDuration.toUpperCase()} PASSAM — ${tsSelectedActivity.name.toUpperCase()}`;
   document.getElementById('chat-msgs').appendChild(d);
   stats.hp=Math.min(stats.maxHp,stats.hp+40);stats.mana=Math.min(stats.maxMana,stats.mana+30);stats.stam=Math.min(stats.maxStam,stats.stam+40);updateStats();
-  callGM(`PULO DE TEMPO: Passam ${tsSelectedDuration}. Durante esse período, ${charData.name} esteve ${tsSelectedActivity.name.toLowerCase()}. Narre as consequências narrativas desse tempo: o que mudou no mundo, no personagem, nas relações. Seja específico e dramático.`);
+  
+  callGM(buildTimeskipPrompt());
 }
 
 // ════ CHAR CREATION ════
@@ -731,6 +801,7 @@ function startGame(){
     cls:classes[selectedClass]?.name||'Civil',
     clsIcon:classes[selectedClass]?.icon||'🧑‍🌾',
     skills:selectedSkills.map(i=>pool[i]),
+    customSkill:document.getElementById('custom-skill-name').value?{icon:document.getElementById('custom-skill-icon').value||'🌀',name:document.getElementById('custom-skill-name').value,desc:document.getElementById('custom-skill-desc').value}:null,
     trait:selectedTrait||'Livre',
     backstory:document.getElementById('cc-backstory').value,
     world:currentWorld,
@@ -753,6 +824,17 @@ function populateSidebar(){
   document.getElementById('g-world-badge').textContent=(charData.world||'Aventura').substring(0,22).toUpperCase();
   document.getElementById('g-skills').innerHTML=(charData.skills||[]).filter(Boolean).map(s=>`<div class="sb-skill-tag">${s.icon||'✨'} ${s.name||'Hab'}</div>`).join('');
   document.getElementById('g-trait').textContent=charData.trait||'Livre';
+  
+  // ATIVAÇÃO DO BOTÃO DE HABILIDADE PRÓPRIA
+  const btnCustomSkill = document.getElementById('btn-custom-skill');
+  if(btnCustomSkill) {
+      if(charData.customSkill && charData.customSkill.name) {
+          btnCustomSkill.style.display = 'inline-block';
+          btnCustomSkill.textContent = `${charData.customSkill.icon||'🌀'} ${charData.customSkill.name}`;
+      } else {
+          btnCustomSkill.style.display = 'none';
+      }
+  }
 }
 function updateStats(){
   document.getElementById('g-hp-v').textContent=`${stats.hp}/${stats.maxHp}`;document.getElementById('g-hp-b').style.width=`${Math.round(stats.hp/stats.maxHp*100)}%`;
@@ -797,7 +879,7 @@ function addItemToInventory(item){
   inventory.push(item);
   const inv=document.getElementById('g-inv');
   if(inv.querySelector('.inv-empty'))inv.innerHTML='';
-  const el=document.createElement('div');el.className='inv-item';el.textContent=item;inv.appendChild(el);
+  const el=document.createElement('div');el.className='inv-item';el.textContent=`🎒 ${item}`;inv.appendChild(el);
 }
 
 // ════ DADOS ════
@@ -834,6 +916,7 @@ function inferNarrativeState(combined){
 function buildSystem(){
   const c=charData;
   const skillList=(c.skills||[]).filter(Boolean).map(s=>`${s.name}: ${s.desc}`).join('; ');
+  const customSkillText=c.customSkill? `\nHabilidade Assinatura do Jogador: ${c.customSkill.name} - ${c.customSkill.desc} (Valorize muito o uso dessa técnica épica).` : '';
   const isKnownWorld=!!WORLD_CLASSES[c.world];
   
   return`Você é o Mestre de RPG mais imersivo já criado. Sua missão: fazer o jogador SENTIR que está vivo neste universo.
@@ -841,7 +924,7 @@ function buildSystem(){
 ═══ PERSONAGEM ═══
 Nome: ${c.name} | Compleição: ${c.build} | Idade: ${c.age}
 Classe: ${c.cls} | Traço: ${c.trait}
-Habilidades: ${skillList}
+Habilidades base: ${skillList} ${customSkillText}
 ${c.backstory?`Contexto: ${c.backstory}`:''}
 
 ═══ UNIVERSO ═══
@@ -892,7 +975,6 @@ async function callGM(msg, rollResult=null){
 
   conversationHistory.push({role:'user',content:msg});
 
-  // Mostra banner de lore nas primeiras mensagens ou ao investigar
   const needsLore=conversationHistory.length<=2||(msg.toLowerCase().includes('investigar')||msg.toLowerCase().includes('lore')||msg.toLowerCase().includes('explorar'));
   if(needsLore&&!!WORLD_CLASSES[charData.world]){
     document.getElementById('lore-banner').classList.add('on');
@@ -941,20 +1023,40 @@ async function callGM(msg, rollResult=null){
 // ════ AÇÕES ════
 function doAction(type){
   if(busy)return;
-  const labels={rest:'🌙 Decide descansar',explore:'🔍 Começa a explorar a área',talk:'💬 Aproxima-se de alguém para conversar',fight:'⚔ Entra em postura de combate',flee:'🏃 Tenta fugir da situação',useSkill:'✨ Usa uma de suas habilidades',lore:'📜 Investiga e busca informações'};
+  
+  const customSkillName = charData.customSkill ? charData.customSkill.name : 'habilidade própria';
+  const customSkillDesc = charData.customSkill ? charData.customSkill.desc : 'técnica secreta improvisada';
+  
+  const labels={
+      rest:'🌙 Decide descansar',
+      explore:'🔍 Começa a explorar a área',
+      talk:'💬 Aproxima-se de alguém para conversar',
+      fight:'⚔ Entra em postura de combate',
+      flee:'🏃 Tenta fugir da situação',
+      useSkill:'✨ Usa uma de suas habilidades',
+      useCustomSkill:`🌀 Usa sua Habilidade Assinatura: ${customSkillName}`,
+      lore:'📜 Investiga e busca informações'
+  };
+  
   addMsg('action',labels[type]||`[${type}]`);
+  
   let roll=null;
-  if(type==='fight'){roll=rollD20();setNarrativeState('acao');}
-  else if(type==='flee'){roll=rollD20();setNarrativeState('tensao');}
-  else if(type==='useSkill'){roll=rollD20();}
+  if(['fight','flee','useSkill','useCustomSkill'].includes(type)){
+     roll=rollD20();
+     if(type==='flee') setNarrativeState('tensao');
+     else setNarrativeState('acao');
+  }
+  
+  const skillNames = (charData.skills||[]).map(s=>s.name).join(' ou ');
   
   const prompts={
     rest:`${charData.name} decide descansar e recuperar forças. Narre o descanso — o local, os pensamentos, e qualquer evento que ocorra enquanto descansa.`,
     explore:`${charData.name} começa a explorar a área com atenção. Descreva o que encontra — detalhes do ambiente, pistas, perigos ou personagens. Seja específico ao universo ${charData.world}.`,
     talk:`${charData.name} se aproxima para conversar. Apresente um personagem NPC interessante ${WORLD_CLASSES[charData.world]?`do universo ${charData.world}`:'do local'} com personalidade própria, objetivos e segredos. Escreva o diálogo com realismo.`,
     fight:`[COMBATE] ${charData.name} entra em combate! Dado rolado: ${roll?.base}. ${roll?.success?'Sucesso no ataque.':'Falhou no ataque.'} ${roll?.critical?'GOLPE CRÍTICO!':''} ${roll?.fumble?'FALHA CRÍTICA!':''} Narre o combate com impacto físico real.`,
-    flee:`[FUGA] ${charData.name} tenta escapar! Dado: ${roll?.base}. ${roll?.success?'Consegue fugir.':'Não consegue escapar!'} Narre as consequências.`,
-    useSkill:`${charData.name} usa uma de suas habilidades (${(charData.skills||[]).map(s=>s.name).join(' / ')}). Dado: ${roll?.base}. ${roll?.success?'Sucesso!':roll?.fumble?'FALHA CRÍTICA!':'Falha parcial.'} Narre o efeito com impacto visual épico.`,
+    flee:`[FUGA] ${charData.name} tenta escapar! Dado: ${roll?.base}. ${roll?.success?'Consegue fugir.':'Não consegue escapar!'} Narre as consequências da fuga.`,
+    useSkill:`${charData.name} usa habilidade (${skillNames}). Dado: ${roll?.base}. ${roll?.success?'Sucesso!':roll?.fumble?'FALHA CRÍTICA!':'Falha parcial.'} Narre o efeito com impacto visual épico.`,
+    useCustomSkill:`${charData.name} ativa sua habilidade exclusiva: "${customSkillName}" (${customSkillDesc}). Dado rolado: ${roll?.base}. ${roll?.success?'Foi um absoluto sucesso, o efeito foi devastador!':'A habilidade falhou miseravelmente, com efeitos colaterais.'} Trate essa ação como o momento mais épico da batalha. Narre o impacto visual dramático.`,
     lore:`${charData.name} investiga e busca informações sobre o local ou situação. Revele lore relevante do universo ${charData.world} — lendas, facções, segredos do lugar. Use fatos reais do cânone.`
   };
   callGM(prompts[type]||`O jogador faz: ${type}`,roll);
