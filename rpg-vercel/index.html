@@ -249,20 +249,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .ts-box{background:var(--bg2);border:1px solid var(--border3);border-radius:10px;width:min(480px,100%);max-height:90vh;overflow-y:auto;display:flex;flex-direction:column}
 .ts-header{padding:18px 20px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .ts-title{font-family:var(--ft);font-size:12px;color:var(--gold);letter-spacing:2px}
-.ts-body{padding:16px 20px;display:flex;flex-direction:column;gap:18px}
-.ts-section-label{font-family:var(--ft);font-size:8px;color:var(--gold);letter-spacing:1.5px;margin-bottom:10px}
-.ts-duration-grid{display:flex;gap:10px;flex-wrap:wrap}
-.ts-dur-group{display:flex;flex-direction:column;gap:5px;flex:1;min-width:60px}
-.ts-dur-group-label{font-size:9px;color:var(--text4);letter-spacing:.5px;text-align:center;text-transform:uppercase;font-family:var(--ft)}
-.ts-dur-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text3);padding:9px 6px;border-radius:4px;cursor:pointer;text-align:center;font-family:var(--fb);font-size:13px;min-height:40px;width:100%}
-.ts-dur-btn.selected{border-color:var(--gold);background:var(--bg4);color:var(--gold2)}
-.ts-activity-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-.ts-act-opt{background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:11px 8px;cursor:pointer;text-align:center;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:5px;min-height:72px;justify-content:center}
-.ts-act-opt.selected{border-color:var(--gold);background:var(--bg4)}
-.ts-act-icon{font-size:22px}
-.ts-act-name{font-family:var(--ft);font-size:clamp(6.5px,1.8vw,8px);color:var(--text2)}
-.ts-act-opt.selected .ts-act-name{color:var(--gold)}
-.ts-preview{background:linear-gradient(135deg,#1a1408,#251c10);border:1px solid var(--border2);border-radius:5px;padding:10px 14px;font-size:12px;color:var(--text2);font-style:italic;display:flex;align-items:center;gap:8px}
+.ts-body{padding:20px;display:flex;flex-direction:column;gap:18px}
+.ts-section-label{font-family:var(--ft);font-size:8px;color:var(--gold);letter-spacing:1.5px;margin-bottom:10px;text-transform:uppercase}
 .ts-footer{padding:14px 20px;border-top:1px solid var(--border);display:flex;gap:8px}
 .ts-btn-cancel{flex:1;background:none;border:1px solid var(--border2);color:var(--text3);padding:12px;font-family:var(--fb);font-size:14px;border-radius:4px;cursor:pointer;min-height:48px}
 .ts-btn-go{flex:2;background:var(--red);border:1px solid var(--red2);color:#f0d0a0;padding:12px;font-family:var(--ft);font-size:9px;letter-spacing:.8px;border-radius:4px;cursor:pointer;min-height:48px}
@@ -309,42 +297,12 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     </div>
     <div class="ts-body">
       <div>
-        <div class="ts-section-label">⌛ Quanto tempo passa?</div>
-        <div class="ts-duration-grid">
-          <div class="ts-dur-group"><div class="ts-dur-group-label">Dias</div>
-            <button class="ts-dur-btn" onclick="selectDuration(this,'1 dia')">1</button>
-            <button class="ts-dur-btn" onclick="selectDuration(this,'3 dias')">3</button>
-            <button class="ts-dur-btn" onclick="selectDuration(this,'7 dias')">7</button>
-          </div>
-          <div class="ts-dur-group"><div class="ts-dur-group-label">Semanas</div>
-            <button class="ts-dur-btn" onclick="selectDuration(this,'2 semanas')">2</button>
-            <button class="ts-dur-btn" onclick="selectDuration(this,'4 semanas')">4</button>
-          </div>
-          <div class="ts-dur-group"><div class="ts-dur-group-label">Meses</div>
-            <button class="ts-dur-btn" onclick="selectDuration(this,'1 mês')">1</button>
-            <button class="ts-dur-btn" onclick="selectDuration(this,'3 meses')">3</button>
-            <button class="ts-dur-btn" onclick="selectDuration(this,'6 meses')">6</button>
-          </div>
-          <div class="ts-dur-group"><div class="ts-dur-group-label">Anos</div>
-            <button class="ts-dur-btn" onclick="selectDuration(this,'1 ano')">1</button>
-            <button class="ts-dur-btn" onclick="selectDuration(this,'5 anos')">5</button>
-          </div>
-        </div>
+        <div class="ts-section-label">⌛ Quanto tempo se passou?</div>
+        <input type="text" class="field-input" id="ts-inp-dur" placeholder="Ex: 6 meses, 5 anos, alguns dias..." oninput="checkTsReady()" style="width:100%">
       </div>
       <div>
-        <div class="ts-section-label">⚔ O que faz nesse tempo?</div>
-        <div class="ts-activity-grid">
-          <div class="ts-act-opt" onclick="selectActivity(this,'treino','Treinamento','Aperfeiçoa habilidades.')"><div class="ts-act-icon">⚔️</div><div class="ts-act-name">Treinamento</div></div>
-          <div class="ts-act-opt" onclick="selectActivity(this,'descanso','Descanso','Recupera-se.')"><div class="ts-act-icon">🌙</div><div class="ts-act-name">Descanso</div></div>
-          <div class="ts-act-opt" onclick="selectActivity(this,'missao','Em Missão','Trabalhos ou buscas.')"><div class="ts-act-icon">📜</div><div class="ts-act-name">Em Missão</div></div>
-          <div class="ts-act-opt" onclick="selectActivity(this,'estudo','Estudando','Aprende e pesquisa.')"><div class="ts-act-icon">📚</div><div class="ts-act-name">Estudando</div></div>
-          <div class="ts-act-opt" onclick="selectActivity(this,'viagem','Viajando','Percorre terras.')"><div class="ts-act-icon">🗺️</div><div class="ts-act-name">Viajando</div></div>
-          <div class="ts-act-opt" onclick="selectActivity(this,'social','Política','Alianças e intrigas.')"><div class="ts-act-icon">🤝</div><div class="ts-act-name">Política</div></div>
-        </div>
-      </div>
-      <div class="ts-preview" id="ts-preview">
-        <div style="font-size:18px">⌛</div>
-        <div id="ts-preview-text">Escolha a duração e atividade.</div>
+        <div class="ts-section-label">⚔ O que você fez nesse tempo?</div>
+        <textarea class="field-input" id="ts-inp-act" rows="3" placeholder="Descreva seu treinamento, viagem, investigações ou descanso detalhadamente..." oninput="checkTsReady()" style="width:100%; resize:vertical;"></textarea>
       </div>
     </div>
     <div class="ts-footer">
@@ -453,7 +411,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     
     </div>
     <div class="cc-card full-col"><span class="cc-label">Traço de Personalidade</span><div class="trait-grid" id="trait-grid"></div></div>
-    <div class="cc-card full-col"><span class="cc-label">Contexto / Motivação <span style="font-family:var(--fb);font-style:italic;font-size:10px;color:var(--text3)">(opcional — quanto mais detalhe, melhor o mestre narra!)</span></span><textarea class="cc-input" id="cc-backstory" rows="3" placeholder="História, motivação ou segredo do personagem..." style="resize:vertical"></textarea></div>
+    <div class="cc-card full-col"><span class="cc-label">Contexto / Motivação <span style="font-family:var(--fb);font-style:italic;font-size:10px;color:var(--text3)">(opcional — deixe em branco para o mestre criar uma história para você)</span></span><textarea class="cc-input" id="cc-backstory" rows="3" placeholder="História familiar, motivação ou segredo do personagem..." style="resize:vertical"></textarea></div>
     <div class="cc-card full-col" id="custom-world-box" style="display:none"><span class="cc-label">Lore do Mundo</span><textarea class="cc-input" id="cc-world-lore" rows="3" placeholder="Como funciona esse universo..." style="resize:vertical"></textarea></div>
   </div>
   <div class="char-footer">
@@ -583,7 +541,6 @@ let selectedClass=-1,selectedSkills=[],selectedTrait='',selectedAvatar='🧙';
 let conversationHistory=[],inventory=[];
 let busy=false;
 let stats={hp:100,maxHp:100,mana:60,maxMana:60,stam:90,maxStam:90};
-let tsSelectedDuration='',tsSelectedActivity=null;
 let narrativeState='calmo';
 let saveTimeout=null;
 const LS_KEY='rpg_sessions_v3';
@@ -656,7 +613,6 @@ async function deleteSave(id){
 }
 
 function resumeGame(id){
-  // Feedback imediato
   document.getElementById('loading-overlay').classList.remove('hide');
   const session=window.appSaves[id];
   if(!session){
@@ -674,11 +630,9 @@ function resumeGame(id){
   
   populateSidebar();updateStats();
   
-  // Renderiza itens
   const inv=document.getElementById('g-inv');
   inv.innerHTML = inventory.length === 0 ? '<div class="inv-empty">Vazio</div>' : inventory.map(item => `<div class="inv-item">🎒 ${item}</div>`).join('');
   
-  // Renderiza o chat
   const chatEl=document.getElementById('chat-msgs');chatEl.innerHTML='';
   conversationHistory.forEach(m=>{if(!m)return;if(m.role==='assistant')addMsg('gm',m.content||'');else if(m.role==='user')addMsg('player',m.content||'');});
   
@@ -695,56 +649,47 @@ function closePause(){document.getElementById('pause-modal').classList.remove('o
 function pauseGoWorlds(){saveToFirebase();closePause();goScreen('s-world');renderSavesList();}
 function pauseNewGame(){if(!confirm('Isso excluirá o personagem. Tem certeza?'))return;deleteSave(currentSessionId);currentSessionId=null;closePause();goScreen('s-world');renderSavesList();}
 
-// ════ TIMESKIP (AGORA 100% PERSONALIZADO) ════
-function openTimeskip(){if(busy)return;tsSelectedDuration='';tsSelectedActivity=null;document.querySelectorAll('.ts-dur-btn,.ts-act-opt').forEach(b=>b.classList.remove('selected'));updateTimeskipPreview();document.getElementById('ts-modal').classList.add('open');}
-function closeTimeskip(){document.getElementById('ts-modal').classList.remove('open');}
-function selectDuration(btn,label){document.querySelectorAll('.ts-dur-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');tsSelectedDuration=label;updateTimeskipPreview();}
-function selectActivity(el,key,name,desc){document.querySelectorAll('.ts-act-opt').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');tsSelectedActivity={key,name,desc};updateTimeskipPreview();}
-function updateTimeskipPreview(){
-  document.getElementById('ts-btn-go').disabled=!(tsSelectedDuration&&tsSelectedActivity);
-  document.getElementById('ts-preview-text').innerHTML=tsSelectedDuration&&tsSelectedActivity?`<strong style="color:var(--gold)">${charData.name||'Herói'}</strong> passa <strong style="color:var(--gold)">${tsSelectedDuration}</strong> — ${tsSelectedActivity.desc}`:'Escolha a duração e atividade.';
+// ════ TIMESKIP APRIMORADO (TEXTO LIVRE) ════
+function openTimeskip(){
+  if(busy)return;
+  document.getElementById('ts-inp-dur').value = '';
+  document.getElementById('ts-inp-act').value = '';
+  document.getElementById('ts-btn-go').disabled = true;
+  document.getElementById('ts-modal').classList.add('open');
 }
-function buildTimeskipPrompt(){
-  const c = charData;
-  const dur = tsSelectedDuration;
-  const act = tsSelectedActivity;
-  
-  const actDirectives={
-    treino:`Foque na evolução física e na maestria das habilidades. Descreva suor, repetição e um momento de superação.`,
-    descanso:`Narre a recuperação profunda. Pensamentos noturnos no silêncio. Como a mente do herói processou os eventos recentes.`,
-    missao:`Faça um resumo épico de pequenos contratos/trabalhos realizados. Descreva um oponente menor derrotado e a recompensa.`,
-    estudo:`O que foi lido nos pergaminhos antigos? Narre o processo de aprendizado e uma nova compreensão sobre as leis da magia/mundo.`,
-    viagem:`Descreva paisagens mudando, o cansaço da estrada, noites em claro. Um encontro inesperado que apenas observou de longe.`,
-    social:`Narre as negociações nos bastidores. Tavernas, salões nobres. Quem ganhou sua confiança e de quem ele passou a suspeitar?`,
-    espiritual:`Tom poético. Meditação, visões, conexão com forças superiores. Dúvidas virando certezas inabaláveis.`,
-    escondido:`Narre a paranoia, a vida nas sombras. O medo de ser descoberto e a disciplina para não deixar rastros.`,
-    trabalho:`O contraste da vida perigosa com o tédio do trabalho comum para sobreviver. O disfarce perfeito na multidão.`,
-    cura_espiritual:`Dor, luto e aceitação. Visitas a túmulos ou lugares silenciosos. Uma decisão forjada na tristeza.`,
-    busca:`A obsessão. Pistas seguidas até o fim, interrogatórios em becos escuros. A frustração antes da descoberta.`
-  };
-  
-  const directive=actDirectives[act.key]||`Adapte a narração à seguinte ação: ${act.name}`;
-  
-  return `[TIMESKIP - PULO DE TEMPO: ${dur}]
-O personagem ${c.name} passou todo esse tempo focando em: ${act.name}
+function closeTimeskip(){document.getElementById('ts-modal').classList.remove('open');}
+function checkTsReady(){
+  const dur = document.getElementById('ts-inp-dur').value.trim();
+  const act = document.getElementById('ts-inp-act').value.trim();
+  document.getElementById('ts-btn-go').disabled = !(dur && act);
+}
 
-DIRETRIZES DO MESTRE:
-${directive}
+function buildTimeskipPrompt(dur, act){
+  return `[PULO DE TEMPO / TIMESKIP]
+  Eu declaro que o tempo avançou em: "${dur}".
+  Durante esse período, as minhas ações e focos foram: "${act}".
 
-ESTRUTURA DA RESPOSTA:
-1. (Passagem do tempo) Um flash sensorial de como os dias ou anos correram, usando o clima do universo ${c.world}.
-2. (O que fez) Dois ou três recortes/cenas curtas mostrando as ações dele durante esse tempo, influenciadas pelo traço "${c.trait}".
-3. (Evolução) O que mudou definitivamente em ${c.name}? Uma cicatriz nova, uma mentalidade mais fria, uma técnica refinada?
-4. (O Retorno) ${c.name} desperta para o PRESENTE exato de agora. Qual é a nova ameaça ou oportunidade que está bem na frente dele EXIGINDO ação imediata?`;
+  MESTRE, aplique suas regras de narração (Zero Puppeteering, mundo vivo) e siga este formato para responder:
+  1. Como o mundo ao meu redor e os NPCs reagiram a essas minhas ações durante esse tempo? Houve consequências materiais ou visíveis?
+  2. Crie uma transição brutal para o momento PRESENTE. Descreva onde eu estou AGORA, focando estritamente nos meus sentidos (o que vejo, ouço, sinto na pele e cheiro).
+  3. Apresente um gancho urgente ou um evento acontecendo EXATAMENTE AGORA na minha frente, exigindo que eu tome uma atitude.`;
 }
 
 function executeTimeskip(){
-  if(!tsSelectedDuration||!tsSelectedActivity)return;closeTimeskip();
-  const d=document.createElement('div');d.className='msg-timeskip';d.textContent=`⏭ ${tsSelectedDuration.toUpperCase()} PASSAM — ${tsSelectedActivity.name.toUpperCase()}`;
-  document.getElementById('chat-msgs').appendChild(d);
-  stats.hp=Math.min(stats.maxHp,stats.hp+40);stats.mana=Math.min(stats.maxMana,stats.mana+30);stats.stam=Math.min(stats.maxStam,stats.stam+40);updateStats();
+  const dur = document.getElementById('ts-inp-dur').value.trim();
+  const act = document.getElementById('ts-inp-act').value.trim();
+  if(!dur || !act) return;
   
-  callGM(buildTimeskipPrompt());
+  closeTimeskip();
+  const d=document.createElement('div');
+  d.className='msg-timeskip';
+  d.textContent=`⏭ TIMESKIP: ${dur.toUpperCase()} SE PASSARAM`;
+  document.getElementById('chat-msgs').appendChild(d);
+  
+  // Cura total após timeskip longo
+  stats.hp=stats.maxHp; stats.mana=stats.maxMana; stats.stam=stats.maxStam; updateStats();
+  
+  callGM(buildTimeskipPrompt(dur, act));
 }
 
 // ════ CHAR CREATION ════
@@ -825,7 +770,6 @@ function populateSidebar(){
   document.getElementById('g-skills').innerHTML=(charData.skills||[]).filter(Boolean).map(s=>`<div class="sb-skill-tag">${s.icon||'✨'} ${s.name||'Hab'}</div>`).join('');
   document.getElementById('g-trait').textContent=charData.trait||'Livre';
   
-  // ATIVAÇÃO DO BOTÃO DE HABILIDADE PRÓPRIA
   const btnCustomSkill = document.getElementById('btn-custom-skill');
   if(btnCustomSkill) {
       if(charData.customSkill && charData.customSkill.name) {
@@ -912,16 +856,16 @@ function inferNarrativeState(combined){
   else if(calm.some(w=>lo.includes(w)))setNarrativeState('calmo');
 }
 
-// ════ SYSTEM PROMPT APRIMORADO ════
+// ════ SYSTEM PROMPT APRIMORADO (NO PUPPETEERING) ════
 function buildSystem(){
   const c=charData;
   const skillList=(c.skills||[]).filter(Boolean).map(s=>`${s.name}: ${s.desc}`).join('; ');
-  const customSkillText=c.customSkill? `\nHabilidade Assinatura do Jogador: ${c.customSkill.name} - ${c.customSkill.desc} (Valorize muito o uso dessa técnica épica).` : '';
+  const customSkillText=c.customSkill? `\nHabilidade Assinatura do Jogador: ${c.customSkill.name} - ${c.customSkill.desc}.` : '';
   const isKnownWorld=!!WORLD_CLASSES[c.world];
   
-  return`Você é o Mestre de RPG mais imersivo já criado. Sua missão: fazer o jogador SENTIR que está vivo neste universo.
+  return`Você é o Mestre de um RPG hardcore. Sua missão é criar um mundo vivo, perigoso e reativo, e interpretar NPCs com personalidades profundas.
 
-═══ PERSONAGEM ═══
+═══ PERSONAGEM DO JOGADOR ═══
 Nome: ${c.name} | Compleição: ${c.build} | Idade: ${c.age}
 Classe: ${c.cls} | Traço: ${c.trait}
 Habilidades base: ${skillList} ${customSkillText}
@@ -929,40 +873,34 @@ ${c.backstory?`Contexto: ${c.backstory}`:''}
 
 ═══ UNIVERSO ═══
 "${c.world}"
-${isKnownWorld?`Este é um universo canônico. Você DEVE usar personagens, lugares, facções e eventos REAIS deste universo. Seja fiel ao lore. Se não souber algo, use a busca web para verificar.`:`Universo personalizado. ${c.customLore||'Crie com coerência interna.'}`}
+${isKnownWorld?`Este é um universo canônico. Use personagens, lugares e leis REAIS desse universo.`:`Universo personalizado. ${c.customLore||'Mantenha a coerência interna do mundo.'}`}
 
 ═══ REGRAS ABSOLUTAS DE NARRAÇÃO ═══
 
-**1. MOSTRE, NÃO EXPLIQUE**
-❌ "Você sente medo."
-✅ "Seus joelhos trincam. O ar some dos pulmões."
+**1. ZERO "PUPPETEERING" (O JOGADOR É LIVRE)**
+Você controla o MUNDO. O jogador controla o PERSONAGEM DELE.
+NUNCA, sob NENHUMA circunstância, escreva o que o personagem do jogador pensa, sente emocionalmente, fala ou decide fazer. 
+❌ ERRADO: "Você sente medo e decide recuar."
+❌ ERRADO: "Você fica aliviado ao ver seu amigo."
+✅ CERTO: "O monstro ruge, fazendo o chão tremer sob as suas botas. O que você faz?"
+Descreva apenas a dor física, os danos, o cansaço e o que os sentidos dele captam do ambiente. A mente e as decisões são intocáveis e pertencem apenas ao jogador.
 
-**2. TODOS OS CINCO SENTIDOS por cena**
-- O que se VÊ (luz, sombra, movimento)
-- O que se OUVE (sons distantes, silêncio)  
-- O que se CHEIRA / TOCA (frio, calor, textura)
+**2. NPCs VIVOS E AUTÔNOMOS**
+NPCs não são robôs de missão. Eles têm desejos, medos, sotaques e temperamentos. Eles mentem, perdem a paciência, atacam primeiro, fogem ou julgam o jogador pelas suas ações. Interprete-os intensamente. Faça-os olhar nos olhos do jogador e falar com voz própria.
 
-**3. NPCs SÃO PESSOAS REAIS**
-Se o universo tem personagens icônicos, use-os com suas personalidades REAIS. Sasuke é frio e calculista. Jon Snow é honrado até o excesso. Geralt fala pouco e observa muito. NUNCA invente versões genéricas de personagens famosos.
+**3. CONSEQUÊNCIAS BRUTAIS E REAIS**
+Se o jogador agir com imprudência, puna-o através do mundo. O mundo não espera o jogador agir. As coisas acontecem.
 
-**4. CONSEQUÊNCIAS REAIS**
-Cada ação muda o mundo. Se o jogador falha, algo piora. Se vence, algo muda. O mundo NÃO espera.
+**4. FORMATO DA RESPOSTA**
+Sempre dirija a narrativa diretamente ao jogador (usando "Você" para descrever o impacto físico ou o que ele enxerga).
+Parágrafo 1 — Como o mundo e os NPCs reagem à ação que o jogador acabou de declarar.
+Parágrafo 2 — Diálogo de um NPC (se houver) ou a consequência direta do ambiente.
+Parágrafo final — A "Bola" é passada para o jogador. Uma nova ameaça, um silêncio tenso ou uma pergunta que exige ação.
 
-**5. FORMATO DA RESPOSTA**
-Parágrafo 1 — Abertura sensorial (o que o personagem vê/sente/cheira nesse instante)
-Parágrafo 2/3 — O que acontece (ação, NPC reagindo, resultado)
-Parágrafo final — Uma tensão aberta que EXIGE resposta. Nunca liste opções numeradas.
+**5. A BAGAGEM DO HERÓI**
+Sempre que fizer sentido, conecte o que está acontecendo agora com a história de fundo do jogador (um cheiro que lembra a casa dele, um NPC que o faz lembrar de um parente, um instinto forjado em um trauma antigo). Faça o mundo parecer vivido.
 
-**6. MECÂNICAS**
-- Para ações arriscadas: [TESTE: ATRIBUTO] na narração
-- Nova missão: [MISSÃO: descrição]
-- Missão completa: [CONCLUÍDA: descrição]
-- Item obtido: [ITEM: nome do item]
-
-**7. EXTENSÃO**
-3 a 5 parágrafos. Nem mais, nem menos. Seja denso, não longo.
-
-**8. IDIOMA**: SEMPRE português brasileiro.`;
+**6. IDIOMA**: SEMPRE português brasileiro.`;
 }
 
 // ════ CHAMADA BACKEND /api/chat (Gemini) ════
@@ -1050,14 +988,14 @@ function doAction(type){
   const skillNames = (charData.skills||[]).map(s=>s.name).join(' ou ');
   
   const prompts={
-    rest:`${charData.name} decide descansar e recuperar forças. Narre o descanso — o local, os pensamentos, e qualquer evento que ocorra enquanto descansa.`,
-    explore:`${charData.name} começa a explorar a área com atenção. Descreva o que encontra — detalhes do ambiente, pistas, perigos ou personagens. Seja específico ao universo ${charData.world}.`,
-    talk:`${charData.name} se aproxima para conversar. Apresente um personagem NPC interessante ${WORLD_CLASSES[charData.world]?`do universo ${charData.world}`:'do local'} com personalidade própria, objetivos e segredos. Escreva o diálogo com realismo.`,
-    fight:`[COMBATE] ${charData.name} entra em combate! Dado rolado: ${roll?.base}. ${roll?.success?'Sucesso no ataque.':'Falhou no ataque.'} ${roll?.critical?'GOLPE CRÍTICO!':''} ${roll?.fumble?'FALHA CRÍTICA!':''} Narre o combate com impacto físico real.`,
-    flee:`[FUGA] ${charData.name} tenta escapar! Dado: ${roll?.base}. ${roll?.success?'Consegue fugir.':'Não consegue escapar!'} Narre as consequências da fuga.`,
-    useSkill:`${charData.name} usa habilidade (${skillNames}). Dado: ${roll?.base}. ${roll?.success?'Sucesso!':roll?.fumble?'FALHA CRÍTICA!':'Falha parcial.'} Narre o efeito com impacto visual épico.`,
-    useCustomSkill:`${charData.name} ativa sua habilidade exclusiva: "${customSkillName}" (${customSkillDesc}). Dado rolado: ${roll?.base}. ${roll?.success?'Foi um absoluto sucesso, o efeito foi devastador!':'A habilidade falhou miseravelmente, com efeitos colaterais.'} Trate essa ação como o momento mais épico da batalha. Narre o impacto visual dramático.`,
-    lore:`${charData.name} investiga e busca informações sobre o local ou situação. Revele lore relevante do universo ${charData.world} — lendas, facções, segredos do lugar. Use fatos reais do cânone.`
+    rest:`Eu decido descansar aqui. Mestre, narre APENAS o que acontece ao meu redor enquanto tento repousar. O ambiente é hostil? Alguém se aproxima? Crie a atmosfera do local, mas NÃO dite o que eu penso ou sinto.`,
+    explore:`Eu começo a explorar a área. Descreva o que os meus sentidos captam do ambiente. O que o mundo de ${charData.world} me revela? Se houver perigos ou pistas materiais, foque nisso.`,
+    talk:`Eu tento iniciar um diálogo ou interagir com alguém. Mestre, introduza um NPC (ou use um existente) e foque 100% NA PERSONALIDADE DELE. Como ele reage à minha aproximação? Escreva a fala e os maneirismos do NPC.`,
+    fight:`[COMBATE] Eu ataco! Dado rolado: ${roll?.base}. ${roll?.success?'Meu golpe acerta a defesa deles.':'Meu golpe é evitado ou contido.'}. Narre A REAÇÃO DO INIMIGO e a consequência física do impacto. Como o inimigo contra-ataca ou grita de dor?`,
+    flee:`[FUGA] Eu tento fugir! Dado: ${roll?.base}. ${roll?.success?'O caminho se abre e os inimigos ficam para trás.':'O caminho é bloqueado ou eles me alcançam!'} Narre o ambiente ao meu redor durante essa perseguição, sem narrar o meu estado emocional.`,
+    useSkill:`Eu uso minha habilidade (${skillNames}). Dado: ${roll?.base}. ${roll?.success?'A habilidade funciona perfeitamente!':roll?.fumble?'A habilidade tem um efeito catastrófico e inesperado!':'A habilidade não tem a força necessária.'} Narre o efeito visual da magia/técnica no ambiente e a reação de terror ou deboche dos inimigos.`,
+    useCustomSkill:`Eu ativo minha Habilidade Assinatura: "${customSkillName}" (${customSkillDesc}). Dado: ${roll?.base}. ${roll?.success?'O efeito atinge o alvo com potência máxima!':'A técnica falha, com consequências graves.'} Narre a destruição ou o espetáculo visual causado no cenário e nos inimigos.`,
+    lore:`Eu observo e investigo os detalhes deste lugar. Revele informações ocultas, segredos, lendas e o lore profundo do universo ${charData.world} baseando-se no que a minha classe e traço poderiam reconhecer visualmente.`
   };
   callGM(prompts[type]||`O jogador faz: ${type}`,roll);
 }
@@ -1067,22 +1005,22 @@ function sendMsg(){
   const val=inp.value.trim();
   if(!val||busy)return;
   addMsg('player',val);
-  callGM(`${charData.name} diz/faz: "${val}". Reaja de forma coerente com o universo ${charData.world}. Narre com riqueza sensorial.`);
+  callGM(`Eu declaro o seguinte: "${val}". Mestre, reaja coerentemente com o universo ${charData.world} e a personalidade dos NPCs envolvidos. NÃO controle os meus pensamentos, sentimentos ou ações. Narre apenas a consequência das minhas palavras/atos no mundo e nas pessoas ao redor.`);
   inp.value='';
 }
 
 function beginGame(){
-  callGM(`INÍCIO DA AVENTURA. Crie uma cena de abertura ÉPICA para ${charData.name}, um(a) ${charData.cls} ${charData.trait.toLowerCase()} no universo ${charData.world}. 
+  callGM(`INÍCIO DA AVENTURA. Crie uma cena de abertura ÉPICA e uma HISTÓRIA DE FUNDO PROFUNDA para ${charData.name}, um(a) ${charData.cls} ${charData.trait.toLowerCase()} no universo ${charData.world}. 
 
 Regras da abertura:
-- Comece IN MEDIAS RES — no meio de um momento significativo, não com "você acorda"
-- Use fatos reais e específicos do universo ${charData.world} (lugares, organizações, terminologia canônica)
-- Introduza imediatamente um conflito ou dilema que exige ação
-- Se houver personagens icônicos próximos, mencione-os naturalmente
-- Termine com uma situação urgente que exige resposta imediata do jogador
-${charData.backstory?`\nContexto do personagem a incorporar: ${charData.backstory}`:''}
+1. CONSTRUÇÃO DE PASSADO (ESSENCIAL): Antes da ação estourar, ancore o personagem no mundo. Crie e descreva rapidamente a família dele (vivos, mortos ou desaparecidos?), cidade natal, mestres ou traumas. O personagem DEVE ter raízes profundas.
+2. IN MEDIAS RES: A cena atual deve estar acontecendo AGORA, intimamente conectada a esse passado.
+3. LORE REAL: Use fatos reais do universo ${charData.world} (lugares, organizações, terminologia).
+4. ZERO PUPPETEERING: Narre a situação acontecendo com o corpo/visão do jogador usando "Você", mas NÃO decida o que ele pensa ou faz.
+5. GATILHO: Termine com uma situação urgente que exige ação Imediata.
+${charData.backstory ? `\nContexto inicial do jogador (EXPANDA ISSO: crie nomes e detalhes dramáticos): ${charData.backstory}` : '\nO jogador NÃO definiu uma história. CRIE UMA DO ZERO. Invente pais, irmãos ou entes queridos, uma motivação forte e um fardo que ele carrega.'}
 
-Seja cinematográfico. Seja específico. Seja imersivo.`);
+Seja visceral e faça o personagem pertencer a este mundo.`);
 }
 
 function toggleSidebar(){document.getElementById('rpg-sidebar').classList.toggle('open');document.getElementById('sb-overlay').classList.toggle('show');}
